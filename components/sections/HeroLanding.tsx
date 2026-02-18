@@ -1,184 +1,79 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { personalInfo, socialLinks } from '@/constants/social';
-import { blobColors, sectionGradients } from '@/constants/theme';
-import FloatingBlobs from '@/components/shared/FloatingBlobs';
-import SectionDivider from '@/components/shared/SectionDivider';
+import { useState, useEffect } from 'react';
+import { sectionGradients } from '@/constants/theme';
+import HeroSlideTerminal from './hero/HeroSlideTerminal';
+import HeroSlideEditor from './hero/HeroSlideEditor';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function HeroLanding() {
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const totalSlides = 2; // Terminal, Editor
+
+    // Auto-advance slideshow
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % totalSlides);
+        }, 8000); // 8 seconds per slide
+
+        return () => clearInterval(timer);
+    }, []);
+
+
+
+    const setSlide = (index: number) => {
+        setCurrentSlide(index);
+    };
+
     return (
         <section id="hero" className={`relative min-h-screen w-full flex items-center justify-center overflow-hidden ${sectionGradients.hero}`}>
-            {/* Animated Floating Blobs */}
-            <FloatingBlobs colors={blobColors.hero} variant="hero" />
 
-            {/* Main Content Container */}
-            <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[80vh]">
-
-                {/* Left Column: Text & CTA */}
-                <div className="text-center lg:text-left order-2 lg:order-1 flex flex-col items-center lg:items-start">
-                    {/* Headline */}
-                    <motion.h1
-                        className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-6 leading-tight"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                    >
-                        {personalInfo.tagline.split(' ').map((word, index) => (
-                            <motion.span
-                                key={index}
-                                className="inline-block mr-3"
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
-                            >
-                                {word}
-                            </motion.span>
-                        ))}
-                    </motion.h1>
-
-                    {/* Subtext */}
-                    <motion.p
-                        className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl font-light leading-relaxed"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.6 }}
-                    >
-                        {personalInfo.subtitle}
-                    </motion.p>
-
-                    {/* CTA & Socials Row */}
-                    <motion.div
-                        className="flex flex-col sm:flex-row items-center gap-6 mb-12"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.8 }}
-                    >
-                        <button
-                            onClick={() => document.getElementById('origin')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="group relative px-8 py-3.5 bg-gray-900 text-white text-lg font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/20"
+            {/* Slides Container */}
+            <div className="relative w-full h-full min-h-[90vh] flex items-center">
+                <AnimatePresence mode="wait">
+                    {currentSlide === 0 && (
+                        <motion.div
+                            key="slide-terminal"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className="absolute inset-0 w-full h-full"
                         >
-                            <span className="relative z-10 flex items-center gap-2">
-                                Begin Journey
-                                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
-                            </span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        </button>
-
-                        <div className="flex items-center gap-4">
-                            {socialLinks.map((social) => (
-                                <a
-                                    key={social.name}
-                                    href={social.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={`p-3 rounded-full bg-white/50 backdrop-blur-sm border border-gray-200 text-gray-600 hover:text-blue-600 hover:border-blue-200 transition-all duration-300 hover:scale-110`}
-                                    aria-label={social.ariaLabel}
-                                >
-                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d={social.icon} />
-                                    </svg>
-                                </a>
-                            ))}
-                        </div>
-                    </motion.div>
-
-                    {/* Tech Stack Mini Row (Optional integration) */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 1.2 }}
-                    >
-                        <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Powered By</p>
-                        <div className="flex gap-4 grayscale hover:grayscale-0 transition-all duration-500">
-                            {/* Icons stripped down for cleanliness - keeping it simple or just dots */}
-                            {['#61DAFB', '#000000', '#3178C6', '#06B6D4', '#339933'].map((color, i) => (
-                                <div key={i} className="w-2 h-2 rounded-full" style={{ backgroundColor: color }} />
-                            ))}
-                        </div>
-                    </motion.div>
-                </div>
-
-                {/* Right Column: Terminal */}
-                <motion.div
-                    className="order-1 lg:order-2 w-full max-w-lg mx-auto lg:max-w-none perspective-1000"
-                    initial={{ opacity: 0, x: 50, rotateY: -10 }}
-                    animate={{ opacity: 1, x: 0, rotateY: -5 }}
-                    transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-                    whileHover={{ rotateY: 0, scale: 1.02 }}
-                >
-                    {/* Glow Effect Background */}
-                    <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-2xl blur-2xl -z-10 opacity-70 animate-pulse" />
-
-                    {/* Terminal Window */}
-                    <div className="overflow-hidden rounded-xl bg-gray-900/95 backdrop-blur-xl border border-white/10 shadow-2xl transform transition-transform duration-500">
-                        {/* Terminal Header */}
-                        <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/5">
-                            <div className="w-3 h-3 rounded-full bg-red-500" />
-                            <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                            <div className="w-3 h-3 rounded-full bg-green-500" />
-                            <div className="ml-auto text-xs text-gray-500 font-mono">zsh — 80x24</div>
-                        </div>
-
-                        {/* Terminal Content */}
-                        <div className="p-6 font-mono text-sm space-y-4 text-gray-300">
-                            <div>
-                                <div className="flex gap-2 text-green-400">
-                                    <span>$</span>
-                                    <span className="text-white">whoami</span>
-                                </div>
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 1.2 }}
-                                    className="pl-4 text-blue-300 font-bold"
-                                >
-                                    {personalInfo.name}
-                                </motion.div>
-                            </div>
-
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.0 }}>
-                                <div className="flex gap-2 text-green-400">
-                                    <span>$</span>
-                                    <span className="text-white">role</span>
-                                </div>
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 2.4 }}
-                                    className="pl-4 text-purple-300"
-                                >
-                                    Full Stack Engineer
-                                </motion.div>
-                            </motion.div>
-
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.2 }}>
-                                <div className="flex gap-2 text-green-400">
-                                    <span>$</span>
-                                    <span className="text-white">philosophy</span>
-                                </div>
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 3.6 }}
-                                    className="pl-4 text-gray-300 italic"
-                                >
-                                    "Good code works. Great systems last. I build the latter."
-                                    <motion.span
-                                        animate={{ opacity: [0, 1, 0] }}
-                                        transition={{ duration: 0.8, repeat: Infinity }}
-                                        className="inline-block w-2 h-4 ml-1 bg-gray-400 align-middle"
-                                    />
-                                </motion.div>
-                            </motion.div>
-                        </div>
-                    </div>
-                </motion.div>
+                            <HeroSlideTerminal isActive={currentSlide === 0} />
+                        </motion.div>
+                    )}
+                    {currentSlide === 1 && (
+                        <motion.div
+                            key="slide-editor"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className="absolute inset-0 w-full h-full"
+                        >
+                            <HeroSlideEditor isActive={currentSlide === 1} />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
 
-            {/* Scroll Indicator */}
+            {/* Navigation Dots */}
+            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-4">
+                {Array.from({ length: totalSlides }).map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => setSlide(index)}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${currentSlide === index
+                            ? 'bg-blue-500 w-8'
+                            : 'bg-gray-400 hover:bg-gray-300'
+                            }`}
+                        aria-label={`Go to slide ${index + 1}`}
+                    />
+                ))}
+            </div>
+
+            {/* Scroll Indicator (Global) */}
             <motion.div
                 className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20 cursor-pointer opacity-70 hover:opacity-100 transition-opacity"
                 onClick={() => document.getElementById('origin')?.scrollIntoView({ behavior: 'smooth' })}
@@ -186,20 +81,8 @@ export default function HeroLanding() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 2.5 }}
             >
-                <span className="text-xs uppercase tracking-widest text-gray-500">Scroll</span>
-                <motion.div
-                    className="w-5 h-9 border-2 border-gray-400 rounded-full flex justify-center p-1"
-                >
-                    <motion.div
-                        className="w-1 h-1.5 bg-gray-600 rounded-full"
-                        animate={{ y: [0, 12, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                    />
-                </motion.div>
+                {/* Optional: Add scroll indicator back if needed, currently simplistic */}
             </motion.div>
-
-            {/* Wave Divider */}
-            <SectionDivider position="bottom" color="#fff" />
         </section>
     );
 }
