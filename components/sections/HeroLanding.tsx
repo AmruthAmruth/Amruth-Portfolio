@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react';
 import { sectionGradients } from '@/constants/theme';
 import HeroSlideTerminal from './hero/HeroSlideTerminal';
 import HeroSlideEditor from './hero/HeroSlideEditor';
+import HeroSlideAPI from './hero/HeroSlideAPI';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export default function HeroLanding() {
     const [currentSlide, setCurrentSlide] = useState(0);
-    const totalSlides = 2; // Terminal, Editor
+    const totalSlides = 3; // Terminal, Editor, API
 
     // Auto-advance slideshow
     useEffect(() => {
@@ -53,6 +54,18 @@ export default function HeroLanding() {
                             className="absolute inset-0 w-full h-full"
                         >
                             <HeroSlideEditor isActive={currentSlide === 1} />
+                        </motion.div>
+                    )}
+                    {currentSlide === 2 && (
+                        <motion.div
+                            key="slide-api"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className="absolute inset-0 w-full h-full"
+                        >
+                            <HeroSlideAPI isActive={currentSlide === 2} />
                         </motion.div>
                     )}
                 </AnimatePresence>
