@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Project } from '@/types';
+import TypingText from './TypingText';
 
 interface JsonViewerProps {
     project: Project;
@@ -41,7 +42,7 @@ export default function JsonViewer({ project }: JsonViewerProps) {
                     <div>
                         <span className="text-gray-500 italic inline-block mb-0.5">// The name of the project</span>
                         <br />
-                        <span className="text-blue-400">"project_name"</span>: <span className="text-orange-400">"{project.title}"</span>,
+                        <span className="text-blue-400">"project_name"</span>: <span className="text-orange-400">"<TypingText text={project.title} speed={30} delay={100} cursor={false} />"</span>,
                     </div>
 
                     {/* Links Object */}
@@ -66,7 +67,7 @@ export default function JsonViewer({ project }: JsonViewerProps) {
                         <div className="flex items-start">
                             <span className="text-blue-400 whitespace-nowrap">"description"</span>:
                             <span className="text-orange-400 ml-2 whitespace-pre-wrap leading-relaxed">
-                                "{project.problem} {project.outcome}"
+                                "<TypingText text={`${project.problem} ${project.outcome}`} speed={10} delay={400} cursor={false} />"
                             </span>,
                         </div>
                     </div>
@@ -79,7 +80,7 @@ export default function JsonViewer({ project }: JsonViewerProps) {
                         <div className="pl-6">
                             {project.features.slice(0, 3).map((feature, i) => (
                                 <div key={i}>
-                                    <span className="text-orange-300">"{feature}"</span>{i < 2 ? ',' : ''}
+                                    <span className="text-orange-300">"<TypingText text={feature} speed={20} delay={1200 + (i * 200)} cursor={false} />"</span>{i < 2 ? ',' : ''}
                                 </div>
                             ))}
                         </div>
@@ -90,7 +91,7 @@ export default function JsonViewer({ project }: JsonViewerProps) {
                     <div>
                         <span className="text-gray-500 italic inline-block mb-0.5">// Current development status</span>
                         <br />
-                        <span className="text-blue-400">"status"</span>: <span className="text-green-400">"{project.status}"</span>,
+                        <span className="text-blue-400">"status"</span>: <span className="text-green-400">"<TypingText text={project.status} speed={30} delay={1800} cursor={false} />"</span>,
                     </div>
 
                     {/* Tech Stack Array */}

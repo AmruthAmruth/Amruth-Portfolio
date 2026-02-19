@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { ChevronRight, ChevronDown } from 'lucide-react';
+import TypingText from '@/components/shared/TypingText';
 
 interface GitLogEntryProps {
     hash: string;
@@ -66,13 +67,17 @@ export default function GitLogEntry({
 
                 <div className="flex items-center gap-2 mt-2">
                     <span className="text-gray-400 text-sm">Message:</span>
-                    <span className="text-gray-200 font-semibold">{message}</span>
+                    <span className="text-gray-200 font-semibold">
+                        <TypingText text={message} speed={20} delay={100} />
+                    </span>
                 </div>
 
                 {/* Expansion Trigger */}
                 <div className="flex items-center gap-2 mt-3 text-sm hover:opacity-80 transition-opacity">
                     {isExpanded ? <ChevronDown size={16} className={colorClass} /> : <ChevronRight size={16} className={colorClass} />}
-                    <span className={`${colorClass} font-bold`}>+ {subtitle}</span>
+                    <span className={`${colorClass} font-bold flex items-center`}>
+                        + <TypingText text={` ${subtitle}`} speed={30} delay={600} cursor={false} />
+                    </span>
                     {!isExpanded && <span className="text-gray-600 text-xs ml-2 italic hidden sm:inline">...click to view details</span>}
                 </div>
             </div>

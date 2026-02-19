@@ -17,12 +17,14 @@ export default function TransmissionForm() {
     const [step, setStep] = useState<Step>('INIT');
     const [history, setHistory] = useState<TerminalLine[]>([]);
     const [inputValue, setInputValue] = useState('');
+    const [loginTime, setLoginTime] = useState('');
     const [formData, setFormData] = useState<FormData>({ name: '', email: '', message: '' });
     const inputRef = useRef<HTMLInputElement>(null);
-    const bottomRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // Initial system boot sequence
     useEffect(() => {
+        setLoginTime(new Date().toLocaleDateString());
         const bootSequence = async () => {
             await addLine('system', 'Initializing Secure Uplink v4.2...');
             await new Promise(r => setTimeout(r, 600));
@@ -38,7 +40,9 @@ export default function TransmissionForm() {
 
     // Scroll to bottom on history update
     useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+        if (containerRef.current) {
+            containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        }
     }, [history]);
 
     // Focus input on click
@@ -131,10 +135,13 @@ export default function TransmissionForm() {
             </div>
 
             {/* Terminal Window */}
-            <div className="p-4 md:p-6 min-h-[400px] h-[50vh] overflow-y-auto custom-scrollbar bg-[#1e1e1e]/95 cursor-text text-gray-300 font-medium">
+            <div
+                ref={containerRef}
+                className="p-4 md:p-6 min-h-[400px] h-[50vh] overflow-y-auto custom-scrollbar bg-[#1e1e1e]/95 cursor-text text-gray-300 font-medium"
+            >
                 {/* Introduction */}
                 <div className="mb-4 text-gray-500">
-                    Last login: {new Date().toLocaleDateString()} on ttys001
+                    Last login: {loginTime} on ttys001
                 </div>
 
                 {/* History */}
@@ -178,7 +185,6 @@ export default function TransmissionForm() {
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                                 className="w-full bg-transparent border-none outline-none text-white p-0 m-0 caret-transparent"
-                                autoFocus
                                 autoComplete="off"
                             />
                             {/* Custom Block Cursor */}
@@ -196,7 +202,7 @@ export default function TransmissionForm() {
                     </div>
                 )}
 
-                <div ref={bottomRef} />
+
             </div>
         </div>
     );
