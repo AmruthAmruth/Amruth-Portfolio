@@ -17,6 +17,11 @@ export interface Project {
     liveUrl: string;
     githubUrl: string;
     gradient: string;
+    // Deployment Dashboard Props
+    status: 'Live' | 'Building' | 'Failed';
+    environment: 'Production' | 'Preview' | 'Development';
+    createdAt: string;
+    buildDuration: string;
 }
 
 /**
