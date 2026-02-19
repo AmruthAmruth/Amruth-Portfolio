@@ -19,17 +19,17 @@ export default function CustomCursor({ color = "blue" }: { color?: string }) {
     const cursorY = useSpring(mouseY, springConfig);
 
     useEffect(() => {
-        // Image rotation logic
-        const interval = setInterval(() => {
-            setCurrentImage(prev =>
+        // Image rotation logic with recursive timeout
+        const timeout = setTimeout(() => {
+            setCurrentImage((prev) =>
                 prev === '/assets/images/Amruth1.jpeg'
                     ? '/assets/images/Amruth2.jpeg'
                     : '/assets/images/Amruth1.jpeg'
             );
-        }, 3000);
+        }, 5000);
 
-        return () => clearInterval(interval);
-    }, []);
+        return () => clearTimeout(timeout);
+    }, [currentImage]);
 
     useEffect(() => {
         // Detect touch devices to avoid custom cursor on mobile
@@ -135,10 +135,10 @@ export default function CustomCursor({ color = "blue" }: { color?: string }) {
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={currentImage}
-                        initial={{ opacity: 0, scale: 0.8, filter: "blur(10px)", rotateY: 90 }}
-                        animate={{ opacity: 1, scale: 1, filter: "blur(0px)", rotateY: 0 }}
-                        exit={{ opacity: 0, scale: 0.8, filter: "blur(10px)", rotateY: -90 }}
-                        transition={{ duration: 0.6, ease: "easeInOut" }}
+                        initial={{ opacity: 0, scale: 0.8, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, scale: 1.2, filter: "blur(10px)" }}
+                        transition={{ duration: 0.8, ease: "easeInOut" }}
                         className="absolute inset-0 bg-cover bg-center"
                         style={{ backgroundImage: `url(${currentImage})` }}
                     />
