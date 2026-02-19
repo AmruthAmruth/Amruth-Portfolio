@@ -2,80 +2,99 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { skills, categories } from '@/constants/skills';
-import { containerVariants, fastStaggerContainer } from '@/constants/animations';
-import { blobColors, sectionGradients, accentGradients } from '@/constants/theme';
-import FloatingBlobs from '@/components/shared/FloatingBlobs';
+import { skills } from '@/constants/skills';
+import { accentGradients } from '@/constants/theme';
 import SectionHeader from '@/components/shared/SectionHeader';
-import SkillBubble from '@/components/shared/SkillBubble';
-import DecorativeDots from '@/components/shared/DecorativeDots';
 import SectionDivider from '@/components/shared/SectionDivider';
+import ArchitectureLayer from '@/components/shared/ArchitectureLayer';
 
 export default function StackSection() {
     const sectionRef = useRef(null);
     const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
+    // Helper to get skills for a category
+    const getSkills = (categoryName: string) => skills.filter(s => s.category === categoryName);
+
+    // Define the Architectural Layers
+    const layers = [
+        {
+            name: "Presentation Layer",
+            description: "User Interface, Interactivity via Modern Web Standards.",
+            categories: [
+                { name: "Languages", skills: getSkills("Languages") },
+                { name: "Frontend", skills: getSkills("Frontend") },
+            ]
+        },
+        {
+            name: "Application Layer",
+            description: "Business Logic, API Handling, Security & Real-time Communication.",
+            categories: [
+                { name: "Backend", skills: getSkills("Backend") },
+                { name: "Real-time", skills: getSkills("Real-time") },
+                { name: "Security", skills: getSkills("Security") },
+            ]
+        },
+        {
+            name: "Infrastructure Layer",
+            description: "Data Persistence, Cloud Deployment & Orchestration.",
+            categories: [
+                { name: "Databases", skills: getSkills("Databases") },
+                { name: "DevOps & Cloud", skills: getSkills("DevOps & Cloud") },
+            ]
+        },
+        {
+            name: "Development Ecosystem",
+            description: "Tools & Methodologies for Efficient Delivery.",
+            categories: [
+                { name: "Tools", skills: getSkills("Tools") },
+            ]
+        },
+    ];
+
     return (
-        <section id="stack" className={`relative w-full min-h-screen flex items-center justify-center overflow-hidden ${sectionGradients.stack} py-24 md:py-32`}>
-            {/* Floating Blobs */}
-            <FloatingBlobs colors={blobColors.stack} />
+        <section id="stack" className={`relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-gray-50/50 py-24 md:py-32`}>
+
+            {/* Background Texture (Dot Pattern) */}
+            <div className="absolute inset-0 opacity-[0.03]"
+                style={{
+                    backgroundImage: 'radial-gradient(#000 1px, transparent 1px)',
+                    backgroundSize: '24px 24px'
+                }}
+            />
 
             {/* Main Content */}
             <div ref={sectionRef} className="relative z-10 max-w-7xl mx-auto px-6 w-full">
                 {/* Section Title */}
                 <SectionHeader
-                    title="Stack"
-                    subtitle="Technologies I use to build scalable, modern applications"
+                    title="System Architecture"
+                    subtitle="A structured view of my technical competencies"
                     gradient={accentGradients.blueCyan}
-                    className="mb-20"
+                    className="mb-16"
                 />
 
-                {/* Skills by Category */}
-                <div className="space-y-16">
-                    {categories.map((category, categoryIndex) => {
-                        const categorySkills = skills.filter((skill) => skill.category === category);
-
-                        return (
-                            <motion.div
-                                key={category}
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                                transition={{
-                                    duration: 0.8,
-                                    delay: categoryIndex * 0.15,
-                                    ease: [0.25, 0.1, 0.25, 1],
-                                }}
-                                className="space-y-6"
-                            >
-                                {/* Category Title */}
-                                <h3 className="text-xl md:text-2xl font-semibold text-gray-800 text-center md:text-left">
-                                    {category}
-                                </h3>
-
-                                {/* Skill Bubbles */}
-                                <motion.div
-                                    variants={fastStaggerContainer}
-                                    initial="hidden"
-                                    animate={isInView ? 'visible' : 'hidden'}
-                                    className="flex flex-wrap justify-center md:justify-start gap-4"
-                                >
-                                    {categorySkills.map((skill, index) => (
-                                        <SkillBubble key={skill.name} skill={skill} index={index} />
-                                    ))}
-                                </motion.div>
-                            </motion.div>
-                        );
-                    })}
+                {/* Architectural Stack */}
+                <div className="flex flex-col items-center w-full">
+                    {layers.map((layer, index) => (
+                        <ArchitectureLayer
+                            key={layer.name}
+                            layerName={layer.name}
+                            description={layer.description}
+                            categories={layer.categories}
+                            index={index}
+                        />
+                    ))}
                 </div>
 
-                {/* Decorative Element */}
+                {/* Bottom Decorative Footer */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                    transition={{ duration: 0.8, delay: 1.5 }}
-                    className="flex justify-center pt-16"
+                    transition={{ duration: 0.8, delay: 0.8 }}
+                    className="flex justify-center mt-16"
                 >
-                    <DecorativeDots />
+                    <div className="text-xs font-mono text-gray-400 bg-white px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+                        ARCHITECTURE_VERIFIED_V1.0
+                    </div>
                 </motion.div>
             </div>
 
