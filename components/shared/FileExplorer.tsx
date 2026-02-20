@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { Project } from '@/types';
+import { ChevronRight, ChevronDown, Folder, FileJson, FileCode, FileText } from 'lucide-react';
+import { useState } from 'react';
 
 interface FileExplorerProps {
     projects: Project[];
@@ -10,48 +12,76 @@ interface FileExplorerProps {
 }
 
 export default function FileExplorer({ projects, selectedProject, onSelect }: FileExplorerProps) {
+    const [isPortfolioOpen, setIsPortfolioOpen] = useState(true);
+
     return (
-        <div className="h-full bg-[#1e1e1e] text-gray-400 font-mono text-sm border-r border-[#333] flex flex-col">
+        <div className="h-full flex flex-col font-sans bg-[#252526] text-[#cccccc] border-r border-[#1e1e1e]">
             {/* Explorer Header */}
-            <div className="px-4 py-3 text-xs font-semibold tracking-wider text-gray-500 uppercase bg-[#252526]">
-                Explorer
+            <div className="px-5 py-3 text-[11px] font-medium tracking-wide text-[#bbbbbb] uppercase flex items-center justify-between">
+                <span>PROJECT EXPLORER</span>
+                <span className="text-[#6f6f6f]">...</span>
             </div>
 
-            {/* Project Roots */}
-            <div className="mt-2">
-                <div className="flex items-center gap-1.5 px-3 py-1 text-gray-300 font-bold mb-1">
-                    <svg className="w-4 h-4 text-gray-400 transform rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                    <span>MY_WORK</span>
-                </div>
+            {/* Main Tree */}
+            <div className="flex flex-col mt-2">
+                {/* Root Folder */}
+                <button
+                    onClick={() => setIsPortfolioOpen(!isPortfolioOpen)}
+                    className="flex items-center px-4 py-1 hover:bg-[#2a2d2e] cursor-pointer text-[#bbbbbb] font-bold text-[13px] sticky top-0"
+                >
+                    {isPortfolioOpen ? <ChevronDown className="w-4 h-4 mr-1.5" /> : <ChevronRight className="w-4 h-4 mr-1.5" />}
+                    <span className="truncate">MY_PORTFOLIO</span>
+                </button>
 
-                {/* Simplified File List */}
-                <div className="pl-6">
-                    {projects.map((project) => (
-                        <motion.div
-                            key={project.title}
-                            onClick={() => onSelect(project)}
-                            className={`
-                                flex items-center gap-2 px-3 py-2 rounded-sm cursor-pointer transition-colors mb-1
-                                ${selectedProject.title === project.title ? 'bg-[#37373d] text-white' : 'hover:bg-[#2a2d2e]'}
-                            `}
-                            whileHover={{ x: 2 }}
-                        >
-                            {/* Icon */}
-                            <span className="text-yellow-400 text-xs font-bold">JS</span>
-                            <span className={`${selectedProject.title === project.title ? 'font-medium' : ''}`}>
-                                {project.title.toLowerCase()}.json
-                            </span>
-                        </motion.div>
-                    ))}
+                {isPortfolioOpen && (
+                    <div className="flex flex-col font-sans text-[14px]">
+                        {/* Standard Folders (Decorative) */}
+                        {['.github', 'components', 'styles'].map((folder) => (
+                            <div key={folder} className="flex items-center gap-1.5 px-8 py-1.5 opacity-60 hover:opacity-100 hover:bg-[#2a2d2e] cursor-default transition-opacity">
+                                <ChevronRight className="w-4 h-4 text-[#858585]" />
+                                <Folder className="w-4 h-4 text-[#8b949e]" />
+                                <span className="text-[#8b949e]">{folder}</span>
+                            </div>
+                        ))}
 
-                    {/* decorative files to hint at more content */}
-                    <div className="flex items-center gap-2 px-3 py-2 text-gray-600 cursor-not-allowed opacity-50">
-                        <span className="text-blue-400 text-xs">MD</span>
-                        <span>readme.md</span>
+                        {/* The "Work" Folder (Active) */}
+                        <div className="flex items-center gap-1.5 px-8 py-1.5 hover:bg-[#2a2d2e] cursor-pointer">
+                            <ChevronDown className="w-4 h-4 text-[#cccccc]" />
+                            <Folder className="w-4 h-4 text-[#dcb67a]" />
+                            <span className="text-[#cccccc] font-medium">projects</span>
+                        </div>
+
+                        {/* Project Files */}
+                        <div className="pl-3 border-l border-[#404040] ml-[38px]">
+                            {projects.map((project) => (
+                                <motion.div
+                                    key={project.title}
+                                    onClick={() => onSelect(project)}
+                                    className={`
+                                        group flex items-center gap-2 px-2 py-1.5 cursor-pointer transition-all rounded-sm mb-0.5
+                                        ${selectedProject.title === project.title
+                                            ? 'bg-[#37373d] text-white font-medium'
+                                            : 'text-[#969696] hover:bg-[#2a2d2e] hover:text-[#e0e0e0]'}
+                                    `}
+                                >
+                                    <span className="text-yellow-400 text-xs font-bold shrink-0 w-4 text-center">JS</span>
+                                    <span className="truncate">{project.title.toLowerCase()}.json</span>
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* Extra Files */}
+                        <div className="flex items-center gap-2 px-8 py-1.5 text-[#cccccc] hover:bg-[#2a2d2e] cursor-pointer opacity-70 mt-2">
+                            <FileText className="w-4 h-4 text-blue-400" />
+                            <span>README.md</span>
+                        </div>
+                        <div className="flex items-center gap-2 px-8 py-1.5 text-[#cccccc] hover:bg-[#2a2d2e] cursor-pointer opacity-70">
+                            <FileJson className="w-4 h-4 text-yellow-400" />
+                            <span>package.json</span>
+                        </div>
+
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );

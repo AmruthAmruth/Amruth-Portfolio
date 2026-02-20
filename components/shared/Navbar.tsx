@@ -71,7 +71,7 @@ export default function Navbar() {
                     <div className="hidden md:flex items-center gap-2 pl-2 opacity-80 hover:opacity-100 transition-opacity">
                         <span className="text-blue-500 font-mono text-sm font-bold">~</span>
                         <span className={`font-mono text-sm transition-colors duration-300 ${isScrolled ? 'text-gray-500' : 'text-gray-400'}`}>/</span>
-                        <span className={`font-mono text-sm font-medium transition-colors duration-300 ${isScrolled ? 'text-gray-200' : 'text-gray-800'}`}>portfolio</span>
+                        <span className={`font-mono text-sm font-medium transition-colors duration-300 ${isScrolled ? 'text-gray-200' : 'text-gray-800'}`}>Amruth</span>
                     </div>
 
                     {/* Desktop Navigation - Array Style */}
