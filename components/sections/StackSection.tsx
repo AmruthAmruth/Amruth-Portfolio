@@ -48,7 +48,7 @@ export default function StackSection() {
                 }}
             />
 
-            <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 w-full flex flex-col">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full flex flex-col">
                 <SectionHeader
                     title="Tech Stack"
                     subtitle="Technologies I use to build scalable, modern applications."
@@ -120,8 +120,8 @@ export default function StackSection() {
                                                     key={cat}
                                                     onClick={() => setActiveCategory(cat)}
                                                     className={`w-full flex items-center gap-2 px-3 py-1.5 text-left text-[11px] rounded transition-all ${isActive
-                                                            ? 'bg-[#2d2d2d] text-white'
-                                                            : 'text-[#888] hover:bg-[#262626] hover:text-[#ccc]'
+                                                        ? 'bg-[#2d2d2d] text-white'
+                                                        : 'text-[#888] hover:bg-[#262626] hover:text-[#ccc]'
                                                         }`}
                                                 >
                                                     <span className="text-[10px] font-bold px-1 py-0.5 rounded bg-[#e8692c]/20 text-[#e8692c] shrink-0">GET</span>
