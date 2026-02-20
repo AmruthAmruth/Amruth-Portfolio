@@ -27,38 +27,86 @@ export default function OriginSection() {
                     />
                 </div>
 
-                {/* Terminal Window */}
+                {/* ── GitHub-style Repo Window ── */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="w-full rounded-xl overflow-hidden bg-[#1e1e1e] border border-gray-800 shadow-2xl font-mono relative"
+                    className="w-full rounded-xl overflow-hidden border border-[#30363d] shadow-2xl shadow-black/50 font-mono relative"
                 >
-                    {/* Terminal Toolbar (MacOS Style) */}
-                    <div className="flex items-center px-4 py-3 bg-[#2d2d2d] border-b border-gray-800">
-                        {/* Traffic Lights */}
-                        <div className="flex gap-2 mr-4">
-                            <div className="w-3 h-3 rounded-full bg-[#ff5f56] hover:bg-[#ff5f56]/80 transition-colors shadow-sm" />
-                            <div className="w-3 h-3 rounded-full bg-[#ffbd2e] hover:bg-[#ffbd2e]/80 transition-colors shadow-sm" />
-                            <div className="w-3 h-3 rounded-full bg-[#27c93f] hover:bg-[#27c93f]/80 transition-colors shadow-sm" />
+                    {/* ── macOS traffic lights + repo path ── */}
+                    <div className="flex items-center gap-3 px-4 py-3 bg-[#161b22] border-b border-[#21262d]">
+                        <div className="flex gap-1.5 shrink-0">
+                            <div className="w-3 h-3 rounded-full bg-[#ff5f57] shadow-sm" />
+                            <div className="w-3 h-3 rounded-full bg-[#febc2e] shadow-sm" />
+                            <div className="w-3 h-3 rounded-full bg-[#28c840] shadow-sm" />
                         </div>
-                        {/* Title - Sans Serif for native look */}
-                        <div className="flex-1 text-center text-xs font-sans font-medium text-gray-400 select-none">
-                            amruth@portfolio — -zsh
+                        {/* Repo breadcrumb — centered */}
+                        <div className="flex-1 flex items-center justify-center gap-1.5 text-[13px] select-none">
+                            <span className="text-[#58a6ff] hover:underline cursor-pointer font-semibold">amruth</span>
+                            <span className="text-[#8b949e]">/</span>
+                            <span className="text-[#58a6ff] hover:underline cursor-pointer font-bold">journey</span>
+                            <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded-full border border-[#388bfd]/40 text-[#58a6ff] bg-[#388bfd]/10 font-sans font-medium">Public</span>
                         </div>
-                        <div className="w-14" /> {/* Spacer for centering */}
+                        {/* Filler for balance */}
+                        <div className="w-[72px] hidden sm:block" />
                     </div>
 
-                    {/* Terminal Content */}
-                    <div className="p-4 sm:p-8 text-sm sm:text-base bg-opacity-90 bg-[#1e1e1e]">
-                        {/* Visual Command Input */}
-                        <div className="mb-6 text-gray-300 font-mono">
-                            <span className="text-green-400 mr-2">➜</span>
-                            <span className="text-blue-400 mr-2">~</span>
-                            <span className="typing-effect">git log --stat</span>
-                        </div>
+                    {/* ── Repo meta (stars, watches) ── */}
+                    <div className="bg-[#161b22] border-b border-[#21262d] px-4 sm:px-6 py-2.5 flex items-center gap-4 text-[11px] text-[#8b949e] font-sans flex-wrap">
+                        <span className="flex items-center gap-1 hover:text-[#e6edf3] cursor-pointer">⭐ <strong className="text-[#e6edf3]">4</strong> years in the making</span>
+                        <span className="text-[#21262d]">·</span>
+                        <span className="flex items-center gap-1">🔀 <strong className="text-[#e6edf3]">{gitLogHistory.length}</strong> commits</span>
+                        <span className="text-[#21262d]">·</span>
+                        <span className="flex items-center gap-1">🌿 Branch: <strong className="text-[#3fb950]">main</strong></span>
+                    </div>
 
+                    {/* ── Nav Tabs ── */}
+                    <div className="bg-[#161b22] border-b border-[#30363d] px-4 sm:px-6 flex gap-0 overflow-x-auto no-scrollbar font-sans">
+                        {[
+                            { label: '📄 Code', active: false },
+                            { label: '🕐 Commits', active: true, count: gitLogHistory.length },
+                            { label: '🌿 Branches', active: false, count: 1 },
+                            { label: '🏷️ Tags', active: false, count: 4 },
+                        ].map((tab) => (
+                            <div key={tab.label} className={`flex items-center gap-1.5 px-3 sm:px-4 py-3 text-[12px] font-medium whitespace-nowrap cursor-pointer border-b-2 transition-colors ${tab.active
+                                    ? 'text-[#e6edf3] border-[#f78166]'
+                                    : 'text-[#8b949e] border-transparent hover:text-[#e6edf3]'
+                                }`}>
+                                {tab.label}
+                                {tab.count !== undefined && (
+                                    <span className="bg-[#30363d] text-[#e6edf3] text-[9px] px-1.5 py-0.5 rounded-full font-bold">{tab.count}</span>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* ── Branch + commit range bar ── */}
+                    <div className="bg-[#161b22] border-b border-[#21262d] px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 font-sans flex-wrap">
+                        <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1.5 bg-[#21262d] border border-[#30363d] rounded-md px-3 py-1 text-[12px] text-[#e6edf3] cursor-pointer hover:bg-[#30363d] transition-colors">
+                                <span>🌿</span>
+                                <span className="font-semibold">main</span>
+                                <span className="text-[#8b949e] text-[10px]">▾</span>
+                            </div>
+                            <span className="text-[#8b949e] text-[12px] hidden sm:block">
+                                Showing <strong className="text-[#e6edf3]">{gitLogHistory.length} commits</strong>
+                            </span>
+                        </div>
+                        <span className="font-mono text-[11px] text-[#8b949e]">001a1f..042ff0</span>
+                    </div>
+
+                    {/* ── git log command line ── */}
+                    <div className="bg-[#0d1117] px-4 sm:px-8 py-3 border-b border-[#21262d] flex items-center gap-2 text-[13px]">
+                        <span className="text-[#3fb950]">➜</span>
+                        <span className="text-[#58a6ff]">amruth/journey</span>
+                        <span className="text-[#e6edf3]">git log --stat</span>
+                        <span className="inline-block w-2 h-[14px] bg-[#e6edf3] animate-pulse ml-0.5" />
+                    </div>
+
+                    {/* ── Git log entries ── */}
+                    <div className="p-4 sm:p-8 bg-[#0d1117]">
                         <div className="flex flex-col gap-6">
                             {gitLogHistory.map((commit, index) => (
                                 <GitLogEntry
@@ -67,9 +115,10 @@ export default function OriginSection() {
                                 />
                             ))}
 
-                            {/* Future Commits Indicator */}
-                            <div className="mt-8 pt-4 border-t border-gray-800 text-gray-500 italic animate-pulse font-mono">
-                                &gt; Future commits loading...
+                            {/* Future commit */}
+                            <div className="pt-4 border-t border-[#21262d] flex items-center gap-2 text-[#484f58] text-[12px] italic">
+                                <span className="animate-pulse">▋</span>
+                                <span>Next commit in progress...</span>
                             </div>
                         </div>
                     </div>
