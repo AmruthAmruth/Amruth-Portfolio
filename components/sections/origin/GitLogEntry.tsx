@@ -92,38 +92,43 @@ export default function GitLogEntry({
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         className="overflow-hidden"
                     >
-                        <div className="mt-4 pl-2 border-l-2 border-gray-800/50 ml-1">
-                            {/* 'Code Block' Style Story */}
-                            <div className="font-mono text-sm text-gray-400 bg-gray-900/50 p-3 rounded-md mb-4 border border-gray-800">
-                                <span className="text-yellow-600">{'{'}</span>
-                                <div className="pl-4 py-1 space-y-2">
-                                    {details.map((line, i) => (
-                                        <p key={i} className="text-gray-300">
-                                            {line}
-                                        </p>
+                        <div className="mt-4 ml-1 space-y-4">
+
+                            {/* Story / detail lines */}
+                            <div className="space-y-2">
+                                {details.map((line, i) => (
+                                    <div key={i} className="flex items-start gap-2.5 text-sm text-gray-300">
+                                        <span className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${colorClass.replace('text-', 'bg-')}`} />
+                                        <p className="leading-relaxed">{line}</p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Divider */}
+                            <div className="border-t border-gray-800/60" />
+
+                            {/* Modules + System State row */}
+                            <div className="flex flex-wrap items-center justify-between gap-3">
+                                <div className="flex flex-wrap gap-2">
+                                    {modules.map((mod, i) => (
+                                        <span
+                                            key={i}
+                                            className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border ${color === 'green' ? 'bg-green-900/20 text-green-400 border-green-800/40' :
+                                                    color === 'yellow' ? 'bg-yellow-900/20 text-yellow-400 border-yellow-800/40' :
+                                                        color === 'purple' ? 'bg-purple-900/20 text-purple-400 border-purple-800/40' :
+                                                            'bg-blue-900/20 text-blue-400 border-blue-800/40'
+                                                }`}
+                                        >
+                                            {mod}
+                                        </span>
                                     ))}
                                 </div>
-                                <span className="text-yellow-600">{'}'}</span>
+                                <span className="flex items-center gap-1.5 text-[11px] text-gray-400 bg-gray-800/50 border border-gray-700/50 px-2.5 py-1 rounded-full whitespace-nowrap shrink-0">
+                                    <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${colorClass.replace('text-', 'bg-')}`} />
+                                    {systemState}
+                                </span>
                             </div>
 
-                            {/* Modules & Status */}
-                            <div className="space-y-3 text-sm">
-                                <div>
-                                    <span className="text-blue-400 font-semibold block mb-1">Modules Installed:</span>
-                                    <div className="flex flex-wrap gap-2 text-gray-300">
-                                        {modules.map((mod, i) => (
-                                            <span key={i} className="bg-gray-800 px-2 py-0.5 rounded text-xs border border-gray-700">
-                                                {mod}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                    <span className="text-purple-400 font-semibold">System State:</span>
-                                    <span className="text-gray-200">{systemState}</span>
-                                </div>
-                            </div>
                         </div>
                     </motion.div>
                 )}
