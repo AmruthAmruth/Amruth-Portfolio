@@ -98,10 +98,10 @@ export default function Footer() {
         <footer className="w-full bg-[#050505] border-t border-gray-800 text-gray-400 font-mono select-none relative z-50">
 
             {/* Command Center / Main Dashboard */}
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 border-b border-gray-800">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border-b border-gray-800">
 
                 {/* Column 1: Identity Module */}
-                <div className="p-8 border-b md:border-b-0 md:border-r border-gray-800 flex flex-col justify-between h-56 md:h-72 hover:bg-white/[0.02] transition-colors">
+                <div className="p-6 sm:p-8 border-b sm:border-b md:border-b-0 md:border-r border-gray-800 flex flex-col justify-between hover:bg-white/[0.02] transition-colors">
                     <div>
                         <div className="text-xs text-blue-400 font-bold tracking-widest mb-2">ID_MODULE</div>
                         <h3 className="text-3xl text-white font-bold tracking-tighter mb-1">AMRUTH</h3>
@@ -118,7 +118,7 @@ export default function Footer() {
                 </div>
 
                 {/* Column 2: System Navigation (Interactive CLI) */}
-                <div className="p-8 border-b md:border-b-0 md:border-r border-gray-800 h-56 md:h-72 hover:bg-white/[0.02] transition-colors flex flex-col">
+                <div className="p-6 sm:p-8 border-b sm:border-b md:border-b-0 md:border-r border-gray-800 hover:bg-white/[0.02] transition-colors flex flex-col">
                     <div className="text-xs text-purple-400 font-bold tracking-widest mb-6">SYS_NAVIGATION</div>
 
                     <ul className="space-y-2 mb-6 flex-1">
@@ -154,7 +154,7 @@ export default function Footer() {
                 </div>
 
                 {/* Column 3: External Uplinks */}
-                <div className="p-8 border-b md:border-b-0 md:border-r border-gray-800 h-56 md:h-72 hover:bg-white/[0.02] transition-colors flex flex-col">
+                <div className="p-6 sm:p-8 border-b sm:border-b md:border-b-0 md:border-r border-gray-800 hover:bg-white/[0.02] transition-colors flex flex-col">
                     <div className="text-xs text-yellow-500 font-bold tracking-widest mb-6">EXT_UPLINKS</div>
                     <div className="flex flex-col gap-3">
                         {socialLinks.map((link) => (
@@ -175,7 +175,7 @@ export default function Footer() {
                 </div>
 
                 {/* Column 4: Local Session Info */}
-                <div className="p-8 h-56 md:h-72 hover:bg-white/[0.02] transition-colors flex flex-col justify-between">
+                <div className="p-6 sm:p-8 hover:bg-white/[0.02] transition-colors flex flex-col justify-between">
                     <div className="text-xs text-cyan-500 font-bold tracking-widest mb-2">SESSION_DATA</div>
 
                     <div className="font-mono">
@@ -201,7 +201,7 @@ export default function Footer() {
             </div>
 
             {/* Bottom System Status Bar */}
-            <div className="w-full bg-black py-2.5 text-[10px] border-t border-gray-800 flex flex-nowrap overflow-x-auto md:overflow-hidden items-center justify-between px-4 md:px-8 gap-4 no-scrollbar">
+            <div className="w-full bg-black py-2.5 text-[10px] border-t border-gray-800 flex flex-wrap overflow-hidden items-center justify-between px-4 md:px-8 gap-2">
 
                 {/* Left: Quick Status */}
                 <div className="flex items-center gap-6 whitespace-nowrap">

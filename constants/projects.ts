@@ -31,15 +31,15 @@ export const projects: Project[] = [
     },
     {
         title: 'Speedo',
-        impact: 'Real-time vehicle tracking system with intelligent ride analytics and map visualization.',
-        problem: 'Fleet managers needed comprehensive vehicle monitoring beyond basic GPS — including speed analysis, stop detection, and detailed ride insights.',
+        impact: 'Real-time vehicle tracking system with speed intelligence, stop detection, and detailed trip analytics.',
+        problem: 'Fleet managers required more than basic GPS tracking. Speedo provides real-time vehicle monitoring with speed intelligence, stop detection, and detailed trip analytics — enabling data-driven fleet optimization.',
         features: [
-            'Live vehicle tracking with interactive map visualization',
-            'Intelligent speed detection: ideal, overspeed, and stop zones',
-            'Comprehensive ride monitoring with trip history and analytics',
-            'Real-time alerts and notifications for critical events',
+            'Real-time vehicle tracking using WebSockets',
+            'Speed classification: ideal, overspeed, and stop detection',
+            'Trip history with ride analytics dashboard',
+            'Interactive map visualization for live monitoring',
         ],
-        outcome: 'A powerful tracking solution providing actionable insights for fleet optimization.',
+        outcome: 'Lack of actionable insights in traditional tracking systems — solved with real-time data and fleet analytics.',
         techStack: [
             { name: 'MongoDB', icon: 'M' },
             { name: 'Express', icon: 'E' },

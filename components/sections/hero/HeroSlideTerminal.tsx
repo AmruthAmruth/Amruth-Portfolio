@@ -18,13 +18,13 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
             {/* Animated Floating Blobs - Kept consistent */}
             <FloatingBlobs colors={blobColors.hero} variant="hero" />
 
-            <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center w-full h-full">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid sm:grid-cols-2 gap-8 lg:gap-20 items-center w-full h-full">
 
                 {/* Left Column: Text & CTA */}
-                <div className="text-center lg:text-left order-2 lg:order-1 flex flex-col items-center lg:items-start justify-center h-full">
+                <div className="text-center sm:text-left order-2 sm:order-1 flex flex-col items-center sm:items-start justify-center h-full pt-16 sm:pt-0">
                     {/* Headline */}
                     <motion.h1
-                        className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-6 leading-tight"
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-4 sm:mb-6 leading-tight"
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
@@ -54,7 +54,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
 
                     {/* CTA & Socials Row */}
                     <motion.div
-                        className="flex flex-col sm:flex-row items-center gap-6 mb-12"
+                        className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-8 sm:mb-12"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.8 }}
@@ -106,9 +106,9 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                     </motion.div>
                 </div>
 
-                {/* Right Column: Terminal */}
+                {/* Right Column: Terminal — hidden on xs, shown on sm+ */}
                 <motion.div
-                    className="order-1 lg:order-2 w-full max-w-lg mx-auto lg:max-w-none perspective-1000 flex items-center justify-center h-full"
+                    className="order-1 sm:order-2 hidden sm:flex w-full max-w-sm sm:max-w-none perspective-1000 items-center justify-center h-full"
                     initial={{ opacity: 0, x: 50, rotateY: -10 }}
                     animate={{ opacity: 1, x: 0, rotateY: -5 }}
                     transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}

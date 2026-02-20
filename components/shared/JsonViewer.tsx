@@ -2,115 +2,161 @@
 
 import { motion } from 'framer-motion';
 import { Project } from '@/types';
-import TypingText from './TypingText';
+import { Globe, Github, CheckCircle, Clock } from 'lucide-react';
 
 interface JsonViewerProps {
     project: Project;
 }
 
 export default function JsonViewer({ project }: JsonViewerProps) {
+    const isLive = project.status === 'Live';
+
     return (
         <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             key={project.title}
-            className="w-full h-full p-8 md:p-12 overflow-auto font-mono text-sm text-gray-300 flex flex-col justify-center"
+            className="w-full h-full overflow-auto text-gray-300 flex flex-col"
         >
-            <div className="flex gap-2 mb-6 text-xs text-gray-500 border-b border-gray-700 pb-2 max-w-2xl mx-auto w-full">
-                <span className="text-yellow-500">JSON</span>
-                <span>/</span>
-                <span>projects</span>
-                <span>/</span>
-                <span className="text-blue-400">{project.title.toLowerCase()}.json</span>
-            </div>
-
-            <div className="font-mono text-sm leading-relaxed max-w-2xl mx-auto w-full">
-                <span className="text-gray-500 italic block mb-2">
-                    {`/**`}
-                    <br />
-                    {` * Project Details: ${project.title}`}
-                    <br />
-                    {` * Status: ${project.status === 'Live' ? 'Production Ready' : 'In Development'}`}
-                    <br />
-                    {` */`}
-                </span>
-
-                <span className="text-yellow-500">{"{"}</span>
-
-                <div className="pl-6 space-y-4 pt-2">
-                    {/* Project Name */}
-                    <div>
-                        <span className="text-gray-500 italic inline-block mb-0.5">// The name of the project</span>
-                        <br />
-                        <span className="text-blue-400">"project_name"</span>: <span className="text-orange-400">"<TypingText text={project.title} speed={30} delay={100} cursor={false} />"</span>,
-                    </div>
-
-                    {/* Links Object */}
-                    <div>
-                        <span className="text-gray-500 italic inline-block mb-0.5">// Clickable links to view the live app or code</span>
-                        <br />
-                        <span className="text-blue-400">"links"</span>: <span className="text-yellow-500">{"{"}</span>
-                        <div className="pl-6">
-                            <div>
-                                <span className="text-blue-400">"live_demo"</span>: <span className="text-green-400 underline cursor-pointer hover:text-green-300 transition-colors"><a href={project.liveUrl} target="_blank" rel="noreferrer">"{project.liveUrl}"</a></span>,
-                            </div>
-                            <div>
-                                <span className="text-blue-400">"github_repo"</span>: <span className="text-green-400 underline cursor-pointer hover:text-green-300 transition-colors"><a href={project.githubUrl} target="_blank" rel="noreferrer">"{project.githubUrl}"</a></span>
-                            </div>
-                        </div>
-                        <span className="text-yellow-500">{"}"}</span>,
-                    </div>
-
-                    {/* Description */}
-                    <div className="flex flex-col">
-                        <span className="text-gray-500 italic inline-block mb-0.5">// What problem does this solve?</span>
-                        <div className="flex items-start">
-                            <span className="text-blue-400 whitespace-nowrap">"description"</span>:
-                            <span className="text-orange-400 ml-2 whitespace-pre-wrap leading-relaxed">
-                                "<TypingText text={`${project.problem} ${project.outcome}`} speed={10} delay={400} cursor={false} />"
-                            </span>,
-                        </div>
-                    </div>
-
-                    {/* Features Array (New) */}
-                    <div>
-                        <span className="text-gray-500 italic inline-block mb-0.5">// Key capabilities and features</span>
-                        <br />
-                        <span className="text-blue-400">"key_features"</span>: <span className="text-purple-500">{"["}</span>
-                        <div className="pl-6">
-                            {project.features.slice(0, 3).map((feature, i) => (
-                                <div key={i}>
-                                    <span className="text-orange-300">"<TypingText text={feature} speed={20} delay={1200 + (i * 200)} cursor={false} />"</span>{i < 2 ? ',' : ''}
-                                </div>
-                            ))}
-                        </div>
-                        <span className="text-purple-500">{" ]"}</span>,
-                    </div>
-
-                    {/* Status */}
-                    <div>
-                        <span className="text-gray-500 italic inline-block mb-0.5">// Current development status</span>
-                        <br />
-                        <span className="text-blue-400">"status"</span>: <span className="text-green-400">"<TypingText text={project.status} speed={30} delay={1800} cursor={false} />"</span>,
-                    </div>
-
-                    {/* Tech Stack Array */}
-                    <div>
-                        <span className="text-gray-500 italic inline-block mb-0.5">// Technologies used to build this</span>
-                        <br />
-                        <span className="text-blue-400">"tech_stack"</span>: <span className="text-purple-500">{"["}</span>
-                        <div className="pl-6 flex flex-wrap gap-2">
-                            {project.techStack.map((tech, i) => (
-                                <span key={tech.name}>
-                                    <span className="text-yellow-300">"{tech.name}"</span>{i < project.techStack.length - 1 ? ',' : ''}
-                                </span>
-                            ))}
-                        </div>
-                        <span className="text-purple-500">{" ]"}</span>
+            {/* ── Top Banner ── */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 px-5 sm:px-8 pt-5 pb-4 border-b border-[#2b2b2b] bg-[#1e1e1e] shrink-0">
+                <div className="flex-1">
+                    <p className="text-[10px] text-[#5a5a5a] uppercase tracking-widest font-semibold mb-0.5">
+                        Project Details
+                    </p>
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-white text-xl font-bold">{project.title}</h3>
+                        <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${isLive
+                                ? 'bg-green-900/30 text-green-400 border border-green-800/50'
+                                : 'bg-yellow-900/30 text-yellow-400 border border-yellow-800/50'
+                            }`}>
+                            {isLive
+                                ? <CheckCircle className="w-2.5 h-2.5" />
+                                : <Clock className="w-2.5 h-2.5" />}
+                            {isLive ? 'Live' : 'In Development'}
+                        </span>
                     </div>
                 </div>
 
-                <span className="text-yellow-500 mt-2 block">{"}"}</span>
+                {/* Action Buttons */}
+                <div className="flex items-center gap-2 shrink-0">
+                    {project.liveUrl && (
+                        <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-blue-600 hover:bg-blue-500 transition-colors text-white text-[11px] font-semibold"
+                        >
+                            <Globe className="w-3 h-3" />
+                            Live Demo
+                        </a>
+                    )}
+                    {project.githubUrl && (
+                        <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#2d2d2d] hover:bg-[#3a3a3a] transition-colors text-white text-[11px] font-semibold border border-[#444]"
+                        >
+                            <Github className="w-3 h-3" />
+                            Source Code
+                        </a>
+                    )}
+                </div>
+            </div>
+
+            {/* ── Content Area ── */}
+            <div className="flex-1 overflow-auto px-5 sm:px-8 py-6 space-y-6">
+
+                {/* About */}
+                <div>
+                    <p className="text-[10px] uppercase tracking-widest text-[#5a8a6a] font-bold mb-2">
+                        About this project
+                    </p>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                        {project.problem}
+                    </p>
+                </div>
+
+                <div className="border-t border-[#2b2b2b]" />
+
+                {/* Key Highlights */}
+                <div>
+                    <p className="text-[10px] uppercase tracking-widest text-[#6a6aaa] font-bold mb-3">
+                        Key Features
+                    </p>
+                    <ul className="space-y-2">
+                        {project.features.map((feature, i) => (
+                            <motion.li
+                                key={i}
+                                initial={{ opacity: 0, x: -8 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.1 + i * 0.07 }}
+                                className="flex items-start gap-2.5 text-sm text-gray-300"
+                            >
+                                <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                                {feature}
+                            </motion.li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div className="border-t border-[#2b2b2b]" />
+
+                {/* Tech Stack */}
+                <div>
+                    <p className="text-[10px] uppercase tracking-widest text-[#8a7a3a] font-bold mb-3">
+                        Built With
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                        {project.techStack.map((tech) => (
+                            <span
+                                key={tech.name}
+                                className="px-3 py-1 rounded-full bg-[#252525] border border-[#3a3a3a] text-yellow-300 text-xs font-semibold hover:border-yellow-600/50 transition-colors"
+                            >
+                                {tech.name}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="border-t border-[#2b2b2b]" />
+
+                {/* Links */}
+                <div>
+                    <p className="text-[10px] uppercase tracking-widest text-[#5a7a8a] font-bold mb-3">
+                        Links
+                    </p>
+                    <div className="space-y-2">
+                        {project.liveUrl && (
+                            <div className="flex items-center gap-3">
+                                <span className="text-[11px] text-gray-500 w-24 shrink-0">Live App</span>
+                                <a
+                                    href={project.liveUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="text-sm text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors truncate"
+                                >
+                                    {project.liveUrl}
+                                </a>
+                            </div>
+                        )}
+                        {project.githubUrl && (
+                            <div className="flex items-center gap-3">
+                                <span className="text-[11px] text-gray-500 w-24 shrink-0">Source Code</span>
+                                <a
+                                    href={project.githubUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="text-sm text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors truncate"
+                                >
+                                    {project.githubUrl}
+                                </a>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
             </div>
         </motion.div>
     );

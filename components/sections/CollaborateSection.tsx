@@ -36,7 +36,7 @@ export default function CollaborateSection() {
             <SectionDivider position="top" color="#f8fafc" />
 
             {/* Main Content */}
-            <div ref={sectionRef} className="relative z-10 max-w-4xl mx-auto px-6 w-full">
+            <div ref={sectionRef} className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full">
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
@@ -55,7 +55,7 @@ export default function CollaborateSection() {
                             NET_PROTOCOL: LISTENING
                         </motion.div>
 
-                        <h2 className="text-4xl md:text-6xl font-bold text-gray-900 tracking-tighter">
+                        <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-900 tracking-tighter break-words">
                             INITIALIZE <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">CONNECTION</span>
                         </h2>
 
