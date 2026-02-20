@@ -1,195 +1,321 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { skills, categories } from '@/constants/skills';
 import { accentGradients } from '@/constants/theme';
 import SectionHeader from '@/components/shared/SectionHeader';
 import SectionDivider from '@/components/shared/SectionDivider';
-import { Cpu, ChevronRight, Terminal, Database, Globe, Layers, Shield, Wrench, Cloud } from 'lucide-react';
+import { Terminal, Database, Globe, Layers, Shield, Wrench, Cloud, Cpu, ChevronDown, ChevronRight, Send, Clock } from 'lucide-react';
 
-// Map categories to icons
-const categoryIcons: Record<string, any> = {
-    'Languages': Terminal,
-    'Frontend': Globe,
-    'Backend': ServerIcon,
-    'Databases': Database,
-    'Real-time': WifiIcon,
-    'Security': Shield,
-    'DevOps & Cloud': Cloud,
-    'Tools': Wrench
+// Category metadata
+const categoryMeta: Record<string, { icon: any; accent: string; endpoint: string; description: string }> = {
+    'Languages': { icon: Terminal, accent: '#f0c04a', endpoint: '/skills/languages', description: 'Core programming languages I write in daily' },
+    'Frontend': { icon: Globe, accent: '#61dafb', endpoint: '/skills/frontend', description: 'UI frameworks, libraries & styling tools' },
+    'Backend': { icon: Cpu, accent: '#68d391', endpoint: '/skills/backend', description: 'Server-side runtimes, frameworks & architecture patterns' },
+    'Databases': { icon: Database, accent: '#4299e1', endpoint: '/skills/databases', description: 'Database systems I design and query' },
+    'Real-time': { icon: Layers, accent: '#9f7aea', endpoint: '/skills/realtime', description: 'Tech for live data, sockets & event-driven systems' },
+    'Security': { icon: Shield, accent: '#fc8181', endpoint: '/skills/security', description: 'Auth, access control & data protection practices' },
+    'DevOps & Cloud': { icon: Cloud, accent: '#f6ad55', endpoint: '/skills/devops', description: 'Cloud platforms, deployment pipelines & infra tools' },
+    'Tools': { icon: Wrench, accent: '#76e4f7', endpoint: '/skills/tools', description: 'Workflow tools, project management & productivity' },
 };
-
-// Custom Icons wrapper to avoid build errors if lucide icons are missing
-function ServerIcon(props: any) { return <Cpu {...props} /> } // Fallback/Alias
-function WifiIcon(props: any) { return <Layers {...props} /> } // Fallback/Alias
 
 export default function StackSection() {
     const [activeCategory, setActiveCategory] = useState<string>(categories[0]);
-    const [isMobile, setIsMobile] = useState(false);
+    const [openSections, setOpenSections] = useState<Set<string>>(new Set(['My Skills']));
+    const [sentAt] = useState(() => new Date().toLocaleTimeString('en-US', { hour12: false }));
 
-    // Handle resize for responsive layout changes
-    useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
-    }, []);
-
+    const meta = categoryMeta[activeCategory] ?? { icon: Layers, accent: '#a0aec0', endpoint: '/skills', description: '' };
+    const ActiveIcon = meta.icon;
     const activeSkills = skills.filter(s => s.category === activeCategory);
 
-    return (
-        <section id="stack" className={`relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-slate-50/50 py-24 md:py-32`}>
+    const toggleSection = (name: string) => {
+        setOpenSections(prev => {
+            const next = new Set(prev);
+            if (next.has(name)) next.delete(name); else next.add(name);
+            return next;
+        });
+    };
 
-            {/* Background Grid */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+    return (
+        <section id="stack" className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-slate-50/50 py-16 md:py-24">
+
+            {/* Background subtle grid */}
+            <div className="absolute inset-0 opacity-[0.025] pointer-events-none"
                 style={{
                     backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
                     backgroundSize: '40px 40px'
                 }}
             />
 
-            <div className="relative z-10 max-w-7xl mx-auto px-4 w-full h-full flex flex-col">
+            <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 w-full flex flex-col">
                 <SectionHeader
-                    title="Skill Dependency Graph"
-                    subtitle="Interactive Technical Proficiency Tree"
+                    title="Tech Stack"
+                    subtitle="Technologies I use to build scalable, modern applications."
                     gradient={accentGradients.blueCyan}
-                    className="mb-16"
+                    className="mb-10"
                 />
 
-                {/* Tree Container */}
-                <div className="flex flex-col lg:flex-row items-stretch justify-center gap-8 lg:gap-0 w-full min-h-[500px]">
+                {/* ── Postman Window ── */}
+                <div className="w-full rounded-xl overflow-hidden border border-[#2d2d2d] shadow-2xl flex flex-col bg-[#242424]" style={{ minHeight: '560px', maxHeight: '700px' }}>
 
-                    {/* Desktop: Connected Lines Logic would go here (SVG Overlay) - 
-                        For simplicity and robustness in this iteration, we use CSS borders/connectors 
-                        relative to the Flex layout which mimic the tree structure perfectly without 
-                        fragile absolute coordinate calculations.
-                    */}
-
-                    {/* COLUMN 1: ROOT */}
-                    <div className="flex flex-col justify-center items-center lg:w-1/6 shrink-0 relative">
-                        <div className="hidden lg:block absolute right-0 top-1/2 w-8 h-0.5 bg-slate-300 -translate-y-1/2 z-0" />
-
-                        <motion.div
-                            initial={{ scale: 0 }}
-                            whileInView={{ scale: 1 }}
-                            className="z-10 w-20 h-20 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-xl shadow-slate-900/20 border-2 border-slate-700 relative group cursor-default"
-                        >
-                            <Terminal className="w-8 h-8" />
-                            <div className="absolute -bottom-8 whitespace-nowrap text-xs font-mono font-bold text-slate-500 uppercase tracking-widest">
-                                ROOT: ME
-                            </div>
-                        </motion.div>
-                    </div>
-
-                    {/* COLUMN 2: CATEGORIES (BRANCHES) */}
-                    <div className="flex flex-col justify-center items-center lg:w-1/4 shrink-0 relative">
-                        {/* Vertical Trunk Line (Desktop) */}
-                        <div className="hidden lg:block absolute left-0 top-8 bottom-8 w-0.5 bg-slate-200 -translate-x-[1px]" />
-
-                        <div className="flex flex-row lg:flex-col gap-3 lg:gap-2 overflow-x-auto lg:overflow-visible w-full py-4 px-2 lg:p-0 no-scrollbar items-start lg:items-center">
-                            {categories.map((cat, idx) => {
-                                const Icon = categoryIcons[cat] || Layers;
-                                const isActive = activeCategory === cat;
-
-                                return (
-                                    <button
-                                        key={cat}
-                                        onClick={() => setActiveCategory(cat)}
-                                        className={`relative group flex items-center gap-3 w-full p-3 rounded-lg text-left transition-all duration-300 border
-                                            ${isActive
-                                                ? 'bg-white border-blue-200 shadow-md shadow-blue-100/50 -translate-y-0.5 lg:translate-x-2'
-                                                : 'bg-white/50 border-transparent hover:bg-white hover:border-slate-200 text-slate-500 opacity-70 hover:opacity-100'
-                                            }`}
-                                    >
-                                        {/* Connector Line to Root (Desktop) */}
-                                        <div className={`hidden lg:block absolute right-full top-1/2 w-8 h-0.5 -mr-0.5 transition-colors duration-300 ${isActive ? 'bg-blue-400' : 'bg-transparent group-hover:bg-slate-200'}`} />
-
-                                        {/* Connector Line to Skills (Desktop) */}
-                                        {isActive && (
-                                            <div className="hidden lg:block absolute left-full top-1/2 w-8 h-0.5 bg-blue-400 -ml-0.5 z-20" />
-                                        )}
-
-                                        <div className={`p-2 rounded-md ${isActive ? 'bg-blue-50 text-blue-600' : 'bg-slate-100 text-slate-400'}`}>
-                                            <Icon className="w-4 h-4" />
-                                        </div>
-                                        <span className={`text-sm font-semibold truncate ${isActive ? 'text-slate-800' : 'text-slate-500'}`}>
-                                            {cat}
-                                        </span>
-                                        {isActive && <ChevronRight className="w-4 h-4 ml-auto text-blue-400 hidden lg:block" />}
-                                    </button>
-                                );
-                            })}
+                    {/* ── Titlebar ── */}
+                    <div className="h-9 bg-[#1a1a1a] flex items-center px-4 gap-3 shrink-0 border-b border-[#333]">
+                        <div className="flex gap-1.5">
+                            <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+                            <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
+                            <div className="w-3 h-3 rounded-full bg-[#28c840]" />
+                        </div>
+                        <div className="flex-1 flex justify-center">
+                            <span className="text-[#888] text-[11px] font-medium tracking-wide">Postman — amruth.dev API</span>
                         </div>
                     </div>
 
-                    {/* COLUMN 3: SKILLS (LEAVES) */}
-                    <div className="flex flex-col justify-center lg:w-1/2 relative min-h-[300px] lg:pl-12">
-                        {/* Desktop Vertical Trunk for Skills */}
-                        <div className="hidden lg:block absolute left-0 top-12 bottom-12 w-0.5 bg-blue-100/50" />
+                    {/* ── Top Nav Bar (Postman-style tabs) ── */}
+                    <div className="h-8 bg-[#1f1f1f] flex items-center px-4 gap-6 text-[11px] text-[#888] border-b border-[#333] shrink-0 font-medium select-none">
+                        {['Collections', 'Environments', 'History'].map((tab, i) => (
+                            <span key={tab} className={i === 0 ? 'text-[#e8692c] border-b-2 border-[#e8692c] pb-0.5' : 'hover:text-[#ccc] cursor-pointer'}>
+                                {tab}
+                            </span>
+                        ))}
+                    </div>
 
-                        <motion.div
-                            key={activeCategory}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3, staggerChildren: 0.05 }}
-                            className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full"
-                        >
-                            {activeSkills.map((skill, index) => {
-                                const skillColor = skill.color.split(' ')[1].replace('to-', ''); // Extract main color approximation
+                    {/* ── Main Body ── */}
+                    <div className="flex flex-1 overflow-hidden">
 
-                                return (
+                        {/* ── Left Sidebar: Collections ── */}
+                        <div className="w-[200px] sm:w-[220px] shrink-0 bg-[#1f1f1f] border-r border-[#333] flex flex-col overflow-y-auto">
+
+                            {/* Search bar */}
+                            <div className="px-3 py-2.5 border-b border-[#2d2d2d]">
+                                <div className="bg-[#2a2a2a] rounded px-2.5 py-1.5 text-[11px] text-[#666] flex items-center gap-1.5">
+                                    <span>🔍</span>
+                                    <span>Search</span>
+                                </div>
+                            </div>
+
+                            {/* Collection: My Skills */}
+                            <div className="flex-1 py-1">
+                                <button
+                                    onClick={() => toggleSection('My Skills')}
+                                    className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-[#e8692c] font-bold hover:bg-[#2a2a2a] transition-colors"
+                                >
+                                    {openSections.has('My Skills')
+                                        ? <ChevronDown className="w-3 h-3 shrink-0" />
+                                        : <ChevronRight className="w-3 h-3 shrink-0" />}
+                                    <span>📁</span>
+                                    <span className="truncate">My Skills</span>
+                                </button>
+
+                                {openSections.has('My Skills') && (
+                                    <div className="pl-2">
+                                        {categories.map((cat) => {
+                                            const m = categoryMeta[cat] ?? { icon: Layers, accent: '#a0aec0', endpoint: '/skills' };
+                                            const CatIcon = m.icon;
+                                            const isActive = activeCategory === cat;
+                                            const count = skills.filter(s => s.category === cat).length;
+
+                                            return (
+                                                <button
+                                                    key={cat}
+                                                    onClick={() => setActiveCategory(cat)}
+                                                    className={`w-full flex items-center gap-2 px-3 py-1.5 text-left text-[11px] rounded transition-all ${isActive
+                                                            ? 'bg-[#2d2d2d] text-white'
+                                                            : 'text-[#888] hover:bg-[#262626] hover:text-[#ccc]'
+                                                        }`}
+                                                >
+                                                    <span className="text-[10px] font-bold px-1 py-0.5 rounded bg-[#e8692c]/20 text-[#e8692c] shrink-0">GET</span>
+                                                    <CatIcon className="w-3 h-3 shrink-0" style={{ color: m.accent }} />
+                                                    <span className="truncate flex-1">{cat}</span>
+                                                    <span className="text-[#444] text-[10px] tabular-nums shrink-0">{count}</span>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Environment indicator */}
+                            <div className="px-3 py-2.5 border-t border-[#2d2d2d]">
+                                <div className="flex items-center gap-1.5">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                                    <span className="text-[10px] text-[#666]">Production</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* ── Right Panel: Request + Response ── */}
+                        <div className="flex-1 flex flex-col overflow-hidden min-w-0 bg-[#242424]">
+
+                            {/* Request Bar */}
+                            <div className="px-4 py-3 border-b border-[#333] shrink-0">
+                                <div className="flex items-center gap-2">
+                                    {/* GET badge */}
+                                    <div className="shrink-0 px-2.5 py-1.5 bg-[#2d2d2d] rounded text-[#e8692c] text-[11px] font-bold border border-[#3d3d3d]">
+                                        GET
+                                    </div>
+
+                                    {/* URL */}
+                                    <div className="flex-1 flex items-center bg-[#1a1a1a] border border-[#3a3a3a] rounded px-3 py-1.5 font-mono text-[12px] overflow-x-auto no-scrollbar">
+                                        <span className="text-[#666] shrink-0">https://</span>
+                                        <span className="text-[#e8692c] shrink-0">amruth.dev</span>
+                                        <span className="text-[#ccc]">{meta.endpoint}</span>
+                                    </div>
+
+                                    {/* Send button */}
+                                    <button className="shrink-0 flex items-center gap-2 px-4 py-1.5 bg-[#e8692c] hover:bg-[#d4601e] text-white rounded text-[12px] font-semibold transition-colors">
+                                        <Send className="w-3 h-3" />
+                                        Send
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Tabs (Params / Headers / Body) */}
+                            <div className="px-4 py-0 border-b border-[#333] flex gap-4 text-[11px] text-[#666] font-medium shrink-0">
+                                {['Params', 'Headers', 'Body', 'Pre-req'].map((tab, i) => (
+                                    <span key={tab} className={`py-2 cursor-pointer transition-colors ${i === 2 ? 'text-[#e8692c] border-b-2 border-[#e8692c] -mb-px' : 'hover:text-[#aaa]'}`}>
+                                        {tab}
+                                    </span>
+                                ))}
+                            </div>
+
+                            {/* Response Area */}
+                            <div className="flex-1 flex flex-col overflow-hidden">
+                                {/* Response Status Bar */}
+                                <div className="px-4 py-2 border-b border-[#2d2d2d] flex items-center gap-4 text-[11px] shrink-0">
+                                    <span className="flex items-center gap-1.5">
+                                        <span className="w-2 h-2 rounded-full bg-green-500" />
+                                        <span className="text-green-400 font-bold">200 OK</span>
+                                    </span>
+                                    <span className="text-[#555]">·</span>
+                                    <span className="text-[#666] flex items-center gap-1">
+                                        <Clock className="w-3 h-3" />{' '}
+                                        <span className="tabular-nums">12ms</span>
+                                    </span>
+                                    <span className="text-[#555]">·</span>
+                                    <span className="text-[#666]">{activeSkills.length} items</span>
+                                    <span className="ml-auto text-[#555]">Body · {sentAt}</span>
+                                </div>
+
+                                {/* Response Tabs */}
+                                <div className="px-4 flex gap-3 text-[11px] text-[#666] border-b border-[#2d2d2d] shrink-0">
+                                    {['Pretty', 'Raw', 'Preview'].map((t, i) => (
+                                        <span key={t} className={`py-1.5 ${i === 0 ? 'text-[#ccc] border-b border-[#ccc] -mb-px' : 'hover:text-[#aaa] cursor-pointer'}`}>{t}</span>
+                                    ))}
+                                    <span className="ml-auto py-1.5 text-[#666]">JSON</span>
+                                </div>
+
+                                {/* JSON Response Body */}
+                                <AnimatePresence mode="wait">
                                     <motion.div
-                                        key={skill.name}
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        transition={{ delay: index * 0.05 }}
-                                        className="relative group bg-white p-4 rounded-xl border border-slate-100 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 flex items-center gap-4 overflow-hidden"
+                                        key={activeCategory}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="flex-1 overflow-auto"
                                     >
-                                        {/* Connector Line (Desktop) */}
-                                        <div className="hidden lg:block absolute right-full top-1/2 w-12 h-0.5 bg-blue-100 -mr-4 group-hover:bg-blue-300 transition-colors" />
+                                        {/* Line numbers + content */}
+                                        <div className="flex h-full">
+                                            {/* Line numbers */}
+                                            <div className="shrink-0 select-none text-[11px] font-mono text-[#444] text-right px-3 pt-4 leading-[22px] hidden sm:block min-w-[36px]">
+                                                {Array.from({ length: activeSkills.length + 12 }, (_, i) => (
+                                                    <div key={i}>{i + 1}</div>
+                                                ))}
+                                            </div>
 
-                                        {/* Node Point */}
-                                        <div className="hidden lg:block absolute -left-[5px] top-1/2 -mt-[3px] w-1.5 h-1.5 rounded-full bg-blue-200 group-hover:bg-blue-500 transition-colors" />
+                                            {/* JSON Content */}
+                                            <div className="flex-1 p-4 font-mono text-[12px] sm:text-[13px] leading-[22px] overflow-x-auto">
+                                                <span className="text-[#ffd700]">{'{'}</span>
+                                                <div className="pl-5 space-y-0">
+                                                    {/* category field */}
+                                                    <div>
+                                                        <span className="text-[#9cdcfe]">&quot;category&quot;</span>
+                                                        <span className="text-gray-500">: </span>
+                                                        <span className="text-[#ce9178]">&quot;{activeCategory}&quot;</span>
+                                                        <span className="text-gray-600">,</span>
+                                                    </div>
 
-                                        {/* Skill Content */}
-                                        <div className={`w-2 h-12 rounded-full bg-gradient-to-b ${skill.color} opacity-80`} />
+                                                    {/* description */}
+                                                    <div>
+                                                        <span className="text-[#9cdcfe]">&quot;description&quot;</span>
+                                                        <span className="text-gray-500">: </span>
+                                                        <span className="text-[#ce9178]">&quot;{meta.description}&quot;</span>
+                                                        <span className="text-gray-600">,</span>
+                                                    </div>
 
-                                        <div className="flex-1">
-                                            <h4 className="font-bold text-slate-800 text-sm">{skill.name}</h4>
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <span className="text-[10px] uppercase font-mono text-slate-400 bg-slate-50 px-1.5 py-0.5 rounded">
-                                                    NODE_ID: {index + 1}
-                                                </span>
+                                                    {/* total */}
+                                                    <div>
+                                                        <span className="text-[#9cdcfe]">&quot;total_skills&quot;</span>
+                                                        <span className="text-gray-500">: </span>
+                                                        <span className="text-[#b5cea8]">{activeSkills.length}</span>
+                                                        <span className="text-gray-600">,</span>
+                                                    </div>
+
+                                                    {/* proficiency */}
+                                                    <div>
+                                                        <span className="text-[#9cdcfe]">&quot;proficiency&quot;</span>
+                                                        <span className="text-gray-500">: </span>
+                                                        <span className="text-[#ce9178]">&quot;Production-ready&quot;</span>
+                                                        <span className="text-gray-600">,</span>
+                                                    </div>
+
+                                                    {/* skills array */}
+                                                    <div className="mt-1">
+                                                        <span className="text-[#9cdcfe]">&quot;skills&quot;</span>
+                                                        <span className="text-gray-500">: </span>
+                                                        <span className="text-[#ffd700]">{'['}</span>
+                                                    </div>
+
+                                                    <div className="pl-5">
+                                                        {activeSkills.map((skill, i) => (
+                                                            <motion.div
+                                                                key={skill.name}
+                                                                initial={{ opacity: 0, x: -6 }}
+                                                                animate={{ opacity: 1, x: 0 }}
+                                                                transition={{ delay: i * 0.035 }}
+                                                                className="flex items-center gap-2 group"
+                                                            >
+                                                                {/* Accent color dot */}
+                                                                <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-b ${skill.color} shrink-0 opacity-90 group-hover:scale-125 transition-transform`} />
+                                                                <span className="text-[#ce9178]">
+                                                                    &quot;{skill.name}&quot;
+                                                                </span>
+                                                                {i < activeSkills.length - 1 && (
+                                                                    <span className="text-gray-600">,</span>
+                                                                )}
+                                                            </motion.div>
+                                                        ))}
+                                                    </div>
+
+                                                    <div>
+                                                        <span className="text-[#ffd700]">{']'}</span>
+                                                    </div>
+                                                </div>
+                                                <span className="text-[#ffd700]">{'}'}</span>
                                             </div>
                                         </div>
-
-                                        {/* Hover Tech Effect */}
-                                        <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <div className="w-1.5 h-1.5 bg-green-400 rounded-full shadow-[0_0_8px_rgba(74,222,128,0.5)] animate-pulse" />
-                                        </div>
                                     </motion.div>
-                                );
-                            })}
-                        </motion.div>
+                                </AnimatePresence>
+                            </div>
+                        </div>
                     </div>
 
-                </div>
-
-                {/* Tech Footer */}
-                <div className="mt-16 flex justify-center w-full">
-                    <div className="flex items-center gap-4 text-xs font-mono text-slate-400 border border-slate-200 px-4 py-2 rounded-full bg-white/50">
-                        <span className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 bg-slate-800 rounded-full animate-pulse" />
-                            ROOT_ACCESS: GRANTED
-                        </span>
-                        <span className="text-slate-300">|</span>
-                        <span>NODES_LOADED: {skills.length}</span>
-                        <span className="text-slate-300">|</span>
-                        <span>TREE_DEPTH: 3</span>
+                    {/* ── Bottom Status Bar (Postman-style) ── */}
+                    <div className="h-6 bg-[#1a1a1a] border-t border-[#333] flex items-center justify-between px-4 text-[10px] text-[#555] font-mono shrink-0 select-none">
+                        <div className="flex items-center gap-4">
+                            <span className="flex items-center gap-1">
+                                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                                Connected
+                            </span>
+                            <span>amruth.dev API v1</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <span>{skills.length} total skills</span>
+                            <span>UTF-8</span>
+                        </div>
                     </div>
                 </div>
-
             </div>
 
             <SectionDivider position="bottom" color="#fff" />
