@@ -38,6 +38,6 @@ export const contactEmail = 'amruthshyju@gmail.com';
 export const personalInfo = {
     name: 'Amruth Shyju',
     title: 'Full Stack Developer',
-    tagline: 'I DESIGN SYSTEMS THAT TURN IDEAS INTO PRODUCTS.',
-    subtitle: 'From architecture to deployment — I build with clarity and scale.',
+    tagline: 'I Build Systems That Outgrow Their First Version.',
+    subtitle: 'Designed with structure, scalability, and long-term evolution in mind.',
 };

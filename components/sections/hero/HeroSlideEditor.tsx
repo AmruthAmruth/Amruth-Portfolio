@@ -14,20 +14,17 @@ export default function HeroSlideEditor({ isActive }: HeroSlideEditorProps) {
     if (!isActive) return null;
 
     const codeSnippet = `
-interface Engineer {
-  name: string;
-  traits: string[];
-  focus: string;
-}
-
-const amruth: Engineer = {
-  name: "${personalInfo.name}",
-  traits: [
-    "Problem Solver",
-    "Clean Code Enthusiast",
-    "System Architect"
+const systemDesign = {
+  foundation: "Clean Architecture",
+  focus: [
+    "Scalability",
+    "Maintainability",
+    "Performance"
   ],
-  focus: "Scalable Solutions"
+  commitTo: [
+    "Code others love to read",
+    "Systems businesses rely on"
+  ]
 };
 `;
 
@@ -47,9 +44,9 @@ const amruth: Engineer = {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     >
-                        Architecting <br />
+                        Architecture Is My Starting Point. <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                            Digital Reality
+                            Not an Afterthought.
                         </span>
                     </motion.h1>
 
@@ -60,7 +57,7 @@ const amruth: Engineer = {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
-                        Turning complex problems into elegant, scalable solutions through clean code and modern architecture.
+                        From domain logic to data flow — every layer has intent.
                     </motion.p>
 
                     {/* CTA */}
