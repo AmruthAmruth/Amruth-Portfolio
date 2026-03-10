@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { skills, categories } from '@/constants/skills';
 import { accentGradients } from '@/constants/theme';
 import SectionHeader from '@/components/shared/SectionHeader';
@@ -23,7 +23,11 @@ const categoryMeta: Record<string, { icon: any; accent: string; endpoint: string
 export default function StackSection() {
     const [activeCategory, setActiveCategory] = useState<string>(categories[0]);
     const [openSections, setOpenSections] = useState<Set<string>>(new Set(['My Skills']));
-    const [sentAt] = useState(() => new Date().toLocaleTimeString('en-US', { hour12: false }));
+    const [sentAt, setSentAt] = useState<string>('');
+
+    useEffect(() => {
+        setSentAt(new Date().toLocaleTimeString('en-US', { hour12: false }));
+    }, []);
 
     const meta = categoryMeta[activeCategory] ?? { icon: Layers, accent: '#a0aec0', endpoint: '/skills', description: '' };
     const ActiveIcon = meta.icon;
@@ -52,6 +56,8 @@ export default function StackSection() {
                 <SectionHeader
                     title="Tech Stack"
                     subtitle="Technologies I use to build scalable, modern applications."
+                    description="The languages, tools, and environments I leverage to bring systems to life."
+                    dataType="interface"
                     gradient={accentGradients.blueCyan}
                     className="mb-10"
                 />
@@ -194,7 +200,7 @@ export default function StackSection() {
                                     </span>
                                     <span className="text-[#555]">·</span>
                                     <span className="text-[#666]">{activeSkills.length} items</span>
-                                    <span className="ml-auto text-[#555]">Body · {sentAt}</span>
+                                    <span className="ml-auto text-[#555]">Body · {sentAt || '--:--:--'}</span>
                                 </div>
 
                                 {/* Response Tabs */}

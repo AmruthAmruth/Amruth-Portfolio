@@ -108,8 +108,8 @@ export default function Navbar() {
                                         )}
 
                                         <span className={`relative z-10 font-mono text-[13px] tracking-tight transition-colors duration-300 ${isActive
-                                                ? (isScrolled ? 'text-white font-semibold text-shadow-sm' : 'text-black font-semibold')
-                                                : (isScrolled ? 'text-gray-400 group-hover:text-gray-200' : 'text-gray-600 group-hover:text-black')
+                                            ? (isScrolled ? 'text-white font-semibold text-shadow-sm' : 'text-black font-semibold')
+                                            : (isScrolled ? 'text-gray-400 group-hover:text-gray-200' : 'text-gray-600 group-hover:text-black')
                                             }`}>
                                             "{link.name}"
                                         </span>

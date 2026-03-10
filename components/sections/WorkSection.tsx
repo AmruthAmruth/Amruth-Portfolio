@@ -35,6 +35,8 @@ export default function WorkSection() {
                     <SectionHeader
                         title="Engineering"
                         subtitle="Built with precision, scalability, and performance in mind."
+                        description="A curated selection of my most significant architectural challenges and solutions."
+                        dataType="object"
                         gradient={accentGradients.blueTeal}
                         className="mb-8 md:mb-12"
                     />

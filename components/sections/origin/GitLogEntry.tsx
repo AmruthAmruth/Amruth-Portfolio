@@ -114,9 +114,9 @@ export default function GitLogEntry({
                                         <span
                                             key={i}
                                             className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border ${color === 'green' ? 'bg-green-900/20 text-green-400 border-green-800/40' :
-                                                    color === 'yellow' ? 'bg-yellow-900/20 text-yellow-400 border-yellow-800/40' :
-                                                        color === 'purple' ? 'bg-purple-900/20 text-purple-400 border-purple-800/40' :
-                                                            'bg-blue-900/20 text-blue-400 border-blue-800/40'
+                                                color === 'yellow' ? 'bg-yellow-900/20 text-yellow-400 border-yellow-800/40' :
+                                                    color === 'purple' ? 'bg-purple-900/20 text-purple-400 border-purple-800/40' :
+                                                        'bg-blue-900/20 text-blue-400 border-blue-800/40'
                                                 }`}
                                         >
                                             {mod}

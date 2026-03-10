@@ -39,7 +39,7 @@ export default function HeroSlideAPI({ isActive }: HeroSlideAPIProps) {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     >
-                        Reliable. Secure. <br />
+                        Delivering Solutions that are <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-emerald-600">
                             Production-Ready.
                         </span>
@@ -52,7 +52,7 @@ export default function HeroSlideAPI({ isActive }: HeroSlideAPIProps) {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
-                        Backend engineering built for real users, real traffic, real growth.
+                        Building secure and reliable backend architectures engineered for high performance and real-world impact.
                     </motion.p>
 
                     {/* CTA */}

@@ -22,6 +22,8 @@ export default function OriginSection() {
                     <SectionHeader
                         title="Origin Story"
                         subtitle="Commit History"
+                        description="Where the journey began, tracing the evolution from static pages to distributed systems."
+                        dataType="array"
                         gradient="from-blue-400 to-green-400"
                         alignment="center"
                     />
@@ -71,8 +73,8 @@ export default function OriginSection() {
                             { label: '🏷️ Tags', active: false, count: 4 },
                         ].map((tab) => (
                             <div key={tab.label} className={`flex items-center gap-1.5 px-3 sm:px-4 py-3 text-[12px] font-medium whitespace-nowrap cursor-pointer border-b-2 transition-colors ${tab.active
-                                    ? 'text-[#e6edf3] border-[#f78166]'
-                                    : 'text-[#8b949e] border-transparent hover:text-[#e6edf3]'
+                                ? 'text-[#e6edf3] border-[#f78166]'
+                                : 'text-[#8b949e] border-transparent hover:text-[#e6edf3]'
                                 }`}>
                                 {tab.label}
                                 {tab.count !== undefined && (

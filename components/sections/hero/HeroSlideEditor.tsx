@@ -44,9 +44,9 @@ const systemDesign = {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     >
-                        Architecture Is My Starting Point. <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                            Not an Afterthought.
+                        Architecting for <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+                            Scale and Clarity.
                         </span>
                     </motion.h1>
 
@@ -57,7 +57,7 @@ const systemDesign = {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
-                        From domain logic to data flow — every layer has intent.
+                        Embracing clean architecture to deliver maintainable, high-performance code that businesses can rely on.
                     </motion.p>
 
                     {/* CTA */}

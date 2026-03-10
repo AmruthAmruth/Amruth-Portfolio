@@ -4,6 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { containerVariants } from '@/constants/animations';
 import SectionDivider from '@/components/shared/SectionDivider';
+import SectionHeader from '@/components/shared/SectionHeader';
 import TransmissionForm from '@/components/shared/TransmissionForm';
 
 export default function CollaborateSection() {
@@ -44,27 +45,14 @@ export default function CollaborateSection() {
                     className="flex flex-col items-center"
                 >
                     {/* Section Title */}
-                    <div className="mb-12 text-center space-y-4">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                            transition={{ delay: 0.2 }}
-                            className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 border border-green-200 rounded-full text-[10px] font-mono font-bold tracking-widest uppercase mb-2"
-                        >
-                            <span className="w-1.5 h-1.5 rounded-full bg-green-600 animate-pulse" />
-                            Open to opportunities
-                        </motion.div>
-
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight break-words">
-                            Let&apos;s build something{' '}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">together</span>
-                        </h2>
-
-                        <p className="text-gray-500 max-w-lg mx-auto text-sm md:text-base">
-                            Have a project in mind, a role to fill, or just want to say hello?
-                            Drop me a message — I read every one.
-                        </p>
-                    </div>
+                    <SectionHeader
+                        title="Collaboration"
+                        subtitle="Let's build something together"
+                        description="Have a project in mind, a role to fill, or just want to say hello? Drop me a message — I read every one."
+                        dataType="function"
+                        gradient="from-blue-600 to-purple-600"
+                        className="mb-12"
+                    />
 
                     {/* Contact Form as Data Uplink */}
                     <div className="w-full relative z-20">

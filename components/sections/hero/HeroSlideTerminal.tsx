@@ -29,17 +29,10 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     >
-                        {personalInfo.tagline.split(' ').map((word, index) => (
-                            <motion.span
-                                key={index}
-                                className="inline-block mr-3"
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
-                            >
-                                {word}
-                            </motion.span>
-                        ))}
+                        Defining My <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                            Engineering Identity.
+                        </span>
                     </motion.h1>
 
                     {/* Subtext */}
@@ -49,7 +42,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
-                        {personalInfo.subtitle}
+                        A Full Stack Engineer driven by a simple philosophy: good code works, but great systems last.
                     </motion.p>
 
                     {/* CTA & Socials Row */}
