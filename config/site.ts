@@ -7,6 +7,6 @@ export const siteConfig = {
     url: 'https://amruthshyju.com',
     author: {
         name: 'Amruth Shyju',
-        email: 'amruthshyju@gmail.com',
+        email: 'amrwth.dev@gmail.com',
     },
 };

@@ -7,6 +7,7 @@
  */
 export const sectionGradients = {
     hero: 'bg-gradient-to-br from-sky-50 via-white to-teal-50',
+    about: 'bg-gradient-to-br from-white via-blue-50 to-indigo-50/30',
     origin: 'bg-gradient-to-br from-white via-sky-50 to-teal-50/30',
     work: 'bg-gradient-to-br from-teal-50/30 via-white to-blue-50/30',
     stack: 'bg-gradient-to-br from-blue-50/30 via-white to-cyan-50/30',
@@ -18,6 +19,7 @@ export const sectionGradients = {
  */
 export const blobColors = {
     hero: ['bg-blue-200/40', 'bg-teal-200/40', 'bg-cyan-200/30'],
+    about: ['bg-blue-200/40', 'bg-indigo-200/40'],
     origin: ['bg-blue-200/20', 'bg-teal-200/20'],
     work: ['bg-cyan-200/20', 'bg-blue-200/20'],
     stack: ['bg-blue-200/20', 'bg-cyan-200/20'],

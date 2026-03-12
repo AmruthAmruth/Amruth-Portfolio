@@ -23,7 +23,7 @@ export default function WorkSection() {
     }, []);
 
     return (
-        <section id="work" className={`relative w-full min-h-screen flex items-center justify-center overflow-hidden ${sectionGradients.work} py-16 md:py-24`}>
+        <section id="builds" className={`relative w-full min-h-screen flex items-center justify-center overflow-hidden ${sectionGradients.work} py-16 md:py-24`}>
             <FloatingBlobs colors={blobColors.work} />
 
             <div ref={sectionRef} className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6">
@@ -33,7 +33,7 @@ export default function WorkSection() {
                     animate={isInView ? 'visible' : 'hidden'}
                 >
                     <SectionHeader
-                        title="Engineering"
+                        title="Builds"
                         subtitle="Built with precision, scalability, and performance in mind."
                         description="A curated selection of my most significant architectural challenges and solutions."
                         dataType="object"

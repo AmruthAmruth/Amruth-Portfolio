@@ -1,138 +1,130 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
-import { ChevronRight, ChevronDown } from 'lucide-react';
-import TypingText from '@/components/shared/TypingText';
+import { motion } from 'framer-motion';
 
 interface GitLogEntryProps {
     hash: string;
     author: string;
     date: string;
+    type: string;
+    scope: string;
     message: string;
-    subtitle: string;
-    details: string[];
-    modules: string[];
-    systemState: string;
+    headline: string;
+    body: string;
+    tags: string[];
+    avatarUrl: string;
     isLast?: boolean;
-    color: 'blue' | 'yellow' | 'purple' | 'green';
+    index: number;
 }
 
-const colorStyles = {
-    blue: 'text-blue-400',
-    yellow: 'text-yellow-400',
-    purple: 'text-purple-400',
-    green: 'text-green-400'
+const TYPE_CONFIG: Record<string, {
+    label: string;
+    dot: string;
+    badgeText: string;
+    badgeBg: string;
+    badgeBorder: string;
+}> = {
+    feat: { label: 'New Chapter', dot: 'bg-[#388bfd]', badgeText: 'text-[#79c0ff]', badgeBg: 'bg-[#388bfd]/10', badgeBorder: 'border-[#388bfd]/30' },
+    chore: { label: 'Learning', dot: 'bg-[#a371f7]', badgeText: 'text-[#d2a8ff]', badgeBg: 'bg-[#a371f7]/10', badgeBorder: 'border-[#a371f7]/30' },
+    fix: { label: 'Growth', dot: 'bg-[#f78166]', badgeText: 'text-[#ffa198]', badgeBg: 'bg-[#f78166]/10', badgeBorder: 'border-[#f78166]/30' },
+    update: { label: 'Level Up', dot: 'bg-[#3fb950]', badgeText: 'text-[#7ee787]', badgeBg: 'bg-[#3fb950]/10', badgeBorder: 'border-[#3fb950]/30' },
 };
 
 export default function GitLogEntry({
-    hash,
-    author,
-    date,
-    message,
-    subtitle,
-    details,
-    modules,
-    systemState,
-    isLast = false,
-    color,
+    hash, author, date, type, scope, message,
+    headline, body, tags, avatarUrl, isLast, index,
 }: GitLogEntryProps) {
-    const [isExpanded, setIsExpanded] = useState(false);
-    const colorClass = colorStyles[color] || colorStyles.blue;
+    const tc = TYPE_CONFIG[type] ?? TYPE_CONFIG['feat'];
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-20px" }}
-            className="group relative font-mono mb-8 last:mb-0 border-l border-gray-800 hover:border-gray-600 transition-colors pl-4"
+            viewport={{ once: true, margin: '-30px' }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: index * 0.1 }}
+            className="group relative flex gap-0"
         >
-            {/* Header: Commit Meta Info */}
-            <div
-                className="cursor-pointer"
-                onClick={() => setIsExpanded(!isExpanded)}
-            >
-                <div className="flex items-center gap-2 mb-1">
-                    <span className="text-yellow-500 font-bold">commit {hash}</span>
-                    <span className="text-gray-500 text-xs">(origin/main)</span>
-                </div>
-
-                <div className="text-gray-400 text-sm mb-1">
-                    Author: <span className="text-gray-300">{author}</span>
-                </div>
-
-                <div className="text-gray-400 text-sm mb-1">
-                    Date: <span className="text-gray-300">{date}</span>
-                </div>
-
-                <div className="flex items-center gap-2 mt-2">
-                    <span className="text-gray-400 text-sm">Message:</span>
-                    <span className="text-gray-200 font-semibold">
-                        <TypingText text={message} speed={20} delay={100} />
-                    </span>
-                </div>
-
-                {/* Expansion Trigger */}
-                <div className="flex items-center gap-2 mt-3 text-sm hover:opacity-80 transition-opacity">
-                    {isExpanded ? <ChevronDown size={16} className={colorClass} /> : <ChevronRight size={16} className={colorClass} />}
-                    <span className={`${colorClass} font-bold flex items-center`}>
-                        + <TypingText text={` ${subtitle}`} speed={30} delay={600} cursor={false} />
-                    </span>
-                    {!isExpanded && <span className="text-gray-600 text-xs ml-2 italic hidden sm:inline">...click to view details</span>}
-                </div>
+            {/* ── Graph rail ── */}
+            <div className="shrink-0 relative flex flex-col items-center w-10 sm:w-12">
+                {/* Colored node dot */}
+                <div className={`
+                    relative z-10 mt-[20px] w-4 h-4 rounded-full border-2 border-[#0d1117]
+                    ring-2 ring-[#30363d] group-hover:ring-[#58a6ff]/60
+                    ${tc.dot} transition-all duration-300 shrink-0
+                `} />
+                {/* Connecting line */}
+                {!isLast && (
+                    <div className="absolute top-[36px] bottom-0 w-px bg-[#30363d] group-hover:bg-[#444c56] transition-colors duration-300" />
+                )}
             </div>
 
-            {/* Expandable Content */}
-            <AnimatePresence>
-                {isExpanded && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="overflow-hidden"
-                    >
-                        <div className="mt-4 ml-1 space-y-4">
+            {/* ── Right column ── */}
+            <div className="flex-1 min-w-0 pb-8">
 
-                            {/* Story / detail lines */}
-                            <div className="space-y-2">
-                                {details.map((line, i) => (
-                                    <div key={i} className="flex items-start gap-2.5 text-sm text-gray-300">
-                                        <span className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${colorClass.replace('text-', 'bg-')}`} />
-                                        <p className="leading-relaxed">{line}</p>
-                                    </div>
-                                ))}
-                            </div>
+                {/* ── Commit summary row ── */}
+                <div className="flex flex-wrap items-center gap-2 py-2.5 px-3.5 mb-3 rounded-lg bg-[#161b22] border border-[#30363d] group-hover:border-[#444c56] transition-colors duration-200">
 
-                            {/* Divider */}
-                            <div className="border-t border-gray-800/60" />
+                    {/* Friendly pill label */}
+                    <span className={`
+                        text-[11px] font-bold px-2.5 py-0.5 rounded-full border uppercase tracking-widest
+                        ${tc.badgeBg} ${tc.badgeBorder} ${tc.badgeText}
+                    `}>
+                        {tc.label}
+                    </span>
 
-                            {/* Modules + System State row */}
-                            <div className="flex flex-wrap items-center justify-between gap-3">
-                                <div className="flex flex-wrap gap-2">
-                                    {modules.map((mod, i) => (
-                                        <span
-                                            key={i}
-                                            className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border ${color === 'green' ? 'bg-green-900/20 text-green-400 border-green-800/40' :
-                                                color === 'yellow' ? 'bg-yellow-900/20 text-yellow-400 border-yellow-800/40' :
-                                                    color === 'purple' ? 'bg-purple-900/20 text-purple-400 border-purple-800/40' :
-                                                        'bg-blue-900/20 text-blue-400 border-blue-800/40'
-                                                }`}
-                                        >
-                                            {mod}
-                                        </span>
-                                    ))}
-                                </div>
-                                <span className="flex items-center gap-1.5 text-[11px] text-gray-400 bg-gray-800/50 border border-gray-700/50 px-2.5 py-1 rounded-full whitespace-nowrap shrink-0">
-                                    <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${colorClass.replace('text-', 'bg-')}`} />
-                                    {systemState}
-                                </span>
-                            </div>
+                    {/* Human-readable commit title on this row */}
+                    <span className="text-[13.5px] font-semibold text-[#e6edf3] flex-1 min-w-0 leading-snug">
+                        {headline}
+                    </span>
 
+                    {/* Hash — subtle, right side */}
+                    <span className="shrink-0 font-mono text-[11px] text-[#6e7681] bg-[#0d1117] border border-[#30363d] px-2 py-0.5 rounded">
+                        {hash}
+                    </span>
+                </div>
+
+                {/* ── Expanded commit card ── */}
+                <div className="rounded-lg border border-[#30363d] bg-[#161b22] overflow-hidden">
+
+                    {/* Card meta bar */}
+                    <div className="flex flex-wrap items-center justify-between gap-y-1 gap-x-4 px-4 sm:px-5 py-2.5 bg-[#0d1117] border-b border-[#21262d]">
+                        <div className="flex items-center gap-2">
+                            <img
+                                src={avatarUrl}
+                                alt={author}
+                                className="w-5 h-5 rounded-full border border-[#30363d]"
+                            />
+                            <span className="text-[12.5px] font-semibold text-[#c9d1d9]">{author}</span>
+                            <span className="text-[12.5px] text-[#6e7681]">committed</span>
+                            {/* Subtle technical commit message — readable as a detail, not the focus */}
+                            <span className="hidden sm:inline font-mono text-[11px] text-[#6e7681] border border-[#30363d] bg-[#161b22] px-2 py-0.5 rounded ml-1">
+                                {type}({scope}): {message}
+                            </span>
                         </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                        <span className="text-[12px] text-[#6e7681]">{date}</span>
+                    </div>
+
+                    {/* Card body — the readable story */}
+                    <div className="px-4 sm:px-6 py-5">
+                        <p className="text-[15px] sm:text-[15.5px] font-normal text-[#c9d1d9] leading-[1.85] font-sans">
+                            {body}
+                        </p>
+                    </div>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap items-center gap-1.5 px-4 sm:px-6 py-3 border-t border-[#21262d] bg-[#0d1117]/40">
+                        <span className="text-[11px] text-[#6e7681] mr-1">Tagged:</span>
+                        {tags.map((tag, i) => (
+                            <span
+                                key={i}
+                                className="px-2.5 py-0.5 text-[11.5px] font-medium rounded-full border border-[#30363d] text-[#8b949e] bg-[#161b22] hover:text-[#c9d1d9] hover:border-[#6e7681] transition-colors"
+                            >
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </motion.div>
     );
 }

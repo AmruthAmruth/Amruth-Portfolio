@@ -1,10 +1,16 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, FormEvent } from 'react';
 import { Send, CheckCircle, AlertCircle, Github, Mail, User, MessageSquare, Tag } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
-const CONTACT_EMAIL = 'amruthshyju@gmail.com';
+const CONTACT_EMAIL = 'amrwth.dev@gmail.com';
+
+// EmailJS credentials from environment variables
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '';
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '';
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '';
 
 const topics = [
     'Freelance Project',
@@ -32,7 +38,7 @@ export default function TransmissionForm() {
         return e;
     };
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         const errs = validate();
         setErrors(errs);
@@ -40,17 +46,30 @@ export default function TransmissionForm() {
 
         setStatus('sending');
 
-        const subject = encodeURIComponent(`[Portfolio] ${topic} — from ${name}`);
-        const body = encodeURIComponent(
-            `Hi Amruth,\n\n${message}\n\n—\nFrom: ${name}\nEmail: ${email}\nTopic: ${topic}`
-        );
-        const mailto = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-
-        // Small delay for UX feel, then open mailto
-        setTimeout(() => {
-            window.location.href = mailto;
+        try {
+            await emailjs.send(
+                EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
+                {
+                    from_name: name,
+                    from_email: email,
+                    message: `[TOPIC: ${topic}]\n\n${message}`,
+                    to_email: CONTACT_EMAIL,
+                },
+                EMAILJS_PUBLIC_KEY
+            );
             setStatus('sent');
-        }, 800);
+            // Reset form
+            setName('');
+            setEmail('');
+            setTopic('');
+            setMessage('');
+            setTimeout(() => setStatus('idle'), 5000);
+        } catch (err) {
+            console.error('EmailJS Error:', err);
+            setStatus('error');
+            setTimeout(() => setStatus('idle'), 5000);
+        }
     };
 
     return (
@@ -102,9 +121,10 @@ export default function TransmissionForm() {
                             <input
                                 type="text"
                                 value={name}
+                                disabled={status === 'sending'}
                                 onChange={e => { setName(e.target.value); setErrors(p => ({ ...p, name: '' })); }}
                                 placeholder="e.g. Jane Doe"
-                                className={`w-full bg-[#161b22] border ${errors.name ? 'border-[#f85149]' : 'border-[#30363d]'} rounded-lg px-3.5 py-2.5 text-[#e6edf3] text-sm placeholder-[#484f58] outline-none focus:border-[#388bfd] focus:ring-1 focus:ring-[#388bfd]/40 transition-all`}
+                                className={`w-full bg-[#161b22] border ${errors.name ? 'border-[#f85149]' : 'border-[#30363d]'} rounded-lg px-3.5 py-2.5 text-[#e6edf3] text-sm placeholder-[#484f58] outline-none focus:border-[#388bfd] focus:ring-1 focus:ring-[#388bfd]/40 transition-all disabled:opacity-50`}
                             />
                             {errors.name && <p className="mt-1.5 text-[11px] text-[#f85149] flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.name}</p>}
                         </div>
@@ -117,9 +137,10 @@ export default function TransmissionForm() {
                             <input
                                 type="email"
                                 value={email}
+                                disabled={status === 'sending'}
                                 onChange={e => { setEmail(e.target.value); setErrors(p => ({ ...p, email: '' })); }}
                                 placeholder="e.g. jane@example.com"
-                                className={`w-full bg-[#161b22] border ${errors.email ? 'border-[#f85149]' : 'border-[#30363d]'} rounded-lg px-3.5 py-2.5 text-[#e6edf3] text-sm placeholder-[#484f58] outline-none focus:border-[#388bfd] focus:ring-1 focus:ring-[#388bfd]/40 transition-all`}
+                                className={`w-full bg-[#161b22] border ${errors.email ? 'border-[#f85149]' : 'border-[#30363d]'} rounded-lg px-3.5 py-2.5 text-[#e6edf3] text-sm placeholder-[#484f58] outline-none focus:border-[#388bfd] focus:ring-1 focus:ring-[#388bfd]/40 transition-all disabled:opacity-50`}
                             />
                             {errors.email && <p className="mt-1.5 text-[11px] text-[#f85149] flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.email}</p>}
                         </div>
@@ -134,8 +155,9 @@ export default function TransmissionForm() {
                                     <button
                                         key={t}
                                         type="button"
+                                        disabled={status === 'sending'}
                                         onClick={() => { setTopic(t); setErrors(p => ({ ...p, topic: '' })); }}
-                                        className={`px-3 py-1.5 rounded-full text-[12px] font-semibold border transition-all ${topic === t
+                                        className={`px-3 py-1.5 rounded-full text-[12px] font-semibold border transition-all disabled:opacity-50 ${topic === t
                                                 ? 'bg-[#388bfd]/20 border-[#388bfd] text-[#58a6ff]'
                                                 : 'bg-[#161b22] border-[#30363d] text-[#8b949e] hover:border-[#8b949e] hover:text-[#e6edf3]'
                                             }`}
@@ -154,10 +176,11 @@ export default function TransmissionForm() {
                             </label>
                             <textarea
                                 value={message}
+                                disabled={status === 'sending'}
                                 onChange={e => { setMessage(e.target.value); setErrors(p => ({ ...p, message: '' })); }}
                                 placeholder="Tell me what's on your mind..."
                                 rows={5}
-                                className={`w-full bg-[#161b22] border ${errors.message ? 'border-[#f85149]' : 'border-[#30363d]'} rounded-lg px-3.5 py-2.5 text-[#e6edf3] text-sm placeholder-[#484f58] outline-none focus:border-[#388bfd] focus:ring-1 focus:ring-[#388bfd]/40 transition-all resize-y min-h-[120px]`}
+                                className={`w-full bg-[#161b22] border ${errors.message ? 'border-[#f85149]' : 'border-[#30363d]'} rounded-lg px-3.5 py-2.5 text-[#e6edf3] text-sm placeholder-[#484f58] outline-none focus:border-[#388bfd] focus:ring-1 focus:ring-[#388bfd]/40 transition-all resize-y min-h-[120px] disabled:opacity-50`}
                             />
                             <div className="flex items-center justify-between mt-1">
                                 {errors.message
@@ -172,35 +195,53 @@ export default function TransmissionForm() {
                     {/* ── Footer / Submit row ── */}
                     <div className="bg-[#161b22] border-t border-[#21262d] px-5 sm:px-7 py-4 flex items-center justify-between gap-4 flex-wrap">
                         <div className="text-[11px] text-[#8b949e] font-mono flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                            Sends to <span className="text-[#58a6ff]">{CONTACT_EMAIL}</span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                            Sending to <span className="text-[#58a6ff]">{CONTACT_EMAIL}</span>
                         </div>
 
-                        {status === 'sent' ? (
-                            <div className="flex items-center gap-2 text-[#3fb950] text-sm font-semibold">
-                                <CheckCircle className="w-4 h-4" />
-                                Your email client is opening…
-                            </div>
-                        ) : (
-                            <motion.button
-                                type="submit"
-                                whileTap={{ scale: 0.97 }}
-                                disabled={status === 'sending'}
-                                className="flex items-center gap-2 px-5 py-2 bg-[#238636] hover:bg-[#2ea043] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-bold rounded-lg transition-colors border border-[#2ea043]/60 shadow-md"
-                            >
-                                {status === 'sending' ? (
-                                    <>
-                                        <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                        Opening…
-                                    </>
-                                ) : (
-                                    <>
-                                        <Send className="w-3.5 h-3.5" />
-                                        Submit Issue
-                                    </>
-                                )}
-                            </motion.button>
-                        )}
+                        <AnimatePresence mode="wait">
+                            {status === 'sent' && (
+                                <motion.div
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -20 }}
+                                    className="flex items-center gap-2 text-[#3fb950] text-sm font-semibold"
+                                >
+                                    <CheckCircle className="w-4 h-4" /> Message sent successfully!
+                                </motion.div>
+                            )}
+                            {status === 'error' && (
+                                <motion.div
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -20 }}
+                                    className="flex items-center gap-2 text-[#f85149] text-sm font-semibold"
+                                >
+                                    <AlertCircle className="w-4 h-4" /> Error sending message.
+                                </motion.div>
+                            )}
+                            {status === 'idle' || status === 'sending' ? (
+                                <motion.button
+                                    key="submit-btn"
+                                    type="submit"
+                                    whileTap={{ scale: 0.97 }}
+                                    disabled={status === 'sending'}
+                                    className="flex items-center gap-2 px-5 py-2 bg-[#238636] hover:bg-[#2ea043] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-bold rounded-lg transition-colors border border-[#2ea043]/60 shadow-md"
+                                >
+                                    {status === 'sending' ? (
+                                        <>
+                                            <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                            Sending...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Send className="w-3.5 h-3.5" />
+                                            Submit Issue
+                                        </>
+                                    )}
+                                </motion.button>
+                            ) : null}
+                        </AnimatePresence>
                     </div>
                 </form>
             </div>

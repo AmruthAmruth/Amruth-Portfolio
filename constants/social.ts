@@ -30,7 +30,7 @@ export const socialLinks: SocialLink[] = [
 /**
  * Contact email
  */
-export const contactEmail = 'amruthshyju@gmail.com';
+export const contactEmail = 'amrwth.dev@gmail.com';
 
 /**
  * Personal information

@@ -27,7 +27,7 @@ export default function HeroLanding() {
     };
 
     return (
-        <section id="hero" className={`relative min-h-screen w-full flex items-center justify-center overflow-hidden ${sectionGradients.hero}`}>
+        <section id="launch" className={`relative min-h-screen w-full flex items-center justify-center overflow-hidden ${sectionGradients.hero}`}>
 
             {/* Slides Container */}
             <div className="relative w-full h-full min-h-[90vh] flex items-center">

@@ -42,7 +42,7 @@ export default function StackSection() {
     };
 
     return (
-        <section id="stack" className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-slate-50/50 py-16 md:py-24">
+        <section id="toolkit" className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-slate-50/50 py-16 md:py-24">
 
             {/* Background subtle grid */}
             <div className="absolute inset-0 opacity-[0.025] pointer-events-none"
@@ -54,7 +54,7 @@ export default function StackSection() {
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full flex flex-col">
                 <SectionHeader
-                    title="Tech Stack"
+                    title="Toolkit"
                     subtitle="Technologies I use to build scalable, modern applications."
                     description="The languages, tools, and environments I leverage to bring systems to life."
                     dataType="interface"

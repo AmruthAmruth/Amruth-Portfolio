@@ -1,4 +1,5 @@
 import HeroLanding from '@/components/sections/HeroLanding';
+import AboutSection from '@/components/sections/AboutSection';
 import OriginSection from '@/components/sections/OriginSection';
 import WorkSection from '@/components/sections/WorkSection';
 import StackSection from '@/components/sections/StackSection';
@@ -9,8 +10,9 @@ export default function Home() {
     <main>
       <HeroLanding />
       <OriginSection />
-      <WorkSection />
       <StackSection />
+      <WorkSection />
+      <AboutSection />
       <CollaborateSection />
     </main>
   );

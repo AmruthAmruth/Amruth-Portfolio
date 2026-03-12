@@ -4,30 +4,29 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
-    { name: 'Home', href: '#hero' },
+    { name: 'Launch', href: '#launch' },
     { name: 'Origin', href: '#origin' },
-    { name: 'Work', href: '#work' },
-    { name: 'Stack', href: '#stack' },
-    { name: 'Collaborate', href: '#collaborate' },
+    { name: 'Toolkit', href: '#toolkit' },
+    { name: 'Builds', href: '#builds' },
+    { name: 'Journey', href: '#journey' },
+    { name: 'Connect', href: '#connect' },
 ];
 
 export default function Navbar() {
-    const [activeSection, setActiveSection] = useState('hero');
+    const [activeSection, setActiveSection] = useState('launch');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
+            setIsScrolled(window.scrollY > 30);
 
             const sections = navLinks.map(link => link.href.substring(1));
-
             for (const sectionId of sections) {
                 const element = document.getElementById(sectionId);
                 if (element) {
                     const rect = element.getBoundingClientRect();
-                    // Adjust offset for better accuracy
                     if (rect.top <= 300 && rect.bottom >= 300) {
                         setActiveSection(sectionId);
                         break;
@@ -36,7 +35,7 @@ export default function Navbar() {
             }
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -52,183 +51,231 @@ export default function Navbar() {
     return (
         <>
             <motion.nav
-                className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-out max-w-[90vw] md:max-w-3xl rounded-full overflow-hidden ${isScrolled
-                    ? 'py-2 px-3 bg-[#0a0a0a]/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)]'
-                    : 'py-2.5 px-4 bg-white/10 backdrop-blur-sm border border-black/5 shadow-sm'
-                    }`}
-                initial={{ y: -100, x: '-50%', opacity: 0 }}
+                className={`fixed top-5 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-out`}
+                style={{ width: 'max-content', maxWidth: '92vw' }}
+                initial={{ y: -80, x: '-50%', opacity: 0 }}
                 animate={{ y: 0, x: '-50%', opacity: 1 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-                {/* Gradient Top Border Highlight */}
-                {isScrolled && (
-                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-100 transition-opacity duration-500" />
-                )}
+                <div
+                    className={`relative flex items-center gap-1 rounded-[2rem] px-2 py-1.5 transition-all duration-500 overflow-hidden ${
+                        isScrolled
+                            ? 'bg-[#000000]/70 backdrop-blur-3xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_1px_1px_rgba(255,255,255,0.08)_inset] ring-1 ring-white/10'
+                            : 'bg-white/70 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_4px_20px_rgba(0,0,0,0.08),0_1px_1px_rgba(255,255,255,0.9)_inset] ring-1 ring-black/[0.05]'
+                    }`}
+                >
+                    {/* Inner highlight for glass reflection */}
+                    <div className={`absolute inset-0 rounded-[2rem] pointer-events-none ring-1 ring-inset ${isScrolled ? 'ring-white/[0.03]' : 'ring-black/[0.02]'}`} />
 
-                <div className="relative flex items-center justify-between gap-4">
+                    {/* Logo / Brand */}
+                    <a
+                        href="#launch"
+                        onClick={(e) => scrollToSection(e, '#launch')}
+                        className="relative z-10 flex items-center gap-1.5 px-3 py-1 mr-1 group cursor-pointer"
+                    >
+                        <span className={`font-mono text-[13px] font-semibold tracking-tight transition-colors duration-300 group-hover:text-emerald-500 ${isScrolled ? 'text-white/90' : 'text-gray-800'}`}>
+                            amruth
+                        </span>
+                        <span className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                            isScrolled
+                                ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]'
+                                : 'bg-emerald-500 shadow-[0_0_6px_rgba(52,211,153,0.6)]'
+                            } group-hover:scale-125 group-hover:bg-emerald-400 group-hover:shadow-[0_0_10px_rgba(52,211,153,0.9)]`} 
+                        />
+                    </a>
 
-                    {/* Prefix: ~/portfolio */}
-                    <div className="hidden md:flex items-center gap-2 pl-2 opacity-80 hover:opacity-100 transition-opacity">
-                        <span className="text-blue-500 font-mono text-sm font-bold">~</span>
-                        <span className={`font-mono text-sm transition-colors duration-300 ${isScrolled ? 'text-gray-500' : 'text-gray-400'}`}>/</span>
-                        <span className={`font-mono text-sm font-medium transition-colors duration-300 ${isScrolled ? 'text-gray-200' : 'text-gray-800'}`}>Amruth</span>
-                    </div>
+                    {/* Separator */}
+                    <div className={`relative z-10 w-px h-4 mx-1 transition-colors duration-300 ${isScrolled ? 'bg-white/10' : 'bg-black/10'}`} />
 
-                    {/* Desktop Navigation - Array Style */}
-                    <div className={`hidden md:flex items-center gap-0.5 px-3 py-1.5 rounded-full ${isScrolled ? 'bg-white/5 ring-1 ring-white/5' : 'bg-black/5 ring-1 ring-black/5'} transition-all duration-300`}>
-                        <span className={`font-mono text-lg font-light select-none mr-1 transition-colors duration-300 ${isScrolled ? 'text-yellow-600/80' : 'text-yellow-700/80'}`}>{'['}</span>
+                    {/* Desktop Nav Links - Array of Strings */}
+                    <div className={`hidden md:flex items-center px-1 font-mono text-[13px] tracking-tight ${isScrolled ? 'text-gray-400' : 'text-gray-500'}`}>
+                        <span className="mr-1.5">[</span>
+                        <div className="flex items-center gap-0.5">
+                            {navLinks.map((link, index) => {
+                                const isActive = activeSection === link.href.substring(1);
+                                const isHovered = hoveredIndex === index;
+                                const isLast = index === navLinks.length - 1;
 
-                        {navLinks.map((link, index) => {
-                            const isActive = activeSection === link.href.substring(1);
-                            const isHovered = hoveredIndex === index;
+                                return (
+                                    <div key={link.name} className="flex items-center">
+                                        <a
+                                            href={link.href}
+                                            onClick={(e) => scrollToSection(e, link.href)}
+                                            onMouseEnter={() => setHoveredIndex(index)}
+                                            onMouseLeave={() => setHoveredIndex(null)}
+                                            className="relative px-2 py-1 rounded-md transition-all duration-300 cursor-pointer select-none group"
+                                        >
+                                            {/* Active state styling */}
+                                            {isActive && (
+                                                <motion.div
+                                                    layoutId="nav-active-pill-glass"
+                                                    className={`absolute inset-0 rounded-md ${isScrolled ? 'bg-white/10 ring-1 ring-white/20 shadow-[0_0_12px_rgba(255,255,255,0.05)] backdrop-blur-md' : 'bg-black/5 ring-1 ring-black/10 shadow-[0_1px_4px_rgba(0,0,0,0.04)] backdrop-blur-md'}`}
+                                                    transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                                                />
+                                            )}
 
-                            return (
-                                <div key={link.name} className="flex items-center group relative">
-                                    <a
-                                        href={link.href}
-                                        onClick={(e) => scrollToSection(e, link.href)}
-                                        onMouseEnter={() => setHoveredIndex(index)}
-                                        onMouseLeave={() => setHoveredIndex(null)}
-                                        className="relative px-3 py-1 rounded-md text-sm transition-all duration-200 cursor-pointer"
-                                    >
-                                        {/* Active State - Glow/Cursor Interaction */}
-                                        {isActive && (
-                                            <motion.div
-                                                layoutId="navbar-glow"
-                                                className={`absolute inset-0 rounded-md shadow-sm border-b ${isScrolled
-                                                    ? 'bg-white/10 shadow-[0_0_15px_rgba(255,255,255,0.1)] border-white/40'
-                                                    : 'bg-black/5 border-black/20'}`}
-                                                transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                                            />
-                                        )}
+                                            {/* Hover state styling */}
+                                            {!isActive && isHovered && (
+                                                <div className={`absolute inset-0 rounded-md transition-opacity ${isScrolled ? 'bg-white/5' : 'bg-black/[0.04]'}`} />
+                                            )}
 
-                                        {/* Hover State */}
-                                        {!isActive && isHovered && (
-                                            <div className={`absolute inset-0 rounded-md ${isScrolled ? 'bg-white/5' : 'bg-black/5'}`} />
-                                        )}
-
-                                        <span className={`relative z-10 font-mono text-[13px] tracking-tight transition-colors duration-300 ${isActive
-                                            ? (isScrolled ? 'text-white font-semibold text-shadow-sm' : 'text-black font-semibold')
-                                            : (isScrolled ? 'text-gray-400 group-hover:text-gray-200' : 'text-gray-600 group-hover:text-black')
+                                            <span className={`relative z-10 transition-colors duration-300 ${
+                                                isActive
+                                                    ? (isScrolled ? 'text-emerald-300 font-medium drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]' : 'text-emerald-600 font-medium')
+                                                    : (isScrolled ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900')
                                             }`}>
-                                            "{link.name}"
-                                        </span>
-                                    </a>
-
-                                    {/* Comma */}
-                                    {index < navLinks.length - 1 && (
-                                        <span className={`font-mono mx-0.5 select-none opacity-50 transition-colors duration-300 ${isScrolled ? 'text-gray-600' : 'text-gray-400'}`}>,</span>
-                                    )}
-                                </div>
-                            );
-                        })}
-
-                        <span className={`font-mono text-lg font-light select-none ml-1 transition-colors duration-300 ${isScrolled ? 'text-yellow-600/80' : 'text-yellow-700/80'}`}>{']'}</span>
+                                                '{link.name}'
+                                            </span>
+                                        </a>
+                                        {!isLast && (
+                                            <span className="mx-0.5 pointer-events-none">,</span>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <span className="ml-1.5">]</span>
                     </div>
 
-                    {/* Mobile View - Terminal Style Toggle */}
-                    <div className="md:hidden flex items-center justify-between w-full">
-                        <div className="flex items-center gap-1.5">
-                            <span className="text-green-600 font-mono text-sm">➜</span>
-                            <span className="text-blue-500 font-mono text-sm">~</span>
-                            <span className={`font-mono text-sm ${isScrolled ? 'text-gray-400' : 'text-gray-500'}`}>/</span>
-                            <span className={`font-mono text-sm font-medium ${isScrolled ? 'text-white' : 'text-gray-900'}`}>nav</span>
-                        </div>
+                    {/* Separator */}
+                    <div className={`relative z-10 hidden md:block w-px h-4 mx-1 transition-colors duration-300 ${isScrolled ? 'bg-white/10' : 'bg-black/10'}`} />
+
+                    {/* Resume CTA */}
+                    <a
+                        href="/assets/AmruthShyjuMERN.pdf"
+                        download="AmruthShyjuMERN.pdf"
+                        className={`relative z-10 hidden md:flex items-center gap-1.5 px-3 py-1.5 ml-1 rounded-full text-[12px] font-semibold font-mono transition-all duration-300 group ${
+                            isScrolled
+                                ? 'bg-white/5 text-gray-200 ring-1 ring-white/10 hover:bg-white/15 hover:text-white hover:ring-white/25 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]'
+                                : 'bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/20 hover:bg-emerald-500/18 hover:text-emerald-600 hover:ring-emerald-500/35 hover:shadow-[0_0_14px_rgba(52,211,153,0.1)]'
+                        }`}
+                    >
+                        <svg
+                            className="w-3 h-3 transition-transform duration-300 group-hover:translate-y-0.5"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Resume
+                    </a>
+
+                    {/* Mobile: Brand + hamburger */}
+                    <div className="relative z-10 flex md:hidden items-center gap-2 pr-1 ml-2">
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className={`p-2 hover:opacity-80 transition-opacity ${isScrolled ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'}`}
                             aria-label="Toggle menu"
+                            className={`flex flex-col gap-[4.5px] p-2 rounded-full transition-all duration-300 ${
+                                isMobileMenuOpen
+                                    ? (isScrolled ? 'bg-white/15 ring-1 ring-white/20' : 'bg-black/5 ring-1 ring-black/10')
+                                    : (isScrolled ? 'hover:bg-white/10' : 'hover:bg-black/5')
+                            }`}
                         >
-                            <span className="font-mono text-yellow-600 text-sm">{isMobileMenuOpen ? 'exit()' : 'ls -a'}</span>
+                            <span className={`block w-3.5 h-[1.5px] rounded-full transition-all duration-300 origin-center ${
+                                isMobileMenuOpen ? 'rotate-45 translate-y-[6px]' : ''
+                            } ${isScrolled ? 'bg-white/90' : 'bg-gray-800'}`} />
+                            <span className={`block w-3.5 h-[1.5px] rounded-full transition-all duration-300 ${
+                                isMobileMenuOpen ? 'opacity-0 scale-x-0' : ''
+                            } ${isScrolled ? 'bg-white/90' : 'bg-gray-800'}`} />
+                            <span className={`block w-3.5 h-[1.5px] rounded-full transition-all duration-300 origin-center ${
+                                isMobileMenuOpen ? '-rotate-45 -translate-y-[6px]' : ''
+                            } ${isScrolled ? 'bg-white/90' : 'bg-gray-800'}`} />
                         </button>
                     </div>
-
                 </div>
             </motion.nav>
 
-            {/* Mobile Menu Overlay - JSON/Code Editor Style */}
+            {/* Mobile Menu */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                        initial={{ opacity: 0, y: -16, filter: 'blur(8px)' }}
+                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                        exit={{ opacity: 0, y: -12, filter: 'blur(4px)', scale: 0.98 }}
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        className="fixed inset-x-4 top-20 z-40 md:hidden"
+                        className="fixed inset-x-4 top-[82px] z-40 md:hidden"
                     >
-                        <div className="bg-[#0f0f0f]/95 backdrop-blur-2xl border border-white/10 rounded-xl shadow-2xl overflow-hidden font-mono text-sm">
+                        <div className="relative bg-[#000000]/70 backdrop-blur-3xl backdrop-saturate-150 border border-white/10 rounded-3xl shadow-[0_24px_64px_rgba(0,0,0,0.6),0_1px_1px_rgba(255,255,255,0.08)_inset] overflow-hidden">
+                            {/* Inner highlight */}
+                            <div className="absolute inset-0 rounded-3xl pointer-events-none ring-1 ring-inset ring-white/[0.02]" />
 
-                            {/* Editor Header / Tab */}
-                            <div className="flex items-center gap-2 px-4 py-2 border-b border-white/5 bg-white/5">
-                                <div className="flex gap-1.5">
-                                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                                    <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                                    <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                                </div>
-                                <span className="ml-2 text-xs text-gray-400">navigation.json</span>
-                            </div>
-
-                            <div className="flex relative p-4">
-                                {/* Line Numbers */}
-                                <div className="flex flex-col gap-1 text-gray-700 text-xs select-none border-r border-white/5 pr-3 text-right min-w-[24px]">
-                                    {Array.from({ length: 14 }).map((_, i) => (
-                                        <span key={i}>{i + 1}</span>
-                                    ))}
-                                </div>
-
-                                {/* Code Content */}
-                                <div className="flex-1 pl-4 overflow-x-auto">
-                                    <div className="text-yellow-500">{"{"}</div>
-                                    <div className="pl-4">
-                                        <span className="text-blue-400">"current_loc"</span>: <span className="text-green-400">"{activeSection}"</span><span className="text-gray-500">,</span>
+                            {/* Header */}
+                            <div className="relative z-10 flex items-center justify-between px-5 py-3.5 border-b border-white/[0.08]">
+                                <div className="flex items-center gap-2">
+                                    <div className="flex gap-1.5 opacity-80 hover:opacity-100 transition-opacity">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57] shadow-[0_0_8px_rgba(255,95,87,0.5)]" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-[#fdbc2c] shadow-[0_0_8px_rgba(253,188,44,0.5)]" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-[#27c840] shadow-[0_0_8px_rgba(39,200,64,0.5)]" />
                                     </div>
-                                    <div className="pl-4">
-                                        <span className="text-blue-400">"links"</span>: <span className="text-yellow-500">{"["}</span>
-
-                                        <div className="flex flex-col gap-1 pl-4 my-1">
-                                            {navLinks.map((link, index) => {
-                                                const isActive = activeSection === link.href.substring(1);
-                                                return (
-                                                    <motion.div
-                                                        key={link.name}
-                                                        initial={{ x: -10, opacity: 0 }}
-                                                        animate={{ x: 0, opacity: 1 }}
-                                                        transition={{ delay: index * 0.05 + 0.1 }}
-                                                    >
-                                                        <a
-                                                            href={link.href}
-                                                            onClick={(e) => scrollToSection(e, link.href)}
-                                                            className={`flex items-center gap-2 group transition-colors duration-200`}
-                                                        >
-                                                            <span className={`${isActive ? 'text-green-400 font-bold' : 'text-orange-300 group-hover:text-orange-200'}`}>
-                                                                "{link.name}"
-                                                            </span>
-                                                            {index < navLinks.length - 1 && <span className="text-gray-600">,</span>}
-
-                                                            {isActive && (
-                                                                <span className="ml-2 text-xs text-gray-500 hidden sm:inline-block">// current</span>
-                                                            )}
-                                                        </a>
-                                                    </motion.div>
-                                                );
-                                            })}
-                                        </div>
-
-                                        <span className="text-yellow-500">{"]"}</span>
-                                    </div>
-                                    <div className="text-yellow-500">{"}"}</div>
+                                    <span className="font-mono text-[11px] text-gray-400 ml-1.5">navigation Array</span>
                                 </div>
+                                <span className="font-mono text-[10px] text-emerald-400/80 uppercase tracking-widest bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                                    [ '{activeSection}' ]
+                                </span>
                             </div>
 
-                            {/* Status Bar */}
-                            <div className="flex items-center justify-between px-3 py-1 bg-blue-500/10 border-t border-white/5 text-[10px] text-blue-200/80">
-                                <div className="flex gap-3">
-                                    <span>master*</span>
-                                    <span>Ln {navLinks.findIndex(l => activeSection === l.href.substring(1)) + 5}, Col 1</span>
+                            {/* Nav items */}
+                            <div className="relative z-10 px-3 py-3 font-mono">
+                                <span className="block text-gray-500 text-[13px] ml-2 mb-2">const nav = [</span>
+                                <div className="flex flex-col gap-0.5 pl-6 pr-2">
+                                    {navLinks.map((link, index) => {
+                                        const isActive = activeSection === link.href.substring(1);
+                                        const isLast = index === navLinks.length - 1;
+                                        return (
+                                            <motion.div
+                                                key={link.name}
+                                                initial={{ opacity: 0, x: -12 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: index * 0.05 + 0.1, duration: 0.3 }}
+                                            >
+                                                <a
+                                                    href={link.href}
+                                                    onClick={(e) => scrollToSection(e, link.href)}
+                                                    className={`group relative flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 ${
+                                                        isActive
+                                                            ? 'bg-white/10 text-emerald-300 shadow-[0_2px_10px_rgba(0,0,0,0.2)] ring-1 ring-white/10'
+                                                            : 'text-gray-400 hover:bg-white/[0.06] hover:text-white'
+                                                    }`}
+                                                >
+                                                    <div className="flex items-center gap-3">
+                                                        <span className={`text-[14px] ${isActive ? 'font-medium drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]' : ''}`}>
+                                                            '{link.name}'<span className="text-gray-600 pointer-events-none group-hover:text-gray-400 transition-colors">{!isLast ? ',' : ''}</span>
+                                                        </span>
+                                                    </div>
+                                                    {isActive && (
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+                                                    )}
+                                                </a>
+                                            </motion.div>
+                                        );
+                                    })}
                                 </div>
-                                <div>UTF-8</div>
-                                <div>JSON</div>
+                                <span className="block text-gray-500 text-[13px] ml-2 mt-2">];</span>
                             </div>
+
+                            {/* Resume */}
+                            <div className="relative z-10 p-3 bg-white/[0.02] border-t border-white/[0.06] backdrop-blur-md">
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: navLinks.length * 0.05 + 0.2 }}
+                                >
+                                    <a
+                                        href="/assets/AmruthShyjuMERN.pdf"
+                                        download="AmruthShyjuMERN.pdf"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl bg-white/5 text-gray-100 ring-1 ring-white/15 hover:bg-white/10 hover:text-white hover:ring-white/25 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 group"
+                                    >
+                                        <svg
+                                            className="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-0.5"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                        </svg>
+                                        <span className="text-[14px] font-semibold font-mono tracking-tight">Download Resume</span>
+                                    </a>
+                                </motion.div>
+                            </div>
+
                         </div>
                     </motion.div>
                 )}
@@ -236,3 +283,4 @@ export default function Navbar() {
         </>
     );
 }
+

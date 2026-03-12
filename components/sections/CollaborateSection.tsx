@@ -12,7 +12,7 @@ export default function CollaborateSection() {
     const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
     return (
-        <section id="collaborate" className={`relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-slate-50 py-24 md:py-32`}>
+        <section id="connect" className={`relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-slate-50 py-24 md:py-32`}>
 
             {/* Ambient Glows (Subtle for light mode) */}
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-[100px] pointer-events-none" />
@@ -46,7 +46,7 @@ export default function CollaborateSection() {
                 >
                     {/* Section Title */}
                     <SectionHeader
-                        title="Collaboration"
+                        title="Connect"
                         subtitle="Let's build something together"
                         description="Have a project in mind, a role to fill, or just want to say hello? Drop me a message — I read every one."
                         dataType="function"
