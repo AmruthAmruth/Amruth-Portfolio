@@ -42,7 +42,7 @@ export default function StackSection() {
     };
 
     return (
-        <section id="toolkit" className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-slate-50/50 py-16 md:py-24">
+        <section id="toolkit" className="relative w-full min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-slate-50/50 py-12 md:py-16">
 
             {/* Background subtle grid */}
             <div className="absolute inset-0 opacity-[0.025] pointer-events-none"

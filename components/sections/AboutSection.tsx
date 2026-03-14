@@ -12,7 +12,7 @@ export default function AboutSection() {
     const containerRef = useRef(null);
 
     return (
-        <section id="journey" ref={containerRef} className={`relative w-full min-h-screen ${sectionGradients.about} py-24 sm:py-32 overflow-hidden`}>
+        <section id="journey" ref={containerRef} className={`relative w-full min-h-[85vh] ${sectionGradients.about} py-16 sm:py-20 overflow-hidden`}>
             <FloatingBlobs colors={blobColors.about} variant="section" />
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">

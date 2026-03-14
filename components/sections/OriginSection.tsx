@@ -14,7 +14,7 @@ export default function OriginSection() {
         <section
             id="origin"
             ref={containerRef}
-            className={`relative w-full min-h-screen ${sectionGradients.origin || 'bg-gradient-to-br from-white via-blue-50 to-indigo-50/30'} py-24 sm:py-32 overflow-hidden`}
+            className={`relative w-full min-h-[85vh] ${sectionGradients.origin || 'bg-gradient-to-br from-white via-blue-50 to-indigo-50/30'} py-16 sm:py-20 overflow-hidden`}
         >
             <FloatingBlobs colors={blobColors.origin || ['bg-blue-200/40', 'bg-indigo-200/40']} variant="section" />
 

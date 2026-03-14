@@ -23,7 +23,7 @@ export default function WorkSection() {
     }, []);
 
     return (
-        <section id="builds" className={`relative w-full min-h-screen flex items-center justify-center overflow-hidden ${sectionGradients.work} py-16 md:py-24`}>
+        <section id="builds" className={`relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden ${sectionGradients.work} py-12 md:py-16`}>
             <FloatingBlobs colors={blobColors.work} />
 
             <div ref={sectionRef} className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6">
