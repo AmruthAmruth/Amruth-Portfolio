@@ -9,105 +9,90 @@ export default function Footer() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const scrollToSection = (id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
-    const internalNav = [
-        { name: 'Launch', id: 'launch' },
-        { name: 'Origin', id: 'origin' },
-        { name: 'Toolkit', id: 'toolkit' },
-        { name: 'Builds', id: 'builds' },
-        { name: 'Journey', id: 'journey' },
-        { name: 'Connect', id: 'connect' },
-    ];
-
     return (
-        <footer className="w-full bg-[#0a0a0a] border-t border-white/5 py-12 md:py-16 relative overflow-hidden">
-            {/* Subtle Gradient Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-500/[0.02] pointer-events-none" />
-            
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="flex flex-col lg:flex-row justify-between items-start gap-12 mb-12">
-                    {/* Identity & Tagline */}
-                    <div className="max-w-sm space-y-6">
-                        <div>
-                            <h3 className="text-2xl font-bold text-white tracking-tighter mb-2">
-                                {personalInfo.name.toUpperCase()}<span className="text-blue-500">.</span>
-                            </h3>
-                            <p className="text-gray-400 text-sm leading-relaxed font-mono">
-                                {personalInfo.tagline}
-                            </p>
-                        </div>
-                        
-                        <div className="flex flex-col gap-3">
-                            <a 
-                                href={`mailto:${contactEmail}`}
-                                className="inline-flex items-center gap-3 text-sm text-gray-400 hover:text-blue-400 transition-colors group"
-                            >
-                                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-blue-500/10 transition-colors">
-                                    <Mail className="w-4 h-4" />
-                                </div>
-                                <span>{contactEmail}</span>
-                            </a>
-                        </div>
-                    </div>
+        <footer className="w-full relative bg-white overflow-hidden border-t border-slate-200/60 font-sans mt-auto">
+            {/* Elegant Top Divider Glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-[1px] bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
 
-                    {/* Navigation Links */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-12 gap-y-4 font-mono">
-                        <div className="contents">
-                            {internalNav.map((link) => (
-                                <button
-                                    key={link.name}
-                                    onClick={() => scrollToSection(link.id)}
-                                    className="text-[11px] uppercase tracking-widest text-gray-500 hover:text-white transition-colors text-left"
-                                >
-                                    {link.name}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
+            <div className="max-w-screen-xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 relative z-10">
 
-                    {/* Social Uplinks */}
-                    <div className="flex flex-wrap gap-3">
+                {/* 1. Brand & Copyright */}
+                <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="flex flex-col items-center md:items-start gap-1"
+                >
+                    <div className="flex items-center gap-2 group cursor-pointer" onClick={scrollToTop}>
+                        <span className="font-bold text-slate-800 tracking-tight text-lg group-hover:text-blue-600 transition-colors duration-300">
+                            {personalInfo.name}
+                        </span>
+                        <motion.span
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                            className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]"
+                        />
+                    </div>
+                    <span className="text-[13px] text-slate-400 font-medium tracking-tight">
+                        © {new Date().getFullYear()} · Crafting Experiences
+                    </span>
+                </motion.div>
+
+                {/* 2. Compact Links & Socials (Floating Pill) */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 bg-slate-50/80 rounded-2xl px-6 py-3 border border-slate-100/50 backdrop-blur-md shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] ring-1 ring-white/50"
+                >
+                    {/* Mail */}
+                    <a
+                        href={`mailto:${contactEmail}`}
+                        className="flex items-center gap-2 text-[14px] font-semibold text-slate-600 hover:text-blue-600 transition-colors duration-300 group"
+                    >
+                        <Mail className="w-[14px] h-[14px] text-slate-400 group-hover:text-blue-500 transition-colors" />
+                        <span className="hidden sm:inline">Connect</span>
+                    </a>
+
+                    <div className="w-px h-4 bg-slate-200 hidden sm:block" />
+
+                    {/* Socials */}
+                    <div className="flex items-center gap-5">
                         {socialLinks.map((link) => (
                             <a
                                 key={link.name}
                                 href={link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-10 h-10 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/10 transition-all flex items-center justify-center text-gray-400 hover:text-white"
+                                className="text-[14px] font-semibold text-slate-500 hover:text-blue-600 transition-all duration-300 hover:-translate-y-0.5"
                                 aria-label={link.ariaLabel}
                             >
-                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d={link.icon} />
-                                </svg>
+                                {link.name.toLowerCase()}
                             </a>
                         ))}
                     </div>
-                </div>
+                </motion.div>
 
-                {/* Bottom Bar */}
-                <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-6 text-[10px] font-mono text-gray-600 uppercase tracking-widest">
-                    <div className="flex items-center gap-4">
-                        <span>© 2026 {personalInfo.name.split(' ')[0]}</span>
-                        <span className="w-1 h-1 bg-gray-800 rounded-full" />
-                        <span>System Stable</span>
+                {/* 3. Status & Back to Top */}
+                <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="flex items-center gap-4"
+                >
+                    <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50/50 border border-emerald-100/30">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+                        <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Available</span>
                     </div>
 
-                    <div className="flex items-center gap-8">
-                        <button 
-                            onClick={scrollToTop}
-                            className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors group"
-                        >
-                            <span>Origin Point</span>
-                            <ArrowUp className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
-                        </button>
-                    </div>
-                </div>
+                    <button
+                        onClick={scrollToTop}
+                        className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.03)] text-slate-400 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50/50 hover:-translate-y-1 transition-all duration-500 group"
+                        aria-label="Back to top"
+                    >
+                        <ArrowUp className="w-4 h-4 transition-transform duration-500 group-hover:-translate-y-0.5" />
+                    </button>
+                </motion.div>
             </div>
         </footer>
     );

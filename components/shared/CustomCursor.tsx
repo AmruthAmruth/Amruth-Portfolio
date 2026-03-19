@@ -32,17 +32,14 @@ export default function CustomCursor({ color = "blue" }: { color?: string }) {
     }, [currentImage]);
 
     useEffect(() => {
-        // Detect touch devices to avoid custom cursor on mobile
-        const isTouchDevice = () => {
-            return (('ontouchstart' in window) ||
-                (navigator.maxTouchPoints > 0));
-        };
-
-        if (isTouchDevice()) return;
-
+        const isTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
+        
+        // Always visible on desktop; on mobile, only if we are doing the gesture
         setIsVisible(true);
-        // Hide default cursor
-        document.body.style.cursor = 'none';
+
+        if (!isTouch) {
+            document.body.style.cursor = 'none';
+        }
 
         const moveCursor = (e: MouseEvent) => {
             mouseX.set(e.clientX);
@@ -64,48 +61,93 @@ export default function CustomCursor({ color = "blue" }: { color?: string }) {
             setIsHovering(false);
         };
 
-        // Add hover listeners to clickable elements
+        // Mobile touch handlers
+        let lastTouchTime = 0;
+        const handleTouchStart = (e: TouchEvent) => {
+            const touch = e.touches[0];
+            mouseX.set(touch.clientX);
+            mouseY.set(touch.clientY);
+            
+            const now = Date.now();
+            if (now - lastTouchTime < 300) {
+                // Secondary tap of a double tap
+                setIsExpanding(true);
+            }
+            lastTouchTime = now;
+            setIsHovering(true);
+        };
+
+        const handleTouchMove = (e: TouchEvent) => {
+            const touch = e.touches[0];
+            mouseX.set(touch.clientX);
+            mouseY.set(touch.clientY);
+        };
+
+        const handleTouchEnd = () => {
+            setIsExpanding(false);
+            setIsHovering(false);
+        };
+
+        // Desktop Only Listeners
+        if (!isTouch) {
+            window.addEventListener('mousemove', moveCursor);
+            window.addEventListener('mousedown', handleMouseDown);
+            window.addEventListener('mouseup', handleMouseUp);
+        } else {
+            // Mobile Only Listeners
+            window.addEventListener('touchstart', handleTouchStart);
+            window.addEventListener('touchmove', handleTouchMove);
+            window.addEventListener('touchend', handleTouchEnd);
+        }
+
+        // Add hover listeners to clickable elements (Desktop Only)
         const handleLinkHover = () => setIsHovering(true);
         const handleLinkLeave = () => setIsHovering(false);
 
-        window.addEventListener('mousemove', moveCursor);
-        window.addEventListener('mousedown', handleMouseDown);
-        window.addEventListener('mouseup', handleMouseUp);
+        let elements: NodeListOf<Element> = [] as any;
+        let observer: MutationObserver | null = null;
 
-        // Dynamically attach listeners to interactive elements
-        const addListeners = () => {
-            const interactiveElements = document.querySelectorAll('a, button, input, textarea, label, [role="button"], .cursor-hover');
-            interactiveElements.forEach((el) => {
-                el.addEventListener('mouseenter', handleLinkHover);
-                el.addEventListener('mouseleave', handleLinkLeave);
+        if (!isTouch) {
+            const addListeners = () => {
+                const interactiveElements = document.querySelectorAll('a, button, input, textarea, label, [role="button"], .cursor-hover');
+                interactiveElements.forEach((el) => {
+                    el.addEventListener('mouseenter', handleLinkHover);
+                    el.addEventListener('mouseleave', handleLinkLeave);
+                });
+                return interactiveElements;
+            };
+
+            elements = addListeners();
+
+            observer = new MutationObserver(() => {
+                addListeners();
             });
-            return interactiveElements; // Return for cleanup
-        };
-
-        const elements = addListeners();
-
-        // Optional: MutationObserver to handle dynamic content
-        const observer = new MutationObserver(() => {
-            // Re-attach listeners when DOM changes (simplified approach)
-            const newElements = addListeners();
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
+            observer.observe(document.body, { childList: true, subtree: true });
+        }
 
         return () => {
-            window.removeEventListener('mousemove', moveCursor);
-            window.removeEventListener('mousedown', handleMouseDown);
-            window.removeEventListener('mouseup', handleMouseUp);
-            document.body.style.cursor = 'auto';
-            observer.disconnect();
-
-            elements.forEach((el) => {
-                el.removeEventListener('mouseenter', handleLinkHover);
-                el.removeEventListener('mouseleave', handleLinkLeave);
-            });
+            if (!isTouch) {
+                window.removeEventListener('mousemove', moveCursor);
+                window.removeEventListener('mousedown', handleMouseDown);
+                window.removeEventListener('mouseup', handleMouseUp);
+                document.body.style.cursor = 'auto';
+                if (observer) observer.disconnect();
+                elements.forEach((el) => {
+                    el.removeEventListener('mouseenter', handleLinkHover);
+                    el.removeEventListener('mouseleave', handleLinkLeave);
+                });
+            } else {
+                window.removeEventListener('touchstart', handleTouchStart);
+                window.removeEventListener('touchmove', handleTouchMove);
+                window.removeEventListener('touchend', handleTouchEnd);
+            }
         };
     }, [mouseX, mouseY]);
 
     if (!isVisible) return null;
+
+    // Detect if we are on touch to hide the default small dot
+    const isTouchDevice = (typeof window !== 'undefined') && (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
 
     return (
         <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden">
@@ -118,8 +160,9 @@ export default function CustomCursor({ color = "blue" }: { color?: string }) {
                     y: cursorY,
                 }}
                 animate={{
-                    width: isExpanding ? 500 : (isHovering ? 100 : 50),
-                    height: isExpanding ? 500 : (isHovering ? 100 : 50),
+                    width: isExpanding ? (isTouchDevice ? 300 : 500) : (isTouchDevice ? (isHovering ? 0 : 0) : (isHovering ? 100 : 50)),
+                    height: isExpanding ? (isTouchDevice ? 300 : 500) : (isTouchDevice ? (isHovering ? 0 : 0) : (isHovering ? 100 : 50)),
+                    opacity: isTouchDevice ? (isExpanding ? 1 : 0) : 1,
                     borderRadius: "50%",
                     scale: isHovering && !isExpanding ? 1.2 : 1,
                     border: isHovering || isExpanding ? "2px solid rgba(59, 130, 246, 0.5)" : "2px solid rgba(255, 255, 255, 0.2)",

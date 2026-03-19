@@ -44,6 +44,7 @@ const systemDesign = {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     >
+                        <span className="sr-only">Amruth Shyju | </span>
                         Architecting for <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
                             Scale and Clarity.
@@ -116,10 +117,10 @@ const systemDesign = {
                                         {codeSnippet.trim().split('\n').map((line, i) => (
                                             <motion.div
                                                 key={i}
-                                                initial={{ opacity: 0, x: -10 }}
+                                                initial={{ opacity: 0, x: -20 }}
                                                 animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: 1.2 + (i * 0.1) }}
-                                                className="table-row"
+                                                transition={{ duration: 0.4, delay: 1.0 + (i * 0.15), ease: "easeOut" }}
+                                                className="table-row whitespace-nowrap"
                                             >
                                                 <span className="table-cell select-none text-gray-600 text-right pr-4 w-8">{i + 1}</span>
                                                 <span className="table-cell" dangerouslySetInnerHTML={{

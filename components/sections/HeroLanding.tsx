@@ -13,14 +13,12 @@ export default function HeroLanding() {
 
     // Auto-advance slideshow
     useEffect(() => {
-        const timer = setInterval(() => {
+        const timer = setTimeout(() => {
             setCurrentSlide((prev) => (prev + 1) % totalSlides);
         }, 8000); // 8 seconds per slide
 
-        return () => clearInterval(timer);
-    }, []);
-
-
+        return () => clearTimeout(timer);
+    }, [currentSlide, totalSlides]);
 
     const setSlide = (index: number) => {
         setCurrentSlide(index);
@@ -77,12 +75,23 @@ export default function HeroLanding() {
                     <button
                         key={index}
                         onClick={() => setSlide(index)}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${currentSlide === index
-                            ? 'bg-blue-500 w-8'
-                            : 'bg-gray-400 hover:bg-gray-300'
+                        className={`relative h-2 rounded-full overflow-hidden transition-all duration-500 ${currentSlide === index
+                            ? 'w-16 bg-white/30 backdrop-blur-sm'
+                            : 'w-2 bg-gray-400/50 hover:bg-gray-400'
                             }`}
                         aria-label={`Go to slide ${index + 1}`}
-                    />
+                    >
+                        {currentSlide === index && (
+                            <motion.div
+                                key={`progress-${currentSlide}`}
+                                className="absolute inset-y-0 left-0 bg-blue-500 rounded-full origin-left"
+                                initial={{ scaleX: 0 }}
+                                animate={{ scaleX: 1 }}
+                                transition={{ duration: 8, ease: "linear" }}
+                                style={{ width: '100%' }}
+                            />
+                        )}
+                    </button>
                 ))}
             </div>
 

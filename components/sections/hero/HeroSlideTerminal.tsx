@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { personalInfo, socialLinks } from '@/constants/social';
+import { Code2, TerminalSquare, Database, Layers, Cpu } from 'lucide-react';
 import FloatingBlobs from '@/components/shared/FloatingBlobs';
 import { blobColors } from '@/constants/theme';
 import SectionDivider from '@/components/shared/SectionDivider';
@@ -29,6 +30,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     >
+                        <span className="sr-only">Amruth Shyju | </span>
                         Defining My <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                             Engineering Identity.
@@ -83,18 +85,19 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                         </div>
                     </motion.div>
 
-                    {/* Tech Stack Mini Row (Optional integration) */}
+                    {/* Tech Stack Mini Row */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: 1.2 }}
                     >
                         <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Powered By</p>
-                        <div className="flex gap-4 grayscale hover:grayscale-0 transition-all duration-500">
-                            {/* Icons stripped down for cleanliness - keeping it simple or just dots */}
-                            {['#61DAFB', '#000000', '#3178C6', '#06B6D4', '#339933'].map((color, i) => (
-                                <div key={i} className="w-2 h-2 rounded-full" style={{ backgroundColor: color }} />
-                            ))}
+                        <div className="flex gap-4 text-gray-400">
+                            <Code2 className="w-5 h-5 hover:text-[#61DAFB] transition-colors duration-300 cursor-pointer" />
+                            <TerminalSquare className="w-5 h-5 hover:text-black transition-colors duration-300 cursor-pointer" />
+                            <Layers className="w-5 h-5 hover:text-[#3178C6] transition-colors duration-300 cursor-pointer" />
+                            <Cpu className="w-5 h-5 hover:text-[#06B6D4] transition-colors duration-300 cursor-pointer" />
+                            <Database className="w-5 h-5 hover:text-[#339933] transition-colors duration-300 cursor-pointer" />
                         </div>
                     </motion.div>
                 </div>
@@ -126,7 +129,14 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                 <div>
                                     <div className="flex gap-2 text-green-400">
                                         <span>$</span>
-                                        <span className="text-white">whoami</span>
+                                        <motion.div 
+                                            initial={{ width: 0 }} 
+                                            animate={{ width: "100%" }} 
+                                            transition={{ duration: 0.4, delay: 0.8, ease: "linear" }}
+                                            className="overflow-hidden whitespace-nowrap text-white"
+                                        >
+                                            whoami
+                                        </motion.div>
                                     </div>
                                     <motion.div
                                         initial={{ opacity: 0 }}
@@ -138,10 +148,17 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                     </motion.div>
                                 </div>
 
-                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.0 }}>
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }}>
                                     <div className="flex gap-2 text-green-400">
                                         <span>$</span>
-                                        <span className="text-white">role</span>
+                                        <motion.div 
+                                            initial={{ width: 0 }} 
+                                            animate={{ width: "100%" }} 
+                                            transition={{ duration: 0.4, delay: 2.0, ease: "linear" }}
+                                            className="overflow-hidden whitespace-nowrap text-white"
+                                        >
+                                            role
+                                        </motion.div>
                                     </div>
                                     <motion.div
                                         initial={{ opacity: 0 }}
@@ -153,10 +170,17 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                     </motion.div>
                                 </motion.div>
 
-                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.2 }}>
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.0 }}>
                                     <div className="flex gap-2 text-green-400">
                                         <span>$</span>
-                                        <span className="text-white">philosophy</span>
+                                        <motion.div 
+                                            initial={{ width: 0 }} 
+                                            animate={{ width: "100%" }} 
+                                            transition={{ duration: 0.6, delay: 3.2, ease: "linear" }}
+                                            className="overflow-hidden whitespace-nowrap text-white"
+                                        >
+                                            philosophy
+                                        </motion.div>
                                     </div>
                                     <motion.div
                                         initial={{ opacity: 0 }}

@@ -58,7 +58,7 @@ export default function WorkSection() {
                     />
 
                     {/* ── DESKTOP IDE WINDOW (md and above) ── */}
-                    <div 
+                    <div
                         className="hidden md:flex flex-col h-[800px] lg:h-[850px] w-full max-w-7xl mx-auto shadow-2xl rounded-lg overflow-hidden border border-[#333] bg-[#1e1e1e]"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
@@ -155,7 +155,7 @@ export default function WorkSection() {
                     </div>
 
                     {/* ── MOBILE PROJECT CARDS (below md) ── */}
-                    <div 
+                    <div
                         className="md:hidden space-y-4"
                         onTouchStart={() => setIsHovered(true)}
                         onTouchEnd={() => setIsHovered(false)}

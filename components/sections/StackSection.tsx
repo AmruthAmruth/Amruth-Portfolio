@@ -79,8 +79,8 @@ export default function StackSection() {
                 />
 
                 {/* ── Postman Window ── */}
-                <div 
-                    className="w-full rounded-xl overflow-hidden border border-[#2d2d2d] shadow-2xl flex flex-col bg-[#242424]" 
+                <div
+                    className="w-full rounded-xl overflow-hidden border border-[#2d2d2d] shadow-2xl flex flex-col bg-[#242424]"
                     style={{ minHeight: '560px', maxHeight: '700px' }}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
@@ -182,11 +182,10 @@ export default function StackSection() {
                                     <button
                                         key={cat}
                                         onClick={() => setActiveCategory(cat)}
-                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-medium transition-colors whitespace-nowrap border shrink-0 ${
-                                            isActive
-                                                ? 'bg-[#2d2d2d] border-[#444] text-[#e8692c]'
-                                                : 'bg-transparent border-transparent text-[#888] hover:bg-[#262626] hover:text-[#ccc]'
-                                        }`}
+                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-medium transition-colors whitespace-nowrap border shrink-0 ${isActive
+                                            ? 'bg-[#2d2d2d] border-[#444] text-[#e8692c]'
+                                            : 'bg-transparent border-transparent text-[#888] hover:bg-[#262626] hover:text-[#ccc]'
+                                            }`}
                                     >
                                         <CatIcon className="w-3.5 h-3.5" style={{ color: isActive ? m.accent : '#888' }} />
                                         <span>{cat}</span>
