@@ -101,55 +101,44 @@ export default function OriginSection() {
                     </div>
 
                     {/* ── Rendered Markdown Content ── */}
-                    <div className="px-6 sm:px-10 lg:px-16 py-10 bg-[#0d1117] font-sans text-[#c9d1d9] leading-relaxed">
+                    <div className="px-5 sm:px-10 lg:px-16 py-8 sm:py-10 bg-[#0d1117] font-sans text-[#c9d1d9] leading-relaxed">
                         <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: 0.1 }}
-                            className="max-w-3xl mx-auto space-y-10"
+                            className="max-w-3xl mx-auto space-y-8"
                         >
                             {/* ── H1 + Badges ── */}
-                            <div className="space-y-5 pb-8 border-b border-[#21262d]">
+                            <div className="space-y-4 pb-6 border-b border-[#21262d]">
                                 <h1 className="text-[28px] sm:text-[34px] font-extrabold tracking-tight text-[#e6edf3] leading-tight">
                                     Hi, I&apos;m Amruth 👋
                                 </h1>
                                 <div className="flex flex-wrap gap-2">
                                     <Badge color="blue">Software Engineer</Badge>
-                                    <Badge color="gray">Full-Stack Developer (MERN)</Badge>
+                                    <Badge color="gray">Full-Stack (MERN)</Badge>
                                     <Badge color="green">Open to Opportunities</Badge>
                                 </div>
-                                <p className="text-[15px] text-[#8b949e] leading-7">
-                                    I build full-stack web applications — from intuitive user interfaces to scalable backend systems. I care deeply about writing clean, maintainable code and creating software that is both reliable and thoughtfully designed.
-                                </p>
                             </div>
 
                             {/* ── About Me ── */}
                             <Section title="About Me">
-                                <div className="space-y-4 text-[15px] text-[#8b949e] leading-7">
-                                    <p>
-                                        I am a <strong className="text-[#e6edf3] font-semibold">self-taught Full Stack Developer</strong> passionate about building reliable and scalable web applications. My journey started with a simple HTML page and gradually evolved into developing full-stack applications using React, Node.js, and modern databases.
-                                    </p>
-                                    <p>
-                                        While I enjoy working across the entire stack, my primary interest lies in <strong className="text-[#e6edf3] font-semibold">backend development</strong> — designing APIs, structuring systems, and ensuring applications perform reliably under real-world conditions.
-                                    </p>
-                                    <p>
-                                        I believe great software is built through clear thinking, clean architecture, and continuous learning. My goal is to build systems that are not only functional, but <em className="text-[#c9d1d9]">maintainable and scalable</em> as they evolve.
-                                    </p>
-                                </div>
+                                <p className="text-[14.5px] sm:text-[15px] text-[#8b949e] leading-relaxed">
+                                    I'm a <strong className="text-[#e6edf3] font-semibold">self-taught Full Stack Developer</strong> passionate about building reliable and scalable web applications. While I enjoy working across the entire stack, my primary focus is on <strong className="text-[#e6edf3] font-semibold">backend development</strong>—designing clean APIs, structuring robust databases, and applying clean architecture.
+                                </p>
                             </Section>
 
                             {/* ── Current Focus ── */}
                             <Section title="Current Focus">
-                                <ul className="space-y-2.5">
+                                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     {[
-                                        { icon: '⚙️', text: 'Designing scalable backend APIs and production-ready services.' },
-                                        { icon: '🎨', text: 'Building responsive, intuitive user interfaces with modern React.' },
-                                        { icon: '📐', text: 'Studying system design patterns and clean architecture principles.' },
-                                        { icon: '🚀', text: 'Optimizing performance, API efficiency, and application scalability.' },
+                                        { icon: '⚙️', text: 'Building scalable backend APIs' },
+                                        { icon: '🎨', text: 'Crafting intuitive React UIs' },
+                                        { icon: '📐', text: 'Applying clean architecture' },
+                                        { icon: '🚀', text: 'Optimizing app performance' },
                                     ].map(({ icon, text }) => (
-                                        <li key={text} className="flex items-start gap-3 text-[15px] text-[#8b949e] leading-7">
-                                            <span className="mt-0.5 shrink-0 text-base">{icon}</span>
+                                        <li key={text} className="flex items-center gap-3 text-[14.5px] text-[#8b949e]">
+                                            <span className="shrink-0 text-base">{icon}</span>
                                             <span>{text}</span>
                                         </li>
                                     ))}
@@ -157,16 +146,16 @@ export default function OriginSection() {
                             </Section>
 
                             {/* ── Quick Stats row ── */}
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 border-t border-[#21262d] pt-8">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 border-t border-[#21262d] pt-6">
                                 {[
-                                    { label: 'Experience', value: 'Self-taught developer', note: '1.5+ years learning and building projects' },
-                                    { label: 'Stack', value: 'MERN', note: 'React · Node.js · Express · MongoDB' },
-                                    { label: 'Focus', value: 'Backend systems', note: 'APIs · Database design · Application architecture' },
+                                    { label: 'Experience', value: 'Self-taught', note: '1.5+ yrs building projects' },
+                                    { label: 'Stack', value: 'MERN', note: 'React · Node.js · MongoDB' },
+                                    { label: 'Focus', value: 'Backend', note: 'APIs · Database · Arch' },
                                 ].map(({ label, value, note }) => (
-                                    <div key={label} className="bg-[#161b22] border border-[#21262d] rounded-lg px-4 py-3.5 space-y-0.5">
-                                        <p className="text-[11.5px] font-mono text-[#8b949e] uppercase tracking-widest">{label}</p>
-                                        <p className="text-[15px] sm:text-[16px] font-bold text-[#e6edf3]">{value}</p>
-                                        <p className="text-[11.5px] text-[#6e7681] mt-1">{note}</p>
+                                    <div key={label} className="bg-[#161b22] border border-[#21262d] rounded-lg px-3.5 py-3 space-y-0.5">
+                                        <p className="text-[10px] sm:text-[11px] font-mono text-[#8b949e] uppercase tracking-wider">{label}</p>
+                                        <p className="text-[14px] sm:text-[15px] font-bold text-[#e6edf3]">{value}</p>
+                                        <p className="text-[11px] text-[#6e7681] mt-0.5 truncate">{note}</p>
                                     </div>
                                 ))}
                             </div>
