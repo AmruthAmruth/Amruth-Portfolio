@@ -17,10 +17,26 @@ export default function WorkSection() {
     const sectionRef = useRef(null);
     const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
     const [selectedProject, setSelectedProject] = useState<Project>(projects[0]);
+    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         if (projects.length > 0) setSelectedProject(projects[0]);
     }, []);
+
+    // Auto-switch projects every 5 seconds unless hovered
+    useEffect(() => {
+        if (isHovered || projects.length === 0) return;
+
+        const interval = setInterval(() => {
+            setSelectedProject(current => {
+                const currentIndex = projects.findIndex(p => p.title === current.title);
+                const nextIndex = (currentIndex + 1) % projects.length;
+                return projects[nextIndex];
+            });
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [selectedProject, isHovered]);
 
     return (
         <section id="builds" className={`relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden ${sectionGradients.work} py-12 md:py-16`}>
@@ -42,7 +58,11 @@ export default function WorkSection() {
                     />
 
                     {/* ── DESKTOP IDE WINDOW (md and above) ── */}
-                    <div className="hidden md:flex flex-col h-[800px] lg:h-[850px] w-full max-w-7xl mx-auto shadow-2xl rounded-lg overflow-hidden border border-[#333] bg-[#1e1e1e]">
+                    <div 
+                        className="hidden md:flex flex-col h-[800px] lg:h-[850px] w-full max-w-7xl mx-auto shadow-2xl rounded-lg overflow-hidden border border-[#333] bg-[#1e1e1e]"
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                    >
 
                         {/* Title Bar */}
                         <div className="h-8 bg-[#3c3c3c] flex items-center justify-center relative select-none shrink-0">
@@ -135,7 +155,11 @@ export default function WorkSection() {
                     </div>
 
                     {/* ── MOBILE PROJECT CARDS (below md) ── */}
-                    <div className="md:hidden space-y-4">
+                    <div 
+                        className="md:hidden space-y-4"
+                        onTouchStart={() => setIsHovered(true)}
+                        onTouchEnd={() => setIsHovered(false)}
+                    >
                         {/* Mobile Selector Tabs */}
                         <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
                             {projects.map(p => (
