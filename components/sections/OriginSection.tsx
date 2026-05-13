@@ -17,6 +17,22 @@ export default function OriginSection() {
             className={`relative w-full min-h-[85vh] ${sectionGradients.origin || 'bg-gradient-to-br from-white via-blue-50 to-indigo-50/30'} py-16 sm:py-20 overflow-hidden`}
         >
             <FloatingBlobs colors={blobColors.origin || ['bg-blue-200/40', 'bg-indigo-200/40']} variant="section" />
+            
+            {/* ── Background Grid ── */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{
+                    backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
+                    backgroundSize: '100px 100px'
+                }}
+            />
+
+            {/* ── Decorative background text ── */}
+            <div className="absolute top-40 left-10 text-[120px] font-black text-slate-900/[0.02] select-none pointer-events-none hidden xl:block uppercase tracking-tighter">
+                Architecture
+            </div>
+            <div className="absolute bottom-40 right-10 text-[120px] font-black text-slate-900/[0.02] select-none pointer-events-none hidden xl:block uppercase tracking-tighter">
+                Systems
+            </div>
 
             {/* ── Centered wrapper — same width as Origin / Work ── */}
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">

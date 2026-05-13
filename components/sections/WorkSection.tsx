@@ -42,6 +42,32 @@ export default function WorkSection() {
         <section id="builds" className={`relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden ${sectionGradients.work} py-12 md:py-16`}>
             <FloatingBlobs colors={blobColors.work} />
 
+            {/* ── Background Grid ── */}
+            <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
+                style={{
+                    backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
+                    backgroundSize: '120px 120px'
+                }}
+            />
+
+            {/* ── Decorative side code ── */}
+            <div className="absolute top-20 right-10 text-xs font-mono text-slate-400/10 select-none pointer-events-none hidden xl:block leading-relaxed">
+                {`{
+  "project": "distributed-systems",
+  "status": "scaling",
+  "load": "99.9%",
+  "latency": "12ms"
+}`}
+            </div>
+            <div className="absolute bottom-20 left-10 text-xs font-mono text-slate-400/10 select-none pointer-events-none hidden xl:block leading-relaxed">
+                {`class Architecture {
+  constructor() {
+    this.scalable = true;
+    this.robust = true;
+  }
+}`}
+            </div>
+
             <div ref={sectionRef} className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6">
                 <motion.div
                     variants={containerVariants}

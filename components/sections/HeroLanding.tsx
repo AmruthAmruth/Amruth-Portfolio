@@ -97,13 +97,24 @@ export default function HeroLanding() {
 
             {/* Scroll Indicator (Global) */}
             <motion.div
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20 cursor-pointer opacity-70 hover:opacity-100 transition-opacity"
+                className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20 cursor-pointer"
                 onClick={() => document.getElementById('origin')?.scrollIntoView({ behavior: 'smooth' })}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 2.5 }}
             >
-                {/* Optional: Add scroll indicator back if needed, currently simplistic */}
+                <div className="flex flex-col items-center gap-2">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-400">
+                        Explore
+                    </span>
+                    <div className="w-[1px] h-12 bg-gradient-to-b from-blue-500 to-transparent relative overflow-hidden">
+                        <motion.div 
+                            animate={{ y: [0, 48, 0] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute top-0 left-0 w-full h-4 bg-blue-500/50 blur-[1px]"
+                        />
+                    </div>
+                </div>
             </motion.div>
         </section>
     );
