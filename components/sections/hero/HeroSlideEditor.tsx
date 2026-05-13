@@ -14,18 +14,21 @@ export default function HeroSlideEditor({ isActive }: HeroSlideEditorProps) {
     if (!isActive) return null;
 
     const codeSnippet = `
-const systemDesign = {
+const engineeringPrinciples = {
   foundation: "Clean Architecture",
+
   focus: [
     "Scalability",
     "Maintainability",
     "Performance"
   ],
-  commitTo: [
-    "Code others love to read",
-    "Systems businesses rely on"
+
+  mindset: [
+    "Build with clarity",
+    "Think long-term",
+    "Optimize responsibly"
   ]
-};
+}
 `;
 
     return (
@@ -58,7 +61,7 @@ const systemDesign = {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
-                        Embracing clean architecture to deliver maintainable, high-performance code that businesses can rely on.
+                        Designing software that stays organized, maintainable, and reliable as products evolve.
                     </motion.p>
 
                     {/* CTA */}
@@ -87,16 +90,26 @@ const systemDesign = {
                 <motion.div
                     className="order-1 sm:order-2 hidden sm:flex w-full max-w-sm sm:max-w-none perspective-1000 items-center justify-center h-full"
                     initial={{ opacity: 0, x: 50, rotateY: 10 }}
-                    animate={{ opacity: 1, x: 0, rotateY: 5 }}
-                    transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+                    animate={{ 
+                        opacity: 1, 
+                        x: 0, 
+                        rotateY: 5,
+                        y: [0, -10, 0]
+                    }}
+                    transition={{ 
+                        opacity: { duration: 1, delay: 0.4 },
+                        x: { duration: 1, delay: 0.4 },
+                        rotateY: { duration: 1, delay: 0.4 },
+                        y: { duration: 5, repeat: Infinity, ease: "easeInOut" }
+                    }}
                     whileHover={{ rotateY: 0, scale: 1.02 }}
                 >
                     <div className="relative w-full">
                         {/* Glow Effect Background */}
-                        <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-2xl blur-2xl -z-10 opacity-70 animate-pulse" />
+                        <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-2xl blur-3xl -z-10 opacity-70 animate-pulse" />
 
                         {/* Editor Window */}
-                        <div className="overflow-hidden rounded-xl bg-[#1e1e1e] backdrop-blur-xl border border-white/10 shadow-2xl transform transition-transform duration-500">
+                        <div className="overflow-hidden rounded-xl bg-[#1e1e1e]/90 backdrop-blur-xl border border-white/10 shadow-2xl transform transition-transform duration-500">
                             {/* Editor Header */}
                             <div className="flex items-center gap-2 px-4 py-3 bg-[#252526] border-b border-black/20">
                                 <div className="flex gap-1.5 opacity-60 hover:opacity-100 transition-opacity">
@@ -104,46 +117,60 @@ const systemDesign = {
                                     <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
                                     <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
                                 </div>
-                                <div className="ml-4 text-xs text-gray-400 font-sans flex items-center gap-2">
-                                    <span className="bg-[#1e1e1e] px-2 py-1 rounded text-blue-400">developer.ts</span>
-                                    <span className="opacity-50">src/types</span>
+                                <div className="ml-4 text-[10px] text-gray-400 font-sans flex items-center gap-2">
+                                    <span className="bg-[#1e1e1e] px-2 py-0.5 rounded text-blue-400 border border-white/5">engineering.ts</span>
+                                    <span className="opacity-40 tracking-wider">src/core</span>
                                 </div>
                             </div>
 
                             {/* Editor Content */}
-                            <div className="p-6 font-mono text-sm leading-relaxed overflow-x-auto">
+                            <div className="p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto min-h-[300px]">
                                 <pre>
-                                    <code className="language-typescript">
-                                        {codeSnippet.trim().split('\n').map((line, i) => (
+                                    <code>
+                                        {codeSnippet.trim().split('\n').map((line, i, arr) => (
                                             <motion.div
                                                 key={i}
-                                                initial={{ opacity: 0, x: -20 }}
+                                                initial={{ opacity: 0, x: -10 }}
                                                 animate={{ opacity: 1, x: 0 }}
-                                                transition={{ duration: 0.4, delay: 1.0 + (i * 0.15), ease: "easeOut" }}
+                                                transition={{ duration: 0.3, delay: 1.2 + (i * 0.1), ease: "easeOut" }}
                                                 className="table-row whitespace-nowrap"
                                             >
-                                                <span className="table-cell select-none text-gray-600 text-right pr-4 w-8">{i + 1}</span>
+                                                <span className="table-cell select-none text-gray-600 text-right pr-6 w-8 opacity-40">{i + 1}</span>
                                                 <span className="table-cell" dangerouslySetInnerHTML={{
-                                                    __html: line
-                                                        .replace(/([a-zA-Z0-9_]+):/g, '<span class="text-[#9cdcfe]">$1</span>:') // keys
-                                                        .replace(/: ([a-zA-Z0-9_\[\]]+)/g, ': <span class="text-[#4ec9b0]">$1</span>') // types
-                                                        .replace(/(".*?")/g, '<span class="text-[#ce9178]">$1</span>') // strings
-                                                        .replace(/(const|interface|return)/g, '<span class="text-[#569cd6]">$1</span>') // keywords
-                                                        .replace(/(\/\/.*)/g, '<span class="text-[#6a9955]">$1</span>') // comments
+                                                    __html: line.replace(
+                                                        /(".*?")|(\bconst\b)|(\bengineeringPrinciples\b)|(\b[a-zA-Z0-9_]+\b:)|([\[\]{}()])|(\/\/.*)/g,
+                                                        (match, str, kw, varName, key, bracket, comment) => {
+                                                            if (str) return `<span style="color: #ce9178">${str}</span>`;
+                                                            if (kw) return `<span style="color: #569cd6">${kw}</span>`;
+                                                            if (varName) return `<span style="color: #9cdcfe">${varName}</span>`;
+                                                            if (key) return `<span style="color: #9cdcfe">${key.slice(0, -1)}</span>:`;
+                                                            if (bracket) return `<span style="color: #d4d4d4">${bracket}</span>`;
+                                                            if (comment) return `<span style="color: #6a9955">${comment}</span>`;
+                                                            return match;
+                                                        }
+                                                    )
                                                 }} />
+                                                {/* Blinking Cursor on last line */}
+                                                {i === arr.length - 1 && (
+                                                    <motion.span
+                                                        animate={{ opacity: [1, 0, 1] }}
+                                                        transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                                                        className="inline-block w-[2px] h-[1.2em] bg-blue-500 ml-1 align-middle"
+                                                    />
+                                                )}
                                             </motion.div>
                                         ))}
                                     </code>
                                 </pre>
                             </div>
                             {/* Status Bar */}
-                            <div className="px-3 py-1 bg-[#007acc] text-white text-[10px] flex justify-between items-center font-sans">
-                                <div className="flex gap-3">
-                                    <span>main*</span>
-                                    <span>0 errors, 0 warnings</span>
+                            <div className="px-3 py-1 bg-[#007acc] text-white text-[9px] flex justify-between items-center font-sans">
+                                <div className="flex gap-3 opacity-90">
+                                    <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-white/20" /> main*</span>
+                                    <span>0 errors</span>
                                 </div>
-                                <div className="flex gap-3">
-                                    <span>Ln 12, Col 34</span>
+                                <div className="flex gap-3 opacity-90">
+                                    <span>Ln {codeSnippet.trim().split('\n').length}, Col 1</span>
                                     <span>UTF-8</span>
                                     <span>TypeScript</span>
                                 </div>

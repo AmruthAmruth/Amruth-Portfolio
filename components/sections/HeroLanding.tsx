@@ -11,14 +11,13 @@ export default function HeroLanding() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const totalSlides = 3; // Terminal, Editor, API
 
-    // Auto-advance slideshow
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setCurrentSlide((prev) => (prev + 1) % totalSlides);
-        }, 10000); // 8 seconds per slide
+    const nextSlide = () => {
+        setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    };
 
-        return () => clearTimeout(timer);
-    }, [currentSlide, totalSlides]);
+    const prevSlide = () => {
+        setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+    };
 
     const setSlide = (index: number) => {
         setCurrentSlide(index);
@@ -69,6 +68,28 @@ export default function HeroLanding() {
                 </AnimatePresence>
             </div>
 
+            {/* Manual Navigation Arrows */}
+            <div className="absolute inset-x-4 sm:inset-x-8 top-1/2 -translate-y-1/2 flex justify-between items-center z-40 pointer-events-none">
+                <button
+                    onClick={prevSlide}
+                    className="p-4 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white/50 hover:text-white hover:bg-white/10 transition-all pointer-events-auto"
+                    aria-label="Previous slide"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button
+                    onClick={nextSlide}
+                    className="p-4 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white/50 hover:text-white hover:bg-white/10 transition-all pointer-events-auto"
+                    aria-label="Next slide"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+
             {/* Navigation Dots */}
             <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-4">
                 {Array.from({ length: totalSlides }).map((_, index) => (
@@ -81,16 +102,6 @@ export default function HeroLanding() {
                             }`}
                         aria-label={`Go to slide ${index + 1}`}
                     >
-                        {currentSlide === index && (
-                            <motion.div
-                                key={`progress-${currentSlide}`}
-                                className="absolute inset-y-0 left-0 bg-blue-500 rounded-full origin-left"
-                                initial={{ scaleX: 0 }}
-                                animate={{ scaleX: 1 }}
-                                transition={{ duration: 8, ease: "linear" }}
-                                style={{ width: '100%' }}
-                            />
-                        )}
                     </button>
                 ))}
             </div>
