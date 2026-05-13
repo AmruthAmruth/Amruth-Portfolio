@@ -24,10 +24,15 @@ export default function HeroLanding() {
     };
 
     return (
-        <section id="launch" className={`relative min-h-screen w-full flex items-center justify-center overflow-hidden ${sectionGradients.hero}`}>
+        <section id="launch" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white">
+            {/* Subtle Grid Background for Stability and Flow */}
+            <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:32px_32px] opacity-40" />
+                <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-white" />
+            </div>
 
             {/* Slides Container */}
-            <div className="relative w-full h-full min-h-[90vh] flex items-center">
+            <div className="relative w-full h-full min-h-[90vh] flex items-center z-10">
                 <AnimatePresence mode="wait">
                     {currentSlide === 0 && (
                         <motion.div
@@ -72,19 +77,19 @@ export default function HeroLanding() {
             <div className="absolute inset-x-4 sm:inset-x-8 top-1/2 -translate-y-1/2 flex justify-between items-center z-40 pointer-events-none">
                 <button
                     onClick={prevSlide}
-                    className="p-4 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white/50 hover:text-white hover:bg-white/10 transition-all pointer-events-auto"
+                    className="p-3 sm:p-4 rounded-full bg-white/40 backdrop-blur-md border border-gray-100 text-gray-400 hover:text-gray-900 hover:bg-white hover:shadow-lg hover:shadow-gray-200/50 transition-all pointer-events-auto group"
                     aria-label="Previous slide"
                 >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 sm:w-6 h-6 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
                 </button>
                 <button
                     onClick={nextSlide}
-                    className="p-4 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white/50 hover:text-white hover:bg-white/10 transition-all pointer-events-auto"
+                    className="p-3 sm:p-4 rounded-full bg-white/40 backdrop-blur-md border border-gray-100 text-gray-400 hover:text-gray-900 hover:bg-white hover:shadow-lg hover:shadow-gray-200/50 transition-all pointer-events-auto group"
                     aria-label="Next slide"
                 >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 sm:w-6 h-6 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
@@ -96,12 +101,19 @@ export default function HeroLanding() {
                     <button
                         key={index}
                         onClick={() => setSlide(index)}
-                        className={`relative h-2 rounded-full overflow-hidden transition-all duration-500 ${currentSlide === index
-                            ? 'w-16 bg-white/30 backdrop-blur-sm'
-                            : 'w-2 bg-gray-400/50 hover:bg-gray-400'
+                        className={`relative h-1.5 rounded-full overflow-hidden transition-all duration-500 ${currentSlide === index
+                            ? 'w-12 bg-gray-900/10'
+                            : 'w-1.5 bg-gray-200 hover:bg-gray-400'
                             }`}
                         aria-label={`Go to slide ${index + 1}`}
                     >
+                        {currentSlide === index && (
+                            <motion.div
+                                layoutId="active-dot"
+                                className="absolute inset-0 bg-gray-900 rounded-full"
+                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            />
+                        )}
                     </button>
                 ))}
             </div>
@@ -115,14 +127,14 @@ export default function HeroLanding() {
                 transition={{ duration: 0.8, delay: 2.5 }}
             >
                 <div className="flex flex-col items-center gap-2">
-                    <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-slate-400">
+                    <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-gray-400">
                         Explore
                     </span>
-                    <div className="w-[1px] h-12 bg-gradient-to-b from-blue-500 to-transparent relative overflow-hidden">
+                    <div className="w-[1px] h-10 bg-gradient-to-b from-gray-300 to-transparent relative overflow-hidden">
                         <motion.div
-                            animate={{ y: [0, 48, 0] }}
+                            animate={{ y: [0, 40, 0] }}
                             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute top-0 left-0 w-full h-4 bg-blue-500/50 blur-[1px]"
+                            className="absolute top-0 left-0 w-full h-4 bg-gray-400/30 blur-[1px]"
                         />
                     </div>
                 </div>

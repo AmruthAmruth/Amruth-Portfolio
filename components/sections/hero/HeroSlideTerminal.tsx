@@ -16,7 +16,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
 
     return (
         <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center">
-            {/* Animated Floating Blobs - Kept consistent */}
+            {/* Animated Floating Blobs - Very subtle for white theme */}
             <FloatingBlobs colors={blobColors.hero} variant="hero" />
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[0.9fr_1.1fr] md:grid-cols-2 gap-8 lg:gap-12 items-center w-full h-full">
@@ -31,9 +31,9 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     >
                         <span className="sr-only">Amruth Shyju | </span>
-                        Building Systems <br />
+                        Architecting <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                            With Purpose.
+                            Scalable Systems.
                         </span>
                     </motion.h1>
 
@@ -44,7 +44,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
-                        A Full Stack Engineer focused on building reliable, scalable, and meaningful digital experiences.
+                        Full Stack Engineer crafting high-performance, maintainable digital solutions with an engineering-first mindset.
                     </motion.p>
 
                     {/* CTA & Socials Row */}
@@ -55,7 +55,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                         transition={{ duration: 0.8, delay: 0.8 }}
                     >
                         <button
-                            onClick={() => document.getElementById('origin')?.scrollIntoView({ behavior: 'smooth' })}
+                            onClick={() => document.getElementById('builds')?.scrollIntoView({ behavior: 'smooth' })}
                             className="group relative px-8 py-3.5 bg-gray-900 text-white text-lg font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/20"
                         >
                             <span className="relative z-10 flex items-center gap-2">
@@ -106,8 +106,16 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                 <motion.div
                     className="order-1 sm:order-2 hidden sm:flex w-full perspective-1000 items-center justify-center h-full"
                     initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+                    animate={{ 
+                        opacity: 1, 
+                        x: 0,
+                        y: [0, -10, 0]
+                    }}
+                    transition={{ 
+                        opacity: { duration: 1, delay: 0.4 },
+                        x: { duration: 1, delay: 0.4 },
+                        y: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+                    }}
                     whileHover={{ scale: 1.02 }}
                 >
                     <div className="relative w-full">
@@ -162,7 +170,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                             transition={{ duration: 0.4, delay: 2.0, ease: "linear" }}
                                             className="overflow-hidden whitespace-nowrap text-white"
                                         >
-                                            role
+                                            env
                                         </motion.div>
                                     </div>
                                     <motion.div
@@ -171,7 +179,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                         transition={{ delay: 2.4 }}
                                         className="pl-4 text-purple-300"
                                     >
-                                        Full Stack Engineer
+                                        Full Stack & Systems
                                     </motion.div>
                                 </motion.div>
 
@@ -193,9 +201,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                         transition={{ delay: 3.6 }}
                                         className="pl-4 text-gray-300"
                                     >
-                                        Building scalable backend systems<br />
-                                        with clean architecture and<br />
-                                        real-world impact.
+                                        Backend Architecture & Scalability
                                     </motion.div>
                                 </motion.div>
 
@@ -217,8 +223,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                         transition={{ delay: 4.8 }}
                                         className="pl-4 text-gray-300 italic"
                                     >
-                                        &quot;Good code works.<br />
-                                        Great systems last.&quot;
+                                        &quot;Logic is the beginning of wisdom, not the end.&quot;
                                         <motion.span
                                             animate={{ opacity: [0, 1, 0] }}
                                             transition={{ duration: 0.8, repeat: Infinity }}

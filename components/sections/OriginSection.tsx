@@ -17,7 +17,7 @@ export default function OriginSection() {
             className={`relative w-full min-h-[85vh] ${sectionGradients.origin || 'bg-gradient-to-br from-white via-blue-50 to-indigo-50/30'} py-16 sm:py-20 overflow-hidden`}
         >
             <FloatingBlobs colors={blobColors.origin || ['bg-blue-200/40', 'bg-indigo-200/40']} variant="section" />
-            
+
             {/* ── Background Grid ── */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
                 style={{
@@ -28,10 +28,10 @@ export default function OriginSection() {
 
             {/* ── Decorative background text ── */}
             <div className="absolute top-40 left-10 text-[120px] font-black text-slate-900/[0.02] select-none pointer-events-none hidden xl:block uppercase tracking-tighter">
-                Architecture
+                Logic
             </div>
             <div className="absolute bottom-40 right-10 text-[120px] font-black text-slate-900/[0.02] select-none pointer-events-none hidden xl:block uppercase tracking-tighter">
-                Systems
+                Abstract
             </div>
 
             {/* ── Centered wrapper — same width as Origin / Work ── */}
@@ -40,10 +40,10 @@ export default function OriginSection() {
                 {/* Section header */}
                 <div className="mb-12 text-center">
                     <SectionHeader
-                        title="Origin"
-                        subtitle="System Profile"
-                        description="A quick dive into my professional mindset and engineering philosophy."
-                        dataType="object"
+                        title="whoami"
+                        subtitle="system_profile.sh"
+                        description="Booting up the engineering mindset and architectural logic behind the developer."
+                        dataType="command"
                         gradient="from-indigo-400 to-cyan-400"
                         alignment="center"
                     />

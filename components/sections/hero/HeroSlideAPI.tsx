@@ -27,20 +27,20 @@ export default function HeroSlideAPI({ isActive }: HeroSlideAPIProps) {
 
     const jsonResponse = `
 {
-  "status": "Production Ready",
+  "status": "Online",
 
-  "capabilities": [
-    "Secure APIs",
-    "Real-Time Systems",
-    "Reliable Architecture"
+  "services": [
+    "Secure Node.js APIs",
+    "Real-Time WebSockets",
+    "Distributed Systems"
   ],
 
-  "focus": "Building products that stay fast, stable, and scalable."
+  "vision": "Deploying robust ecosystems that power modern digital experiences."
 }`;
 
     return (
         <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center">
-            {/* Animated Floating Blobs */}
+            {/* Animated Floating Blobs - Subtle for white theme */}
             <FloatingBlobs colors={blobColors.work} variant="section" />
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid sm:grid-cols-2 gap-8 lg:gap-20 items-center w-full h-full">
@@ -55,9 +55,9 @@ export default function HeroSlideAPI({ isActive }: HeroSlideAPIProps) {
                         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     >
                         <span className="sr-only">Amruth Shyju | </span>
-                        Building Products <br />
+                        Deploying Seamless <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-emerald-600">
-                            People Can Depend On.
+                            Digital Solutions.
                         </span>
                     </motion.h1>
 
@@ -68,7 +68,7 @@ export default function HeroSlideAPI({ isActive }: HeroSlideAPIProps) {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
-                        Creating secure and reliable systems designed for performance, stability, and real-world usage.
+                        Providing robust APIs and integrated services designed for maximum performance, stability, and global impact.
                     </motion.p>
 
                     {/* CTA */}
@@ -78,7 +78,7 @@ export default function HeroSlideAPI({ isActive }: HeroSlideAPIProps) {
                         transition={{ duration: 0.8, delay: 0.8 }}
                     >
                         <button
-                            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                            onClick={() => document.getElementById('connect')?.scrollIntoView({ behavior: 'smooth' })}
                             className="group relative px-8 py-3.5 bg-gray-900 text-white text-lg font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-teal-500/20"
                         >
                             <span className="relative z-10 flex items-center gap-2">

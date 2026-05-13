@@ -70,9 +70,9 @@ export default function StackSection() {
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full flex flex-col">
                 <SectionHeader
-                    title="Toolkit"
-                    subtitle="Technologies I use to build scalable, modern applications."
-                    description="The languages, tools, and environments I leverage to bring systems to life."
+                    title="Environment"
+                    subtitle="package.json"
+                    description="The modern runtime dependencies and dev-tools I leverage to compile vision into production-ready reality."
                     dataType="interface"
                     gradient={accentGradients.blueCyan}
                     className="mb-10"

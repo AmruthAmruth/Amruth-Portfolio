@@ -75,9 +75,9 @@ export default function WorkSection() {
                     animate={isInView ? 'visible' : 'hidden'}
                 >
                     <SectionHeader
-                        title="Builds"
-                        subtitle="Built with precision, scalability, and performance in mind."
-                        description="A curated selection of my most significant architectural challenges and solutions."
+                        title="Executables"
+                        subtitle="chmod +x builds"
+                        description="A directory of high-performance modules and architectural solutions built with precision."
                         dataType="object"
                         gradient={accentGradients.blueTeal}
                         className="mb-8 md:mb-12"

@@ -31,9 +31,9 @@ export default function CollaborateSection() {
                 >
                     {/* Section Title */}
                     <SectionHeader
-                        title="Connect"
-                        subtitle="Let's build something together"
-                        description="Have a project in mind, a role to fill, or just want to say hello? Drop me a message — I read every one."
+                        title="Transmission"
+                        subtitle="await connection.sync()"
+                        description="Establishing a secure data uplink for new projects, roles, and future-ready collaborations."
                         dataType="function"
                         gradient="from-blue-600 to-purple-600"
                         className="mb-12"

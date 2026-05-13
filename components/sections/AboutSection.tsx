@@ -19,9 +19,9 @@ export default function AboutSection() {
 
                 <div className="mb-12 text-center">
                     <SectionHeader
-                        title="Journey"
-                        subtitle="Commit History"
-                        description="Where the journey began — tracing the evolution from a first static page to distributed systems."
+                        title="Timeline"
+                        subtitle="git log --graph"
+                        description="Tracing the commit history from the initial spark to complex system architectures."
                         dataType="array"
                         gradient="from-blue-400 to-green-400"
                         alignment="center"

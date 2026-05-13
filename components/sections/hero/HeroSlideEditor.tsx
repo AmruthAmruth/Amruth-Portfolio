@@ -14,26 +14,22 @@ export default function HeroSlideEditor({ isActive }: HeroSlideEditorProps) {
     if (!isActive) return null;
 
     const codeSnippet = `
-const engineeringPrinciples = {
-  foundation: "Clean Architecture",
+const systemConfig = {
+  core: "Clean Architecture",
 
-  focus: [
-    "Scalability",
-    "Maintainability",
-    "Performance"
+  modules: [
+    "Scalable",
+    "Robust",
+    "Secure"
   ],
 
-  mindset: [
-    "Build with clarity",
-    "Think long-term",
-    "Optimize responsibly"
-  ]
+  deployment: "Continuous Excellence"
 }
 `;
 
     return (
         <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center">
-            {/* Animated Floating Blobs - Variant ensures subtle difference if needed */}
+            {/* Animated Floating Blobs - Subtle for white theme */}
             <FloatingBlobs colors={blobColors.collaborate} variant="hero" />
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid sm:grid-cols-2 gap-8 lg:gap-20 items-center w-full h-full">
@@ -48,9 +44,9 @@ const engineeringPrinciples = {
                         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     >
                         <span className="sr-only">Amruth Shyju | </span>
-                        Architecting for <br />
+                        Engineering with <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
-                            Scale and Clarity.
+                            Absolute Precision.
                         </span>
                     </motion.h1>
 
@@ -61,7 +57,7 @@ const engineeringPrinciples = {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
-                        Designing software that stays organized, maintainable, and reliable as products evolve.
+                        Writing clean, modular code that evolves seamlessly with complex product requirements and system growth.
                     </motion.p>
 
                     {/* CTA */}
@@ -71,7 +67,7 @@ const engineeringPrinciples = {
                         transition={{ duration: 0.8, delay: 0.8 }}
                     >
                         <button
-                            onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
+                            onClick={() => document.getElementById('builds')?.scrollIntoView({ behavior: 'smooth' })}
                             className="group relative px-8 py-3.5 bg-gray-900 text-white text-lg font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20"
                         >
                             <span className="relative z-10 flex items-center gap-2">
