@@ -19,10 +19,10 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
             {/* Animated Floating Blobs - Kept consistent */}
             <FloatingBlobs colors={blobColors.hero} variant="hero" />
 
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid sm:grid-cols-2 gap-8 lg:gap-20 items-center w-full h-full">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[0.9fr_1.1fr] md:grid-cols-2 gap-8 lg:gap-12 items-center w-full h-full">
 
                 {/* Left Column: Text & CTA */}
-                <div className="text-center sm:text-left order-2 sm:order-1 flex flex-col items-center sm:items-start justify-center h-full pt-16 sm:pt-0">
+                <div className="text-center sm:text-left order-2 sm:order-1 flex flex-col items-center sm:items-start justify-center h-full pt-16 sm:pt-0 lg:pr-8">
                     {/* Headline */}
                     <motion.h1
                         className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-4 sm:mb-6 leading-tight"
@@ -31,9 +31,9 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     >
                         <span className="sr-only">Amruth Shyju | </span>
-                        Defining My <br />
+                        Building Systems <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                            Engineering Identity.
+                            With Purpose.
                         </span>
                     </motion.h1>
 
@@ -44,7 +44,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
-                        A Full Stack Engineer driven by a simple philosophy: good code works, but great systems last.
+                        A Full Stack Engineer focused on building reliable, scalable, and meaningful digital experiences.
                     </motion.p>
 
                     {/* CTA & Socials Row */}
@@ -59,7 +59,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                             className="group relative px-8 py-3.5 bg-gray-900 text-white text-lg font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/20"
                         >
                             <span className="relative z-10 flex items-center gap-2">
-                                Begin Journey
+                                Explore My Work
                                 <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
@@ -104,24 +104,29 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
 
                 {/* Right Column: Terminal — hidden on xs, shown on sm+ */}
                 <motion.div
-                    className="order-1 sm:order-2 hidden sm:flex w-full max-w-sm sm:max-w-none perspective-1000 items-center justify-center h-full"
-                    initial={{ opacity: 0, x: 50, rotateY: -10 }}
-                    animate={{ opacity: 1, x: 0, rotateY: -5 }}
+                    className="order-1 sm:order-2 hidden sm:flex w-full perspective-1000 items-center justify-center h-full"
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-                    whileHover={{ rotateY: 0, scale: 1.02 }}
+                    whileHover={{ scale: 1.02 }}
                 >
                     <div className="relative w-full">
                         {/* Glow Effect Background */}
                         <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-2xl blur-2xl -z-10 opacity-70 animate-pulse" />
 
                         {/* Terminal Window */}
-                        <div className="overflow-hidden rounded-xl bg-gray-900/95 backdrop-blur-xl border border-white/10 shadow-2xl transform transition-transform duration-500">
+                        <div className="overflow-hidden rounded-xl bg-[#0d1117]/95 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] transform transition-transform duration-500">
                             {/* Terminal Header */}
-                            <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/5">
-                                <div className="w-3 h-3 rounded-full bg-red-500" />
-                                <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                                <div className="w-3 h-3 rounded-full bg-green-500" />
-                                <div className="ml-auto text-xs text-gray-500 font-mono">zsh — 80x24</div>
+                            <div className="flex items-center gap-2 px-4 py-3 bg-[#161b22]/50 border-b border-white/5">
+                                <div className="flex gap-1.5">
+                                    <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]" />
+                                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]" />
+                                    <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]" />
+                                </div>
+                                <div className="ml-auto flex items-center gap-2 text-[10px] text-gray-500 font-mono uppercase tracking-wider">
+                                    <TerminalSquare className="w-3 h-3" />
+                                    <span>zsh — 120x40</span>
+                                </div>
                             </div>
 
                             {/* Terminal Content */}
@@ -144,7 +149,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                         transition={{ delay: 1.2 }}
                                         className="pl-4 text-blue-300 font-bold"
                                     >
-                                        {personalInfo.name}
+                                        Amruth Shyju
                                     </motion.div>
                                 </div>
 
@@ -176,7 +181,31 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                         <motion.div
                                             initial={{ width: 0 }}
                                             animate={{ width: "100%" }}
-                                            transition={{ duration: 0.6, delay: 3.2, ease: "linear" }}
+                                            transition={{ duration: 0.4, delay: 3.2, ease: "linear" }}
+                                            className="overflow-hidden whitespace-nowrap text-white"
+                                        >
+                                            focus
+                                        </motion.div>
+                                    </div>
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ delay: 3.6 }}
+                                        className="pl-4 text-gray-300"
+                                    >
+                                        Building scalable backend systems<br />
+                                        with clean architecture and<br />
+                                        real-world impact.
+                                    </motion.div>
+                                </motion.div>
+
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 4.2 }}>
+                                    <div className="flex gap-2 text-green-400">
+                                        <span>$</span>
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: "100%" }}
+                                            transition={{ duration: 0.6, delay: 4.4, ease: "linear" }}
                                             className="overflow-hidden whitespace-nowrap text-white"
                                         >
                                             philosophy
@@ -185,10 +214,11 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                     <motion.div
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
-                                        transition={{ delay: 3.6 }}
+                                        transition={{ delay: 4.8 }}
                                         className="pl-4 text-gray-300 italic"
                                     >
-                                        &quot;Good code works. Great systems last. I build the latter.&quot;
+                                        &quot;Good code works.<br />
+                                        Great systems last.&quot;
                                         <motion.span
                                             animate={{ opacity: [0, 1, 0] }}
                                             transition={{ duration: 0.8, repeat: Infinity }}

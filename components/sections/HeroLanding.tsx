@@ -15,7 +15,7 @@ export default function HeroLanding() {
     useEffect(() => {
         const timer = setTimeout(() => {
             setCurrentSlide((prev) => (prev + 1) % totalSlides);
-        }, 8000); // 8 seconds per slide
+        }, 10000); // 8 seconds per slide
 
         return () => clearTimeout(timer);
     }, [currentSlide, totalSlides]);
