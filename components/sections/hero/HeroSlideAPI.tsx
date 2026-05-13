@@ -130,25 +130,25 @@ export default function HeroSlideAPI({ isActive }: HeroSlideAPIProps) {
                             <div className="relative p-6 font-mono text-sm leading-relaxed overflow-x-auto bg-white min-h-[200px]">
                                 <AnimatePresence mode="wait">
                                     {isFetching ? (
-                                        <motion.div 
+                                        <motion.div
                                             key="loading"
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             exit={{ opacity: 0 }}
                                             className="absolute inset-0 flex flex-col items-center justify-center bg-white"
                                         >
-                                            <motion.div 
-                                                animate={{ rotate: 360 }} 
+                                            <motion.div
+                                                animate={{ rotate: 360 }}
                                                 transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
                                                 className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full mb-4"
                                             />
                                             <p className="text-gray-400 font-sans text-xs animate-pulse">Awaiting connection...</p>
                                         </motion.div>
                                     ) : (
-                                        <motion.div 
+                                        <motion.div
                                             key="response"
-                                            initial={{ opacity: 0, y: 10 }} 
-                                            animate={{ opacity: 1, y: 0 }} 
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
                                             transition={{ duration: 0.5 }}
                                         >
                                             <div className="text-xs text-gray-400 mb-2 flex justify-between border-b border-gray-100 pb-2">

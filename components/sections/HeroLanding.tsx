@@ -108,7 +108,7 @@ export default function HeroLanding() {
                         Explore
                     </span>
                     <div className="w-[1px] h-12 bg-gradient-to-b from-blue-500 to-transparent relative overflow-hidden">
-                        <motion.div 
+                        <motion.div
                             animate={{ y: [0, 48, 0] }}
                             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                             className="absolute top-0 left-0 w-full h-4 bg-blue-500/50 blur-[1px]"

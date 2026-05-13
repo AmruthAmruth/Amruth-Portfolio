@@ -129,9 +129,9 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                 <div>
                                     <div className="flex gap-2 text-green-400">
                                         <span>$</span>
-                                        <motion.div 
-                                            initial={{ width: 0 }} 
-                                            animate={{ width: "100%" }} 
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: "100%" }}
                                             transition={{ duration: 0.4, delay: 0.8, ease: "linear" }}
                                             className="overflow-hidden whitespace-nowrap text-white"
                                         >
@@ -151,9 +151,9 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }}>
                                     <div className="flex gap-2 text-green-400">
                                         <span>$</span>
-                                        <motion.div 
-                                            initial={{ width: 0 }} 
-                                            animate={{ width: "100%" }} 
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: "100%" }}
                                             transition={{ duration: 0.4, delay: 2.0, ease: "linear" }}
                                             className="overflow-hidden whitespace-nowrap text-white"
                                         >
@@ -173,9 +173,9 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.0 }}>
                                     <div className="flex gap-2 text-green-400">
                                         <span>$</span>
-                                        <motion.div 
-                                            initial={{ width: 0 }} 
-                                            animate={{ width: "100%" }} 
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: "100%" }}
                                             transition={{ duration: 0.6, delay: 3.2, ease: "linear" }}
                                             className="overflow-hidden whitespace-nowrap text-white"
                                         >
