@@ -6,6 +6,7 @@ import SectionHeader from '@/components/shared/SectionHeader';
 import FloatingBlobs from '@/components/shared/FloatingBlobs';
 import { blobColors, sectionGradients } from '@/constants/theme';
 import SectionDivider from '@/components/shared/SectionDivider';
+import { Book, FileText, Clock, Shield, Briefcase, Cpu, Code2, Sparkles, Layout, Database, GitBranch, Github as GithubIcon, Terminal } from 'lucide-react';
 
 export default function OriginSection() {
     const containerRef = useRef(null);
@@ -18,13 +19,14 @@ export default function OriginSection() {
         >
             <FloatingBlobs colors={blobColors.origin || ['bg-blue-200/40', 'bg-indigo-200/40']} variant="section" />
 
-            {/* ── Background Grid ── */}
+            {/* ── Background Grid & Noise ── */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
                 style={{
                     backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
                     backgroundSize: '100px 100px'
                 }}
             />
+            <div className="absolute inset-0 opacity-[0.015] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
             {/* ── Decorative background text ── */}
             <div className="absolute top-40 left-10 text-[120px] font-black text-slate-900/[0.02] select-none pointer-events-none hidden xl:block uppercase tracking-tighter">
@@ -50,71 +52,91 @@ export default function OriginSection() {
                 </div>
 
                 {/* ── GitHub-style README window ── */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                    className="w-full rounded-xl overflow-hidden border border-[#30363d] bg-[#0d1117] shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
-                >
-                    {/* ── macOS Title Bar ── */}
-                    <div className="relative flex items-center px-4 py-3 bg-[#161b22] border-b border-[#30363d]">
-                        {/* Traffic lights */}
-                        <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 rounded-full bg-[#ff5f57] hover:scale-110 transition-transform" />
-                            <div className="w-3 h-3 rounded-full bg-[#febc2e] hover:scale-110 transition-transform" />
-                            <div className="w-3 h-3 rounded-full bg-[#28c840] hover:scale-110 transition-transform" />
+                <div className="relative group">
+                    {/* Ambient Glow */}
+                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 via-indigo-500/20 to-cyan-500/20 rounded-[22px] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                    
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '-80px' }}
+                        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                        className="relative w-full rounded-xl overflow-hidden border border-[#30363d] bg-[#0d1117] shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-shadow duration-500 group-hover:shadow-[0_25px_70px_rgba(0,0,0,0.6)]"
+                    >
+                        {/* ── macOS Title Bar ── */}
+                        <div className="relative flex items-center px-4 py-3 bg-[#161b22] border-b border-[#30363d]">
+                            {/* Traffic lights */}
+                            <div className="flex items-center gap-2">
+                                <div className="w-3 h-3 rounded-full bg-[#ff5f57] border border-black/10 hover:brightness-110 transition-all" />
+                                <div className="w-3 h-3 rounded-full bg-[#febc2e] border border-black/10 hover:brightness-110 transition-all" />
+                                <div className="w-3 h-3 rounded-full bg-[#28c840] border border-black/10 hover:brightness-110 transition-all" />
+                            </div>
+                            
+                            {/* Centered repo title */}
+                            <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
+                                <Book className="w-3.5 h-3.5 text-[#8b949e]" />
+                                <div className="flex items-center gap-1">
+                                    <span className="text-[12.5px] font-semibold text-[#c9d1d9] hover:text-[#58a6ff] transition-colors cursor-pointer">amruth</span>
+                                    <span className="text-[12.5px] text-[#8b949e]/40">/</span>
+                                    <span className="text-[12.5px] font-semibold text-[#c9d1d9] hover:text-[#58a6ff] transition-colors cursor-pointer">amruth.dev</span>
+                                </div>
+                                <span className="hidden sm:flex items-center gap-1 text-[10px] font-mono text-[#6e7681] border border-[#30363d] bg-[#0d1117] px-1.5 py-0.5 rounded leading-none">
+                                    README.md
+                                </span>
+                            </div>
+                            <div className="ml-auto flex items-center gap-3">
+                                <div className="flex items-center gap-1 text-[#8b949e] hover:text-[#c9d1d9] transition-colors cursor-pointer">
+                                    <Sparkles className="w-3.5 h-3.5" />
+                                    <span className="text-[11px] font-medium hidden xs:inline">Featured</span>
+                                </div>
+                            </div>
                         </div>
-                        {/* Centered repo title */}
-                        <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1.5">
-                            {/* Repo book icon */}
-                            <svg className="w-3.5 h-3.5 text-[#8b949e]" fill="currentColor" viewBox="0 0 16 16">
-                                <path fillRule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z" />
-                            </svg>
-                            <span className="text-[12.5px] font-semibold text-[#c9d1d9]">amruth</span>
-                            <span className="text-[12.5px] text-[#8b949e]/40">/</span>
-                            <span className="text-[12.5px] font-semibold text-[#c9d1d9]">amruth.dev</span>
-                            <span className="hidden sm:inline text-[11px] font-mono text-[#6e7681] ml-1 border border-[#30363d] bg-[#0d1117] px-1.5 py-0.5 rounded">
-                                README.md
-                            </span>
-                        </div>
-                        <div className="ml-auto w-14" />
-                    </div>
 
-                    {/* ── Repo sub-header: file path + public badge ── */}
-                    <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 bg-[#161b22] border-b border-[#30363d]">
-                        <div className="flex items-center gap-2 text-[13px] text-[#8b949e]">
-                            {/* File icon */}
-                            <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 16 16">
-                                <path fillRule="evenodd" d="M2 1.75C2 .784 2.784 0 3.75 0h6.586a.25.25 0 01.177.073l2.664 2.664a.25.25 0 01.073.177V14.25A1.75 1.75 0 0111.5 16h-7.75A1.75 1.75 0 012 14.25V1.75zm1.75-.25a.25.25 0 00-.25.25v12.5c0 .138.112.25.25.25h7.75a.25.25 0 00.25-.25V4.671a.25.25 0 00-.073-.177l-2.06-2.06a.25.25 0 00-.177-.073H3.75z" />
-                            </svg>
-                            <span className="font-mono font-semibold text-[#c9d1d9]">README.md</span>
-                            <span className="text-[#8b949e]/50">·</span>
-                            <span>Last updated</span>
-                            <span className="font-semibold text-[#c9d1d9]">2025</span>
+                        {/* ── Repo sub-header: file path + public badge ── */}
+                        <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-[#0d1117] border-b border-[#30363d]">
+                            <div className="flex items-center gap-2 text-[13px] text-[#8b949e]">
+                                <FileText className="w-4 h-4 shrink-0 text-[#8b949e]" />
+                                <span className="font-mono font-medium text-[#c9d1d9]">README.md</span>
+                                <span className="text-[#8b949e]/30">|</span>
+                                <div className="flex items-center gap-1.5 group/update cursor-help">
+                                    <Clock className="w-3.5 h-3.5 group-hover/update:text-[#58a6ff] transition-colors" />
+                                    <span className="text-[12px]">Last updated</span>
+                                    <span className="font-semibold text-[#c9d1d9]">2h ago</span>
+                                </div>
+                            </div>
+                            <div className="hidden sm:flex items-center gap-3">
+                                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-[#3fb950]/30 bg-[#3fb950]/5 group/public cursor-help transition-all hover:bg-[#3fb950]/10">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#3fb950] animate-pulse" />
+                                    <span className="text-[11px] font-semibold text-[#3fb950]">Live</span>
+                                </div>
+                                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-[#58a6ff]/30 bg-[#58a6ff]/5 group/hire cursor-help transition-all hover:bg-[#58a6ff]/10">
+                                    <GithubIcon className="w-3 h-3 text-[#58a6ff]" />
+                                    <span className="text-[11px] font-semibold text-[#58a6ff]">Public Repository</span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="hidden sm:flex items-center gap-2">
-                            <span className="text-[11.5px] font-semibold text-[#3fb950] border border-[#2ea043]/40 bg-[#2ea043]/10 rounded-full px-2.5 py-0.5">
-                                Public
-                            </span>
-                            <span className="hidden md:inline text-[11.5px] font-semibold text-[#58a6ff] border border-[#388bfd]/40 bg-[#1f6feb]/10 rounded-full px-2.5 py-0.5">
-                                Open to Hire
-                            </span>
-                        </div>
-                    </div>
 
-                    {/* ── Preview / Code / Blame tabs ── */}
-                    <div className="flex items-center gap-0 px-4 sm:px-6 py-0 bg-[#0d1117] border-b border-[#30363d] overflow-x-auto">
-                        <button className="px-4 py-2.5 text-[12.5px] font-semibold text-[#e6edf3] border-b-2 border-[#f78166] whitespace-nowrap">
-                            Preview
-                        </button>
-                        <button className="px-4 py-2.5 text-[12.5px] font-semibold text-[#8b949e] hover:text-[#c9d1d9] transition-colors whitespace-nowrap">
-                            Code
-                        </button>
-                        <button className="px-4 py-2.5 text-[12.5px] font-semibold text-[#8b949e] hover:text-[#c9d1d9] transition-colors whitespace-nowrap">
-                            Blame
-                        </button>
-                    </div>
+                        {/* ── Tabs Container ── */}
+                        <div className="flex items-center gap-1 px-4 sm:px-6 bg-[#0d1117] border-b border-[#30363d] overflow-x-auto no-scrollbar">
+                            <div className="relative">
+                                <button className="px-4 py-3 text-[13px] font-semibold text-[#e6edf3] whitespace-nowrap flex items-center gap-2">
+                                    <Layout className="w-3.5 h-3.5" />
+                                    Preview
+                                </button>
+                                <motion.div 
+                                    layoutId="activeTab"
+                                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#f78166] rounded-t-full"
+                                />
+                            </div>
+                            <button className="px-4 py-3 text-[13px] font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#161b22] transition-all whitespace-nowrap flex items-center gap-2 rounded-t-md">
+                                <Terminal className="w-3.5 h-3.5" />
+                                Code
+                            </button>
+                            <button className="px-4 py-3 text-[13px] font-medium text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#161b22] transition-all whitespace-nowrap flex items-center gap-2 rounded-t-md">
+                                <GitBranch className="w-3.5 h-3.5" />
+                                Blame
+                            </button>
+                        </div>
 
                     {/* ── Rendered Markdown Content ── */}
                     <div className="px-5 sm:px-10 lg:px-16 py-8 sm:py-10 bg-[#0d1117] font-sans text-[#c9d1d9] leading-relaxed">
@@ -123,55 +145,89 @@ export default function OriginSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: 0.1 }}
-                            className="max-w-3xl mx-auto space-y-8"
+                            className="max-w-3xl mx-auto space-y-10"
                         >
                             {/* ── H1 + Badges ── */}
-                            <div className="space-y-4 pb-6 border-b border-[#21262d]">
-                                <h1 className="text-[28px] sm:text-[34px] font-extrabold tracking-tight text-[#e6edf3] leading-tight">
-                                    Hi, I&apos;m Amruth 👋
-                                </h1>
-                                <div className="flex flex-wrap gap-2">
-                                    <Badge color="blue">Software Engineer</Badge>
-                                    <Badge color="gray">Full-Stack (MERN)</Badge>
-                                    <Badge color="green">Open to Opportunities</Badge>
+                            <div className="space-y-6 pb-8 border-b border-[#21262d]">
+                                <div className="space-y-2">
+                                    <h1 className="text-[32px] sm:text-[42px] font-extrabold tracking-tight text-[#e6edf3] leading-tight flex items-center flex-wrap gap-x-4">
+                                        Hi, I&apos;m Amruth
+                                        <motion.span 
+                                            animate={{ rotate: [0, 20, 0] }}
+                                            transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+                                            className="origin-bottom-right inline-block"
+                                        >
+                                            👋
+                                        </motion.span>
+                                        <motion.span
+                                            animate={{ opacity: [1, 0] }}
+                                            transition={{ duration: 0.8, repeat: Infinity, ease: "steps(2)" }}
+                                            className="inline-block w-[3px] h-[32px] sm:h-[42px] bg-[#58a6ff] ml-1"
+                                        />
+                                    </h1>
+                                    <p className="text-[16px] text-[#8b949e] font-medium max-w-xl">
+                                        Software Engineer focused on building systems that stay reliable, maintainable, and easy to grow over time.
+                                    </p>
+                                </div>
+                                <div className="flex flex-wrap gap-2.5">
+                                    <Badge icon={<Shield className="w-3 h-3" />} color="blue">Backend Systems</Badge>
+                                    <Badge icon={<Cpu className="w-3 h-3" />} color="gray">MERN Stack</Badge>
+                                    <Badge icon={<Sparkles className="w-3 h-3" />} color="green">Open to Roles</Badge>
                                 </div>
                             </div>
 
                             {/* ── About Me ── */}
-                            <Section title="About Me">
-                                <p className="text-[14.5px] sm:text-[15px] text-[#8b949e] leading-relaxed">
-                                    I'm a <strong className="text-[#e6edf3] font-semibold">self-taught Full Stack Developer</strong> passionate about building reliable and scalable web applications. While I enjoy working across the entire stack, my primary focus is on <strong className="text-[#e6edf3] font-semibold">backend development</strong>—designing clean APIs, structuring robust databases, and applying clean architecture.
+                            <Section title="Philosophy">
+                                <p className="text-[15px] sm:text-[16px] text-[#8b949e] leading-relaxed">
+                                    I believe engineering is about more than just solving immediate problems—it&apos;s about <strong className="text-[#e6edf3] font-semibold">architecting for the long-term</strong>. I value clarity, intentionality, and systems that are as simple as possible but no simpler.
+                                </p>
+                                <p className="text-[15px] sm:text-[16px] text-[#8b949e] leading-relaxed">
+                                    My approach is rooted in <strong className="text-[#e6edf3] font-semibold">clean architecture</strong> and type-safe systems, ensuring that every piece of code contributes to a stable and scalable ecosystem.
                                 </p>
                             </Section>
 
-                            {/* ── Current Focus ── */}
-                            <Section title="Current Focus">
-                                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {/* ── Focus Areas ── */}
+                            <Section title="Engineering Focus">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
                                     {[
-                                        { icon: '⚙️', text: 'Building scalable backend APIs' },
-                                        { icon: '🎨', text: 'Crafting intuitive React UIs' },
-                                        { icon: '📐', text: 'Applying clean architecture' },
-                                        { icon: '🚀', text: 'Optimizing app performance' },
-                                    ].map(({ icon, text }) => (
-                                        <li key={text} className="flex items-center gap-3 text-[14.5px] text-[#8b949e]">
-                                            <span className="shrink-0 text-base">{icon}</span>
-                                            <span>{text}</span>
-                                        </li>
+                                        { icon: <Database className="w-4 h-4" />, text: 'Resilient Backend Systems', detail: 'Distributed architecture & APIs' },
+                                        { icon: <Layout className="w-4 h-4" />, text: 'Modular UI Architecture', detail: 'Type-safe & reusable components' },
+                                        { icon: <Shield className="w-4 h-4" />, text: 'System Security & Auth', detail: 'Encryption & access control' },
+                                        { icon: <Sparkles className="w-4 h-4" />, text: 'Performance Engineering', detail: 'Latency & resource optimization' },
+                                    ].map(({ icon, text, detail }, i) => (
+                                        <motion.div 
+                                            key={text} 
+                                            initial={{ opacity: 0, x: -10 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0.1 * i }}
+                                            className="group/focus flex items-start gap-4"
+                                        >
+                                            <div className="mt-1 p-2 rounded-md bg-[#161b22] border border-[#30363d] group-hover/focus:border-[#58a6ff]/50 transition-colors">
+                                                <span className="text-[#8b949e] group-hover/focus:text-[#58a6ff] transition-colors">{icon}</span>
+                                            </div>
+                                            <div className="space-y-0.5">
+                                                <p className="text-[14.5px] font-semibold text-[#e6edf3]">{text}</p>
+                                                <p className="text-[12px] text-[#8b949e]">{detail}</p>
+                                            </div>
+                                        </motion.div>
                                     ))}
-                                </ul>
+                                </div>
                             </Section>
 
                             {/* ── Quick Stats row ── */}
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 border-t border-[#21262d] pt-6">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 border-t border-[#21262d] pt-8">
                                 {[
-                                    { label: 'Experience', value: 'Self-taught', note: '1.5+ yrs building projects' },
-                                    { label: 'Stack', value: 'MERN', note: 'React · Node.js · MongoDB' },
-                                    { label: 'Focus', value: 'Backend', note: 'APIs · Database · Arch' },
-                                ].map(({ label, value, note }) => (
-                                    <div key={label} className="bg-[#161b22] border border-[#21262d] rounded-lg px-3.5 py-3 space-y-0.5">
-                                        <p className="text-[10px] sm:text-[11px] font-mono text-[#8b949e] uppercase tracking-wider">{label}</p>
-                                        <p className="text-[14px] sm:text-[15px] font-bold text-[#e6edf3]">{value}</p>
-                                        <p className="text-[11px] text-[#6e7681] mt-0.5 truncate">{note}</p>
+                                    { label: 'System Uptime', value: '1.5+ Years', note: 'Project consistency', icon: <Clock className="w-3 h-3" /> },
+                                    { label: 'Current Version', value: 'v2.4.0-stable', note: 'Continuous evolution', icon: <GitBranch className="w-3 h-3" /> },
+                                    { label: 'Environment', value: 'Full-Stack', note: 'Production ready', icon: <Briefcase className="w-3 h-3" /> },
+                                ].map(({ label, value, note, icon }) => (
+                                    <div key={label} className="group/stat bg-[#161b22] border border-[#30363d] rounded-xl px-4 py-4 space-y-1.5 transition-all hover:bg-[#1c2128] hover:border-[#58a6ff]/30">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-[#8b949e] group-hover/stat:text-[#58a6ff] transition-colors">{icon}</span>
+                                            <p className="text-[10px] font-mono text-[#8b949e] uppercase tracking-widest">{label}</p>
+                                        </div>
+                                        <p className="text-[16px] font-bold text-[#e6edf3] tracking-tight">{value}</p>
+                                        <p className="text-[11px] text-[#6e7681] group-hover/stat:text-[#8b949e] transition-colors">{note}</p>
                                     </div>
                                 ))}
                             </div>
@@ -179,17 +235,28 @@ export default function OriginSection() {
                     </div>
 
                     {/* ── Status Bar ── */}
-                    <div className="flex items-center justify-between px-4 sm:px-6 py-2 bg-[#161b22] border-t border-[#30363d] text-[11.5px] font-mono text-[#8b949e]">
-                        <span>amruth.dev / README.md</span>
-                        <span className="flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#3fb950]" />
-                            actively maintained
-                        </span>
+                    <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 bg-[#161b22] border-t border-[#30363d] text-[11px] font-mono text-[#8b949e]">
+                        <div className="flex items-center gap-3">
+                            <span className="flex items-center gap-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#3fb950]" />
+                                main
+                            </span>
+                            <span className="text-[#30363d]">/</span>
+                            <span>amruth.dev</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <span className="hidden xs:inline">UTF-8</span>
+                            <span className="flex items-center gap-1.5">
+                                <span className="w-2 h-2 rounded-full bg-[#3fb950] opacity-50" />
+                                production
+                            </span>
+                        </div>
                     </div>
                 </motion.div>
             </div>
+        </div>
 
-            <SectionDivider position="bottom" color="#fff" />
+        <SectionDivider position="bottom" color="#fff" />
         </section>
     );
 }
@@ -207,14 +274,15 @@ function Section({ title, children }: { title: string; children: React.ReactNode
     );
 }
 
-function Badge({ children, color }: { children: React.ReactNode; color: 'blue' | 'gray' | 'green' }) {
+function Badge({ children, color, icon }: { children: React.ReactNode; color: 'blue' | 'gray' | 'green'; icon?: React.ReactNode }) {
     const styles = {
         blue: 'bg-[#1f6feb]/10 text-[#58a6ff] border-[#388bfd]/40',
         gray: 'bg-[#8b949e]/10 text-[#8b949e] border-[#8b949e]/40',
         green: 'bg-[#2ea043]/10 text-[#3fb950] border-[#2ea043]/40',
     };
     return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full border text-[12px] font-semibold ${styles[color]}`}>
+        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-[12px] font-semibold transition-all hover:bg-white/5 cursor-default ${styles[color]}`}>
+            {icon && <span className="opacity-80">{icon}</span>}
             {children}
         </span>
     );
