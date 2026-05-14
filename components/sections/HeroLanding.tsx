@@ -96,7 +96,7 @@ export default function HeroLanding() {
             </div>
 
             {/* Navigation Dots */}
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-4">
+            <div className="absolute bottom-20 sm:bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-4">
                 {Array.from({ length: totalSlides }).map((_, index) => (
                     <button
                         key={index}
@@ -120,7 +120,7 @@ export default function HeroLanding() {
 
             {/* Scroll Indicator (Global) */}
             <motion.div
-                className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20 cursor-pointer"
+                className="hidden md:flex absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20 cursor-pointer"
                 onClick={() => document.getElementById('origin')?.scrollIntoView({ behavior: 'smooth' })}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}

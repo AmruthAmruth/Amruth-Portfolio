@@ -43,10 +43,10 @@ export default function HeroSlideAPI({ isActive }: HeroSlideAPIProps) {
             {/* Animated Floating Blobs - Subtle for white theme */}
             <FloatingBlobs colors={blobColors.work} variant="section" />
 
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid sm:grid-cols-2 gap-8 lg:gap-20 items-center w-full h-full">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-20 items-center w-full h-full pt-20 pb-10 sm:py-0">
 
                 {/* Left Column: Text & CTA */}
-                <div className="text-center sm:text-left order-2 sm:order-1 flex flex-col items-center sm:items-start justify-center h-full pt-16 sm:pt-0">
+                <div className="text-center sm:text-left order-2 lg:order-1 flex flex-col items-center sm:items-start justify-center h-full">
                     {/* Headline */}
                     <motion.h1
                         className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-4 sm:mb-6 leading-tight"
@@ -63,7 +63,7 @@ export default function HeroSlideAPI({ isActive }: HeroSlideAPIProps) {
 
                     {/* Subtext */}
                     <motion.p
-                        className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl font-light leading-relaxed"
+                        className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl font-light leading-relaxed px-4 sm:px-0"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
@@ -79,7 +79,7 @@ export default function HeroSlideAPI({ isActive }: HeroSlideAPIProps) {
                     >
                         <button
                             onClick={() => document.getElementById('connect')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="group relative px-8 py-3.5 bg-gray-900 text-white text-lg font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-teal-500/20"
+                            className="group relative px-8 py-3.5 bg-gray-900 text-white text-base sm:text-lg font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-teal-500/20"
                         >
                             <span className="relative z-10 flex items-center gap-2">
                                 Start Collaborating
@@ -95,7 +95,7 @@ export default function HeroSlideAPI({ isActive }: HeroSlideAPIProps) {
 
                 {/* Right Column: API Client */}
                 <motion.div
-                    className="order-1 sm:order-2 hidden sm:flex w-full max-w-sm sm:max-w-none perspective-1000 items-center justify-center h-full"
+                    className="order-1 lg:order-2 flex w-full max-w-sm sm:max-w-none perspective-1000 items-center justify-center h-full scale-90 sm:scale-100"
                     initial={{ opacity: 0, x: 50, rotateY: 10 }}
                     animate={{ 
                         opacity: 1, 

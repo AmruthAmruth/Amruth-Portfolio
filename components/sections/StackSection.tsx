@@ -73,7 +73,7 @@ export default function StackSection() {
                 {/* ── Postman Window ── */}
                 <div
                     className="w-full rounded-xl overflow-hidden border border-[#2d2d2d] shadow-2xl flex flex-col bg-[#242424]"
-                    style={{ minHeight: '560px', maxHeight: '700px' }}
+                    style={{ minHeight: '500px', maxHeight: '750px' }}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                 >
@@ -198,7 +198,7 @@ export default function StackSection() {
                                     </div>
 
                                     {/* URL */}
-                                    <div className="flex-1 flex items-center bg-[#1a1a1a] border border-[#3a3a3a] rounded px-2 sm:px-3 py-1.5 font-mono text-[11px] sm:text-[12px] overflow-x-auto whitespace-nowrap no-scrollbar">
+                                    <div className="flex-1 flex items-center bg-[#1a1a1a] border border-[#3a3a3a] rounded px-2 sm:px-3 py-1.5 font-mono text-[10px] sm:text-[12px] overflow-x-auto whitespace-nowrap no-scrollbar">
                                         <span className="text-[#666] shrink-0">https://</span>
                                         <span className="text-[#e8692c] shrink-0">amruth.dev</span>
                                         <span className="text-[#ccc] shrink-0">{meta.endpoint}</span>
@@ -267,7 +267,7 @@ export default function StackSection() {
                                             </div>
 
                                             {/* JSON Content */}
-                                            <div className="flex-1 p-4 font-mono text-[12px] sm:text-[13px] leading-[22px] overflow-x-auto">
+                                            <div className="flex-1 p-3 sm:p-5 font-mono text-[11px] sm:text-[13px] leading-[20px] sm:leading-[24px] overflow-x-auto">
                                                 <span className="text-[#ffd700]">{'{'}</span>
                                                 <div className="pl-5 space-y-0">
                                                     {/* category field */}

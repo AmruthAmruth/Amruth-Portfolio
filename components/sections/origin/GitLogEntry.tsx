@@ -47,10 +47,10 @@ export default function GitLogEntry({
             className="group relative flex gap-0"
         >
             {/* ── Graph rail ── */}
-            <div className="shrink-0 relative flex flex-col items-center w-8 sm:w-12">
+            <div className="shrink-0 relative flex flex-col items-center w-7 sm:w-12">
                 {/* Colored node dot */}
                 <div className={`
-                    relative z-10 mt-[20px] w-4 h-4 rounded-full border-2 border-[#0d1117]
+                    relative z-10 mt-[20px] w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 border-[#0d1117]
                     ring-2 ring-[#30363d] group-hover:ring-[#58a6ff]/60
                     ${tc.dot} transition-all duration-300 shrink-0
                 `} />
@@ -64,24 +64,24 @@ export default function GitLogEntry({
             <div className="flex-1 min-w-0 pb-8">
 
                 {/* ── Commit summary row ── */}
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 py-2 px-3 sm:py-2.5 sm:px-3.5 mb-3 rounded-lg bg-[#161b22] border border-[#30363d] group-hover:border-[#444c56] shadow-sm transition-all duration-200">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 py-2 px-2.5 sm:py-2.5 sm:px-3.5 mb-3 rounded-lg bg-[#161b22] border border-[#30363d] group-hover:border-[#444c56] shadow-sm transition-all duration-200">
                     <div className="flex items-center justify-between sm:justify-start gap-2">
                         {/* Friendly pill label */}
                         <span className={`
-                            text-[9px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-wider sm:tracking-widest
+                            text-[8px] sm:text-[10px] font-bold px-1.5 py-0.5 rounded-full border uppercase tracking-wider
                             ${tc.badgeBg} ${tc.badgeBorder} ${tc.badgeText}
                         `}>
                             {tc.label}
                         </span>
 
                         {/* Hash — subtle, mobile visible */}
-                        <span className="sm:hidden font-mono text-[10px] text-[#6e7681] bg-[#0d1117] border border-[#30363d] px-1.5 py-0.5 rounded shrink-0">
+                        <span className="sm:hidden font-mono text-[9px] text-[#6e7681] bg-[#0d1117] border border-[#30363d] px-1.5 py-0.5 rounded shrink-0">
                             {hash}
                         </span>
                     </div>
 
                     {/* Human-readable commit title */}
-                    <span className="text-[13px] sm:text-[14px] font-semibold text-[#e6edf3] flex-1 min-w-0 leading-tight sm:leading-snug">
+                    <span className="text-[12px] sm:text-[14px] font-semibold text-[#e6edf3] flex-1 min-w-0 leading-snug">
                         {headline}
                     </span>
 

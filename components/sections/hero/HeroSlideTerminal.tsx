@@ -19,10 +19,10 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
             {/* Animated Floating Blobs - Very subtle for white theme */}
             <FloatingBlobs colors={blobColors.hero} variant="hero" />
 
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[0.9fr_1.1fr] md:grid-cols-2 gap-8 lg:gap-12 items-center w-full h-full">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:grid lg:grid-cols-[0.9fr_1.1fr] md:grid-cols-2 gap-8 lg:gap-12 items-center w-full h-full pt-20 pb-10 sm:py-0">
 
                 {/* Left Column: Text & CTA */}
-                <div className="text-center sm:text-left order-2 sm:order-1 flex flex-col items-center sm:items-start justify-center h-full pt-16 sm:pt-0 lg:pr-8">
+                <div className="text-center sm:text-left order-2 lg:order-1 flex flex-col items-center sm:items-start justify-center h-full lg:pr-8">
                     {/* Headline */}
                     <motion.h1
                         className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-4 sm:mb-6 leading-tight"
@@ -39,7 +39,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
 
                     {/* Subtext */}
                     <motion.p
-                        className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl font-light leading-relaxed"
+                        className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 max-w-2xl font-light leading-relaxed px-4 sm:px-0"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
@@ -56,7 +56,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                     >
                         <button
                             onClick={() => document.getElementById('builds')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="group relative px-8 py-3.5 bg-gray-900 text-white text-lg font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/20"
+                            className="group relative px-8 py-3.5 bg-gray-900 text-white text-base sm:text-lg font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/20"
                         >
                             <span className="relative z-10 flex items-center gap-2">
                                 Explore My Work
@@ -74,7 +74,7 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                                     href={social.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className={`p-3 rounded-full bg-white/50 backdrop-blur-sm border border-gray-200 text-gray-600 hover:text-blue-600 hover:border-blue-200 transition-all duration-300 hover:scale-110`}
+                                    className={`p-2.5 sm:p-3 rounded-full bg-white/50 backdrop-blur-sm border border-gray-200 text-gray-600 hover:text-blue-600 hover:border-blue-200 transition-all duration-300 hover:scale-110`}
                                     aria-label={social.ariaLabel}
                                 >
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -90,8 +90,9 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: 1.2 }}
+                        className="hidden xs:block"
                     >
-                        <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Powered By</p>
+                        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-3">Powered By</p>
                         <div className="flex gap-4 text-gray-400">
                             <Code2 className="w-5 h-5 hover:text-[#61DAFB] transition-colors duration-300 cursor-pointer" />
                             <TerminalSquare className="w-5 h-5 hover:text-black transition-colors duration-300 cursor-pointer" />
@@ -102,9 +103,9 @@ export default function HeroSlideTerminal({ isActive }: HeroSlideTerminalProps) 
                     </motion.div>
                 </div>
 
-                {/* Right Column: Terminal — hidden on xs, shown on sm+ */}
+                {/* Right Column: Terminal */}
                 <motion.div
-                    className="order-1 sm:order-2 hidden sm:flex w-full perspective-1000 items-center justify-center h-full"
+                    className="order-1 lg:order-2 flex w-full perspective-1000 items-center justify-center h-full scale-90 sm:scale-100"
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ 
                         opacity: 1, 

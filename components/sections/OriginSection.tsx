@@ -130,13 +130,13 @@ export default function OriginSection() {
                         </div>
 
                     {/* ── Rendered Markdown Content ── */}
-                    <div className="px-5 sm:px-10 lg:px-16 py-8 sm:py-10 bg-[#0d1117] font-sans text-[#c9d1d9] leading-relaxed">
+                    <div className="px-4 sm:px-10 lg:px-16 py-8 sm:py-12 bg-[#0d1117] font-sans text-[#c9d1d9] leading-relaxed">
                         <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: 0.1 }}
-                            className="max-w-3xl mx-auto space-y-10"
+                            className="max-w-4xl mx-auto space-y-8 sm:space-y-12"
                         >
                             {/* ── H1 + Badges ── */}
                             <div className="space-y-6 pb-8 border-b border-[#21262d]">
