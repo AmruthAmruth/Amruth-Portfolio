@@ -160,8 +160,8 @@ export default function OriginSection() {
                                             👋
                                         </motion.span>
                                         <motion.span
-                                            animate={{ opacity: [1, 0] }}
-                                            transition={{ duration: 0.8, repeat: Infinity, ease: "steps(2)" }}
+                                            animate={{ opacity: [1, 1, 0, 0] }}
+                                            transition={{ duration: 0.8, repeat: Infinity, times: [0, 0.5, 0.5, 1], ease: "linear" }}
                                             className="inline-block w-[3px] h-[32px] sm:h-[42px] bg-[#58a6ff] ml-1"
                                         />
                                     </h1>
