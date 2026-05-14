@@ -138,15 +138,26 @@ export default function StackSection() {
                                                 <button
                                                     key={cat}
                                                     onClick={() => setActiveCategory(cat)}
-                                                    className={`w-full flex items-center gap-2 px-3 py-1.5 text-left text-[11px] rounded transition-all ${isActive
+                                                    className={`w-full flex items-center gap-2 px-3 py-1.5 text-left text-[11px] rounded transition-all relative overflow-hidden ${isActive
                                                         ? 'bg-[#2d2d2d] text-white'
                                                         : 'text-[#888] hover:bg-[#262626] hover:text-[#ccc]'
                                                         }`}
                                                 >
-                                                    <span className="text-[10px] font-bold px-1 py-0.5 rounded bg-[#e8692c]/20 text-[#e8692c] shrink-0">GET</span>
-                                                    <CatIcon className="w-3 h-3 shrink-0" style={{ color: m.accent }} />
-                                                    <span className="truncate flex-1">{cat}</span>
-                                                    <span className="text-[#444] text-[10px] tabular-nums shrink-0">{count}</span>
+                                                    <span className="relative z-10 text-[10px] font-bold px-1 py-0.5 rounded bg-[#e8692c]/20 text-[#e8692c] shrink-0">GET</span>
+                                                    <CatIcon className="relative z-10 w-3 h-3 shrink-0" style={{ color: m.accent }} />
+                                                    <span className="relative z-10 truncate flex-1">{cat}</span>
+                                                    <span className="relative z-10 text-[#444] text-[10px] tabular-nums shrink-0">{count}</span>
+
+                                                    {/* Progress Bar for Active Sidebar Item */}
+                                                    {isActive && (
+                                                        <motion.div
+                                                            initial={{ width: 0 }}
+                                                            animate={{ width: isHovered ? '0%' : '100%' }}
+                                                            key={cat + (isHovered ? '-paused' : '-running')}
+                                                            transition={{ duration: isHovered ? 0 : 5, ease: 'linear' }}
+                                                            className="absolute bottom-0 left-0 h-[1.5px] bg-[#e8692c]"
+                                                        />
+                                                    )}
                                                 </button>
                                             );
                                         })}
@@ -174,13 +185,24 @@ export default function StackSection() {
                                     <button
                                         key={cat}
                                         onClick={() => setActiveCategory(cat)}
-                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-medium transition-colors whitespace-nowrap border shrink-0 ${isActive
+                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-medium transition-colors whitespace-nowrap border shrink-0 relative overflow-hidden ${isActive
                                             ? 'bg-[#2d2d2d] border-[#444] text-[#e8692c]'
                                             : 'bg-transparent border-transparent text-[#888] hover:bg-[#262626] hover:text-[#ccc]'
                                             }`}
                                     >
-                                        <CatIcon className="w-3.5 h-3.5" style={{ color: isActive ? m.accent : '#888' }} />
-                                        <span>{cat}</span>
+                                        <CatIcon className="relative z-10 w-3.5 h-3.5" style={{ color: isActive ? m.accent : '#888' }} />
+                                        <span className="relative z-10">{cat}</span>
+
+                                        {/* Progress Bar for Mobile Active Category */}
+                                        {isActive && (
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                animate={{ width: isHovered ? '0%' : '100%' }}
+                                                key={cat + (isHovered ? '-paused' : '-running')}
+                                                transition={{ duration: isHovered ? 0 : 5, ease: 'linear' }}
+                                                className="absolute bottom-0 left-0 h-[2px] bg-[#e8692c]"
+                                            />
+                                        )}
                                     </button>
                                 );
                             })}

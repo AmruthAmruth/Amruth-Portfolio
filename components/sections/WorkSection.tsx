@@ -40,7 +40,7 @@ export default function WorkSection() {
         }, 5000);
 
         return () => clearInterval(interval);
-    }, [selectedProject, isHovered]);
+    }, [isHovered]);
 
     return (
         <section id="builds" className={`relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden ${sectionGradients.work} py-12 md:py-16`}>
@@ -188,6 +188,20 @@ export default function WorkSection() {
                                                     <span className="text-blue-400 text-[10px] shrink-0 font-bold">M↓</span>
                                                     <span className="text-[13px] truncate">{p.title}.md</span>
                                                 </div>
+
+                                                {/* Progress Bar for Active Tab */}
+                                                {isActive && (
+                                                    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-500/20">
+                                                        <motion.div
+                                                            initial={{ width: 0 }}
+                                                            animate={{ width: isHovered ? '0%' : '100%' }}
+                                                            key={p.title + (isHovered ? '-paused' : '-running')}
+                                                            transition={{ duration: isHovered ? 0 : 5, ease: 'linear' }}
+                                                            className="absolute inset-y-0 left-0 bg-blue-500"
+                                                        />
+                                                    </div>
+                                                )}
+
                                                 <X className={`ml-auto w-3 h-3 text-gray-400 hover:text-white rounded-md p-0.5 hover:bg-[#454545] transition-all ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
                                             </div>
                                         );
@@ -260,6 +274,8 @@ export default function WorkSection() {
                     {/* ── MOBILE PROJECT CARDS (below md) ── */}
                     <div
                         className="md:hidden space-y-4"
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
                         onTouchStart={() => setIsHovered(true)}
                         onTouchEnd={() => setIsHovered(false)}
                     >
@@ -269,12 +285,23 @@ export default function WorkSection() {
                                 <button
                                     key={p.title}
                                     onClick={() => setSelectedProject(p)}
-                                    className={`shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all border ${selectedProject.title === p.title
+                                    className={`shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all border relative overflow-hidden ${selectedProject.title === p.title
                                         ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/20'
                                         : 'bg-white/5 text-gray-300 border-white/10 hover:border-white/30'
                                         }`}
                                 >
-                                    {p.title}
+                                    <span className="relative z-10">{p.title}</span>
+
+                                    {/* Progress Bar for Active Mobile Tab */}
+                                    {selectedProject.title === p.title && (
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: isHovered ? '0%' : '100%' }}
+                                            key={p.title + (isHovered ? '-paused' : '-running')}
+                                            transition={{ duration: isHovered ? 0 : 5, ease: 'linear' }}
+                                            className="absolute bottom-0 left-0 h-[3px] bg-white/40"
+                                        />
+                                    )}
                                 </button>
                             ))}
                         </div>
