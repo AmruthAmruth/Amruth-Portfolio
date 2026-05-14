@@ -9,7 +9,19 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 export default function HeroLanding() {
     const [currentSlide, setCurrentSlide] = useState(0);
-    const totalSlides = 3; // Terminal, Editor, API
+    const [isPaused, setIsPaused] = useState(false);
+    const totalSlides = 3; 
+
+    // Auto-advance logic
+    useEffect(() => {
+        if (isPaused) return;
+
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % totalSlides);
+        }, 5000);
+
+        return () => clearInterval(timer);
+    }, [isPaused, totalSlides]);
 
     const nextSlide = () => {
         setCurrentSlide((prev) => (prev + 1) % totalSlides);
@@ -24,7 +36,12 @@ export default function HeroLanding() {
     };
 
     return (
-        <section id="launch" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white">
+        <section 
+            id="launch" 
+            className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+        >
             {/* Subtle Grid Background for Stability and Flow */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:32px_32px] opacity-40" />
@@ -34,57 +51,37 @@ export default function HeroLanding() {
             {/* Slides Container */}
             <div className="relative w-full h-full min-h-[90vh] flex items-center z-10">
                 <AnimatePresence mode="wait">
-                    {currentSlide === 0 && (
-                        <motion.div
-                            key="slide-terminal"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className="absolute inset-0 w-full h-full"
-                        >
-                            <HeroSlideTerminal isActive={currentSlide === 0} />
-                        </motion.div>
-                    )}
-                    {currentSlide === 1 && (
-                        <motion.div
-                            key="slide-editor"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className="absolute inset-0 w-full h-full"
-                        >
-                            <HeroSlideEditor isActive={currentSlide === 1} />
-                        </motion.div>
-                    )}
-                    {currentSlide === 2 && (
-                        <motion.div
-                            key="slide-api"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className="absolute inset-0 w-full h-full"
-                        >
-                            <HeroSlideAPI isActive={currentSlide === 2} />
-                        </motion.div>
-                    )}
+                    <motion.div
+                        key={currentSlide}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                        className="absolute inset-0 w-full h-full"
+                    >
+                        {currentSlide === 0 && <HeroSlideTerminal isActive={currentSlide === 0} />}
+                        {currentSlide === 1 && <HeroSlideEditor isActive={currentSlide === 1} />}
+                        {currentSlide === 2 && <HeroSlideAPI isActive={currentSlide === 2} />}
+                    </motion.div>
                 </AnimatePresence>
             </div>
 
             {/* Manual Navigation Arrows */}
             <div className="absolute inset-x-4 sm:inset-x-8 top-1/2 -translate-y-1/2 flex justify-between items-center z-40 pointer-events-none">
-                <button
+                <motion.button
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
                     onClick={prevSlide}
-                    className="p-3 sm:p-4 rounded-full bg-white/40 backdrop-blur-md border border-gray-100 text-gray-400 hover:text-gray-900 hover:bg-white hover:shadow-lg hover:shadow-gray-200/50 transition-all pointer-events-auto group"
+                    className="p-3 sm:p-4 rounded-full bg-white/60 backdrop-blur-md border border-gray-100 text-gray-400 hover:text-gray-900 hover:bg-white hover:shadow-xl hover:shadow-gray-200/50 transition-all pointer-events-auto group"
                     aria-label="Previous slide"
                 >
                     <svg className="w-5 h-5 sm:w-6 h-6 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
-                </button>
-                <button
+                </motion.button>
+                <motion.button
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
                     onClick={nextSlide}
                     className="p-3 sm:p-4 rounded-full bg-white/40 backdrop-blur-md border border-gray-100 text-gray-400 hover:text-gray-900 hover:bg-white hover:shadow-lg hover:shadow-gray-200/50 transition-all pointer-events-auto group"
                     aria-label="Next slide"
@@ -92,7 +89,7 @@ export default function HeroLanding() {
                     <svg className="w-5 h-5 sm:w-6 h-6 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
-                </button>
+                </motion.button>
             </div>
 
             {/* Navigation Dots */}
@@ -102,17 +99,24 @@ export default function HeroLanding() {
                         key={index}
                         onClick={() => setSlide(index)}
                         className={`relative h-1.5 rounded-full overflow-hidden transition-all duration-500 ${currentSlide === index
-                            ? 'w-12 bg-gray-900/10'
-                            : 'w-1.5 bg-gray-200 hover:bg-gray-400'
+                            ? 'w-16 bg-gray-900/10'
+                            : 'w-2 bg-gray-200 hover:bg-gray-400'
                             }`}
                         aria-label={`Go to slide ${index + 1}`}
                     >
                         {currentSlide === index && (
-                            <motion.div
-                                layoutId="active-dot"
-                                className="absolute inset-0 bg-gray-900 rounded-full"
-                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                            />
+                            <div className="absolute inset-0 bg-gray-900/10">
+                                <motion.div
+                                    initial={{ width: 0 }}
+                                    animate={{ width: isPaused ? '0%' : '100%' }}
+                                    key={currentSlide + (isPaused ? '-paused' : '-running')}
+                                    transition={{ 
+                                        duration: isPaused ? 0 : 5, 
+                                        ease: "linear" 
+                                    }}
+                                    className="absolute inset-y-0 left-0 bg-gray-900"
+                                />
+                            </div>
                         )}
                     </button>
                 ))}
