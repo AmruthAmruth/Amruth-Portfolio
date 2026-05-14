@@ -5,6 +5,8 @@ import { personalInfo, socialLinks, contactEmail } from '@/constants/social';
 import { ArrowUp, Mail } from 'lucide-react';
 
 export default function Footer() {
+    const FOOTER_LINKS = ['Connect', 'LinkedIn', 'WhatsApp', 'Instagram'];
+
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -38,38 +40,49 @@ export default function Footer() {
                     </span>
                 </motion.div>
 
-                {/* 2. Compact Links & Socials (Floating Pill) */}
+                {/* 2. Code-Inspired Links (Array of Strings Design) */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 bg-slate-50/80 rounded-2xl px-6 py-3 border border-slate-100/50 backdrop-blur-md shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] ring-1 ring-white/50"
                 >
-                    {/* Mail */}
+                    {/* Connect (Email) Link */}
                     <a
                         href={`mailto:${contactEmail}`}
-                        className="flex items-center gap-2 text-[14px] font-semibold text-slate-600 hover:text-blue-600 transition-colors duration-300 group"
+                        className="flex items-center gap-2 text-[13px] font-mono font-semibold text-slate-600 hover:text-blue-600 transition-colors duration-300 group"
                     >
                         <Mail className="w-[14px] h-[14px] text-slate-400 group-hover:text-blue-500 transition-colors" />
-                        <span className="hidden sm:inline">Connect</span>
+                        <span>connect()</span>
                     </a>
 
                     <div className="w-px h-4 bg-slate-200 hidden sm:block" />
 
-                    {/* Socials */}
-                    <div className="flex items-center gap-5">
-                        {socialLinks.map((link) => (
-                            <a
-                                key={link.name}
-                                href={link.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-[14px] font-semibold text-slate-500 hover:text-blue-600 transition-all duration-300 hover:-translate-y-0.5"
-                                aria-label={link.ariaLabel}
-                            >
-                                {link.name.toLowerCase()}
-                            </a>
-                        ))}
+                    {/* Social Array Visualization */}
+                    <div className="flex items-center font-mono text-[13px] select-none">
+                        <span className="text-purple-500 font-bold mr-1">[</span>
+                        <div className="flex items-center">
+                            {['LinkedIn', 'WhatsApp', 'Instagram'].map((name, i, arr) => {
+                                const link = socialLinks.find(l => l.name === name);
+                                if (!link) return null;
+                                return (
+                                    <div key={name} className="flex items-center">
+                                        <span className="text-amber-600">'</span>
+                                        <a
+                                            href={link.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-amber-600 hover:text-blue-600 hover:underline decoration-blue-400/30 underline-offset-4 transition-all"
+                                        >
+                                            {name.toLowerCase()}
+                                        </a>
+                                        <span className="text-amber-600">'</span>
+                                        {i < arr.length - 1 && <span className="text-slate-400 mr-2">,</span>}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <span className="text-purple-500 font-bold ml-1">]</span>
                     </div>
                 </motion.div>
 
