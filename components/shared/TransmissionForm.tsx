@@ -44,6 +44,14 @@ export default function TransmissionForm() {
         setErrors(errs);
         if (Object.keys(errs).length > 0) return;
 
+        // Check if configuration is present
+        if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+            console.error('EmailJS Error: Configuration keys are missing. Please add NEXT_PUBLIC_EMAILJS_SERVICE_ID, NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, and NEXT_PUBLIC_EMAILJS_PUBLIC_KEY to your .env file.');
+            setStatus('error');
+            setTimeout(() => setStatus('idle'), 5000);
+            return;
+        }
+
         setStatus('sending');
 
         try {
@@ -51,9 +59,11 @@ export default function TransmissionForm() {
                 EMAILJS_SERVICE_ID,
                 EMAILJS_TEMPLATE_ID,
                 {
-                    from_name: name,
-                    from_email: email,
-                    message: `[TOPIC: ${topic}]\n\n${message}`,
+                    name: name,
+                    email: email,
+                    topic: topic,
+                    message: message,
+                    full_message: `[TOPIC: ${topic}]\n\n${message}`,
                     to_email: CONTACT_EMAIL,
                 },
                 EMAILJS_PUBLIC_KEY

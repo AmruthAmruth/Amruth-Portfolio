@@ -26,6 +26,15 @@ export default function ContactForm() {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        // Check if configuration is present
+        if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+            console.error('EmailJS Error: Configuration keys are missing. Please add NEXT_PUBLIC_EMAILJS_SERVICE_ID, NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, and NEXT_PUBLIC_EMAILJS_PUBLIC_KEY to your .env file.');
+            setStatus('error');
+            setTimeout(() => setStatus('idle'), 5000);
+            return;
+        }
+
         setStatus('sending');
 
         try {
@@ -33,8 +42,8 @@ export default function ContactForm() {
                 EMAILJS_SERVICE_ID,
                 EMAILJS_TEMPLATE_ID,
                 {
-                    from_name: formData.name,
-                    from_email: formData.email,
+                    name: formData.name,
+                    email: formData.email,
                     message: formData.message,
                     to_email: 'amrwth.dev@gmail.com',
                 },
