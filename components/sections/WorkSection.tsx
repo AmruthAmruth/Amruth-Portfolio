@@ -11,7 +11,11 @@ import SectionDivider from '@/components/shared/SectionDivider';
 import FileExplorer from '@/components/shared/FileExplorer';
 import JsonViewer from '@/components/shared/JsonViewer';
 import { Project } from '@/types';
-import { GitBranch, Check, X, Bell, ExternalLink, Github, ChevronDown } from 'lucide-react';
+import { 
+    GitBranch, Check, X, Bell, ExternalLink, Github, ChevronDown, 
+    Search, Layout, Files, Play, Boxes, UserCircle, Settings, 
+    AlertTriangle, Radio, ChevronRight 
+} from 'lucide-react';
 
 export default function WorkSection() {
     const sectionRef = useRef(null);
@@ -83,24 +87,86 @@ export default function WorkSection() {
                         className="mb-8 md:mb-12"
                     />
 
+                    {/* ── INTERACTION HINT (for non-tech users) ── */}
+                    <motion.div 
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ delay: 0.5 }}
+                        className="hidden md:flex items-center justify-center gap-2 mb-6 text-slate-400/60 text-xs italic font-sans"
+                    >
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500/40 animate-pulse" />
+                        <span>Tip: Use the sidebar on the left to browse projects, just like a real code editor.</span>
+                    </motion.div>
+
                     {/* ── DESKTOP IDE WINDOW (md and above) ── */}
                     <div
-                        className="hidden md:flex flex-col h-[800px] lg:h-[850px] w-full max-w-7xl mx-auto shadow-2xl rounded-lg overflow-hidden border border-[#333] bg-[#1e1e1e]"
+                        className="hidden md:flex flex-col h-[800px] lg:h-[850px] w-full max-w-7xl mx-auto shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] rounded-lg overflow-hidden border border-[#333] bg-[#1e1e1e]"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                     >
 
-                        {/* Title Bar */}
-                        <div className="h-8 bg-[#3c3c3c] flex items-center justify-center relative select-none shrink-0">
-                            <div className="absolute left-3 flex gap-2">
-                                <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                                <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                        {/* Title Bar (Official VS Code Color) */}
+                        <div className="h-9 bg-[#323233] flex items-center justify-between px-3 relative select-none shrink-0 border-b border-[#2b2b2b]">
+                            <div className="flex items-center gap-4">
+                                <div className="flex gap-2 ml-1">
+                                    <div className="w-3 h-3 rounded-full bg-[#ff5f56] shadow-inner" />
+                                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner" />
+                                    <div className="w-3 h-3 rounded-full bg-[#27c93f] shadow-inner" />
+                                </div>
+                                <div className="flex items-center gap-3 ml-2 text-[#969696] text-[11px] font-sans">
+                                    {['File', 'Edit', 'Selection', 'View', 'Go', 'Run', 'Terminal', 'Help'].map(item => (
+                                        <span key={item} className="hover:bg-[#454545] hover:text-white px-2 py-1 rounded transition-colors cursor-default">
+                                            {item}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
-                            <span className="text-[#ccccc7] text-xs font-sans">Amruth&apos;s Portfolio — {selectedProject.title}</span>
+
+                            {/* Centered Search Bar (Modern VS Code Look) */}
+                            <div className="absolute left-1/2 -translate-x-1/2 w-1/3 max-w-[400px]">
+                                <div className="h-6 bg-[#3c3c3c] border border-[#444] rounded-md flex items-center px-4 gap-2 text-[#969696] text-[11px] cursor-text hover:bg-[#454545] transition-colors">
+                                    <Search className="w-3 h-3" />
+                                    <span>Amruth-Portfolio</span>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-4 text-[#969696] mr-2">
+                                <Layout className="w-4 h-4 hover:text-white cursor-pointer transition-colors" />
+                                <X className="w-4 h-4 hover:text-white cursor-pointer transition-colors" />
+                            </div>
                         </div>
 
                         <div className="flex flex-1 overflow-hidden">
+                            {/* Activity Bar (VS Code Left Sidebar) */}
+                            <div className="w-12 bg-[#333333] flex flex-col items-center py-2 gap-2 border-r border-[#2b2b2b] shrink-0">
+                                <div className="relative group w-full flex justify-center py-3 text-white border-l-[2px] border-white transition-all">
+                                    <Files className="w-[26px] h-[26px] opacity-100" />
+                                    <span className="absolute left-14 bg-[#252526] text-white text-[11px] px-2 py-1 rounded border border-[#454545] shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">Explorer</span>
+                                </div>
+                                {[
+                                    { icon: Search, label: 'Search' },
+                                    { icon: GitBranch, label: 'Source Control' },
+                                    { icon: Play, label: 'Run and Debug' },
+                                    { icon: Boxes, label: 'Extensions' }
+                                ].map((item, idx) => (
+                                    <div key={idx} className="relative group w-full flex justify-center py-3 text-[#858585] hover:text-white cursor-pointer transition-all">
+                                        <item.icon className="w-[26px] h-[26px]" />
+                                        <span className="absolute left-14 bg-[#252526] text-white text-[11px] px-2 py-1 rounded border border-[#454545] shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">{item.label}</span>
+                                    </div>
+                                ))}
+                                
+                                <div className="mt-auto flex flex-col gap-1 pb-2 w-full">
+                                    <div className="relative group w-full flex justify-center py-3 text-[#858585] hover:text-white cursor-pointer transition-colors">
+                                        <UserCircle className="w-[26px] h-[26px]" />
+                                        <span className="absolute left-14 bottom-10 bg-[#252526] text-white text-[11px] px-2 py-1 rounded border border-[#454545] shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">Accounts</span>
+                                    </div>
+                                    <div className="relative group w-full flex justify-center py-3 text-[#858585] hover:text-white cursor-pointer transition-colors">
+                                        <Settings className="w-[26px] h-[26px]" />
+                                        <span className="absolute left-14 bottom-2 bg-[#252526] text-white text-[11px] px-2 py-1 rounded border border-[#454545] shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">Settings</span>
+                                    </div>
+                                </div>
+                            </div>
+
                             {/* File Explorer */}
                             <div className="hidden md:flex shrink-0">
                                 <FileExplorer
@@ -114,7 +180,7 @@ export default function WorkSection() {
                             <div className="flex-1 bg-[#1e1e1e] relative flex flex-col min-w-0">
 
                                 {/* Editor Tabs */}
-                                <div className="flex bg-[#252526] h-9 overflow-x-auto no-scrollbar scrollbar-hide shrink-0">
+                                <div className="flex bg-[#252526] h-9 overflow-x-auto no-scrollbar scrollbar-hide shrink-0 border-b border-[#1e1e1e]">
                                     {projects.map(p => {
                                         const isActive = selectedProject.title === p.title;
                                         return (
@@ -122,26 +188,32 @@ export default function WorkSection() {
                                                 key={p.title}
                                                 onClick={() => setSelectedProject(p)}
                                                 className={`
-                                                    flex items-center gap-2 px-3 min-w-[130px] max-w-[200px] cursor-pointer border-r border-[#1e1e1e] group shrink-0
-                                                    ${isActive ? 'bg-[#1e1e1e] text-white border-t-2 border-t-blue-500' : 'bg-[#2d2d2d] text-[#969696] hover:bg-[#2a2d2e]'}
+                                                    flex items-center gap-2 px-3 min-w-[140px] max-w-[220px] cursor-pointer border-r border-[#1e1e1e] group shrink-0 transition-colors relative
+                                                    ${isActive ? 'bg-[#1e1e1e] text-white border-t border-t-blue-500' : 'bg-[#2d2d2d] text-[#969696] hover:bg-[#2a2d2e]'}
                                                 `}
                                             >
-                                                <span className="text-[13px] truncate">{p.title}</span>
-                                                <span className={`ml-auto text-gray-400 hover:text-white rounded-md p-0.5 hover:bg-[#454545] opacity-0 group-hover:opacity-100 transition-opacity ${isActive ? 'opacity-100' : ''}`}>
-                                                    <X className="w-3.5 h-3.5" />
-                                                </span>
+                                                <div className="flex items-center gap-1.5 min-w-0">
+                                                    <span className="text-blue-400 text-[10px] shrink-0 font-bold">M↓</span>
+                                                    <span className="text-[13px] truncate">{p.title}.md</span>
+                                                </div>
+                                                <X className={`ml-auto w-3 h-3 text-gray-400 hover:text-white rounded-md p-0.5 hover:bg-[#454545] transition-all ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
                                             </div>
                                         );
                                     })}
                                 </div>
 
                                 {/* Breadcrumbs */}
-                                <div className="h-6 flex items-center px-4 bg-[#1e1e1e] text-[#a9a9a9] text-xs font-sans border-b border-[#2b2b2b] shrink-0">
-                                    <span className="text-[#6a6a6a]">Portfolio</span>
-                                    <span className="mx-1 text-[#6e6e6e]">&rsaquo;</span>
-                                    <span className="text-[#6a6a6a]">Projects</span>
-                                    <span className="mx-1 text-[#6e6e6e]">&rsaquo;</span>
-                                    <span className="text-white font-medium">{selectedProject.title}</span>
+                                <div className="h-[22px] flex items-center px-4 bg-[#1e1e1e] text-[#a9a9a9] text-[11px] font-sans shrink-0">
+                                    <span className="hover:text-[#cccccc] cursor-pointer transition-colors">src</span>
+                                    <ChevronRight className="mx-0.5 w-3 h-3 text-[#6e6e6e]" />
+                                    <span className="hover:text-[#cccccc] cursor-pointer transition-colors">components</span>
+                                    <ChevronRight className="mx-0.5 w-3 h-3 text-[#6e6e6e]" />
+                                    <span className="hover:text-[#cccccc] cursor-pointer transition-colors">projects</span>
+                                    <ChevronRight className="mx-0.5 w-3 h-3 text-[#6e6e6e]" />
+                                    <div className="flex items-center gap-1">
+                                        <span className="text-blue-400 text-[10px] font-bold">M↓</span>
+                                        <span className="text-white font-medium">{selectedProject.title}.md</span>
+                                    </div>
                                 </div>
 
                                 {/* Editor Content */}
@@ -151,30 +223,43 @@ export default function WorkSection() {
                             </div>
                         </div>
 
-                        {/* Status Bar */}
-                        <div className="h-6 bg-[#007acc] text-white flex items-center justify-between px-3 text-[11px] font-sans select-none z-30 shrink-0">
-                            <div className="flex items-center gap-4">
-                                <div className="flex items-center gap-1 hover:bg-[#1f8ad2] px-1 rounded cursor-pointer transition-colors">
+                        {/* Status Bar (Official VS Code Blue) */}
+                        <div className="h-[22px] bg-[#007acc] text-white flex items-center justify-between px-3 text-[11px] font-sans select-none z-30 shrink-0">
+                            <div className="flex items-center gap-3 h-full">
+                                <div className="flex items-center gap-1 hover:bg-[#1f8ad2] px-1.5 h-full cursor-pointer transition-colors">
                                     <GitBranch className="w-3.5 h-3.5" />
                                     <span>main*</span>
                                 </div>
-                                <div className="flex items-center gap-1">
-                                    <X className="w-3 h-3 text-white/80" /> <span className="text-white/90">0</span>
+                                <div className="flex items-center gap-2 hover:bg-[#1f8ad2] px-1.5 h-full cursor-pointer transition-colors">
+                                    <div className="flex items-center gap-1">
+                                        <X className="w-3 h-3 text-white" /> <span>0</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <AlertTriangle className="w-3 h-3 text-white" /> <span>0</span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-1 hover:bg-[#1f8ad2] px-1.5 h-full cursor-pointer transition-colors">
+                                    <Radio className="w-3 h-3" />
+                                    <span>Go Live</span>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4">
-                                <div className="hidden sm:flex items-center gap-4">
-                                    <span className="hover:bg-[#1f8ad2] px-1 rounded cursor-pointer">Ln 12, Col 42</span>
-                                    <span className="hover:bg-[#1f8ad2] px-1 rounded cursor-pointer">Spaces: 2</span>
-                                    <span className="hover:bg-[#1f8ad2] px-1 rounded cursor-pointer">UTF-8</span>
+                            <div className="flex items-center gap-3 h-full">
+                                <div className="hidden sm:flex items-center gap-3 h-full">
+                                    <span className="hover:bg-[#1f8ad2] px-1.5 h-full flex items-center cursor-pointer">Ln 12, Col 42</span>
+                                    <span className="hover:bg-[#1f8ad2] px-1.5 h-full flex items-center cursor-pointer">Spaces: 2</span>
+                                    <span className="hover:bg-[#1f8ad2] px-1.5 h-full flex items-center cursor-pointer uppercase">UTF-8</span>
+                                    <span className="hover:bg-[#1f8ad2] px-1.5 h-full flex items-center cursor-pointer">LF</span>
                                 </div>
-                                <div className="flex items-center gap-1 hover:bg-[#1f8ad2] px-1 rounded cursor-pointer">
-                                    <span className="text-yellow-400 font-bold">{'{ }'}</span>
-                                    <span>JSON</span>
+                                <div className="flex items-center gap-1 hover:bg-[#1f8ad2] px-1.5 h-full cursor-pointer">
+                                    <span className="text-blue-300 font-bold">M↓</span>
+                                    <span>Markdown</span>
                                 </div>
-                                <div className="hidden sm:flex items-center gap-1 hover:bg-[#1f8ad2] px-1 rounded cursor-pointer">
+                                <div className="hidden sm:flex items-center gap-1 hover:bg-[#1f8ad2] px-1.5 h-full cursor-pointer">
                                     <Check className="w-3 h-3" />
                                     <span>Prettier</span>
+                                </div>
+                                <div className="flex items-center gap-1 hover:bg-[#1f8ad2] px-1.5 h-full cursor-pointer">
+                                    <Bell className="w-3 h-3" />
                                 </div>
                             </div>
                         </div>
