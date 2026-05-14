@@ -14,12 +14,9 @@ export default function CollaborateSection() {
     const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
     return (
-        <section id="connect" className={`relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden ${sectionGradients.collaborate} py-16 md:py-20`}>
+        <section id="connect" className={`relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden ${sectionGradients.collaborate || 'bg-white'} py-16 md:py-20`}>
 
-            <FloatingBlobs colors={blobColors.collaborate} />
-
-            {/* Wave Divider Top (White to match previous section) */}
-            <SectionDivider position="top" color="#fff" />
+            <FloatingBlobs colors={blobColors.collaborate || ['bg-purple-200/10', 'bg-pink-200/10']} />
 
             {/* Main Content */}
             <div ref={sectionRef} className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 w-full">

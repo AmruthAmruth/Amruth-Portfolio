@@ -44,15 +44,7 @@ export default function WorkSection() {
 
     return (
         <section id="builds" className={`relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden ${sectionGradients.work} py-12 md:py-16`}>
-            <FloatingBlobs colors={blobColors.work} />
-
-            {/* ── Background Grid ── */}
-            <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
-                style={{
-                    backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
-                    backgroundSize: '120px 120px'
-                }}
-            />
+            <FloatingBlobs colors={blobColors.work || ['bg-cyan-200/10', 'bg-blue-200/10']} />
 
             {/* ── Decorative side code ── */}
             <div className="absolute top-20 right-10 text-xs font-mono text-slate-400/10 select-none pointer-events-none hidden xl:block leading-relaxed">
@@ -366,8 +358,6 @@ export default function WorkSection() {
 
                 </motion.div>
             </div>
-
-            <SectionDivider position="bottom" color="#fff" />
         </section>
     );
 }

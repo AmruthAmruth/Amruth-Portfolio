@@ -6,12 +6,12 @@
  * Section background gradients
  */
 export const sectionGradients = {
-    hero: 'bg-gradient-to-br from-sky-50 via-white to-teal-50',
-    about: 'bg-gradient-to-br from-white via-blue-50 to-indigo-50/30',
-    origin: 'bg-gradient-to-br from-white via-sky-50 to-teal-50/30',
-    work: 'bg-gradient-to-br from-teal-50/30 via-white to-blue-50/30',
-    stack: 'bg-gradient-to-br from-blue-50/30 via-white to-cyan-50/30',
-    collaborate: 'bg-gradient-to-br from-purple-50/30 via-white to-pink-50/30',
+    hero: 'bg-white',
+    about: 'bg-white',
+    origin: 'bg-white',
+    work: 'bg-white',
+    stack: 'bg-white',
+    collaborate: 'bg-white',
 };
 
 /**

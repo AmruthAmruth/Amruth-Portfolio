@@ -58,15 +58,7 @@ export default function StackSection() {
     };
 
     return (
-        <section id="toolkit" className="relative w-full min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-slate-50/50 py-12 md:py-16">
-
-            {/* Background subtle grid */}
-            <div className="absolute inset-0 opacity-[0.025] pointer-events-none"
-                style={{
-                    backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
-                    backgroundSize: '40px 40px'
-                }}
-            />
+        <section id="toolkit" className="relative w-full min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-white py-12 md:py-16">
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full flex flex-col">
                 <SectionHeader
@@ -367,8 +359,6 @@ export default function StackSection() {
                     </div>
                 </div>
             </div>
-
-            <SectionDivider position="bottom" color="#fff" />
         </section>
     );
 }
