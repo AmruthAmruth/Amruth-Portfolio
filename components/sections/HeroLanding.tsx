@@ -10,7 +10,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 export default function HeroLanding() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
-    const totalSlides = 3; 
+    const totalSlides = 3;
 
     // Auto-advance logic
     useEffect(() => {
@@ -36,8 +36,8 @@ export default function HeroLanding() {
     };
 
     return (
-        <section 
-            id="launch" 
+        <section
+            id="launch"
             className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
@@ -110,9 +110,9 @@ export default function HeroLanding() {
                                     initial={{ width: 0 }}
                                     animate={{ width: isPaused ? '0%' : '100%' }}
                                     key={currentSlide + (isPaused ? '-paused' : '-running')}
-                                    transition={{ 
-                                        duration: isPaused ? 0 : 5, 
-                                        ease: "linear" 
+                                    transition={{
+                                        duration: isPaused ? 0 : 5,
+                                        ease: "linear"
                                     }}
                                     className="absolute inset-y-0 left-0 bg-gray-900"
                                 />

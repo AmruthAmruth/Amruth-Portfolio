@@ -86,13 +86,13 @@ const systemConfig = {
                 <motion.div
                     className="order-1 lg:order-2 flex w-full max-w-sm sm:max-w-none perspective-1000 items-center justify-center h-full scale-90 sm:scale-100"
                     initial={{ opacity: 0, x: 50, rotateY: 10 }}
-                    animate={{ 
-                        opacity: 1, 
-                        x: 0, 
+                    animate={{
+                        opacity: 1,
+                        x: 0,
                         rotateY: 5,
                         y: [0, -10, 0]
                     }}
-                    transition={{ 
+                    transition={{
                         opacity: { duration: 1, delay: 0.4 },
                         x: { duration: 1, delay: 0.4 },
                         rotateY: { duration: 1, delay: 0.4 },
