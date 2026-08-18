@@ -19,10 +19,10 @@ export default function JsonViewer({ project }: JsonViewerProps) {
             className="w-full h-full flex flex-col bg-[#1e1e1e] font-sans selection:bg-blue-500/30 overflow-hidden"
         >
             {/* Header: Title & Status */}
-            <div className="pt-8 pb-6 px-8 border-b border-[#2b2b2b]/50 bg-gradient-to-b from-[#252526]/30 to-transparent">
+            <div className="pt-5 pb-4 px-4 sm:px-8 border-b border-[#2b2b2b]/50 bg-gradient-to-b from-[#252526]/30 to-transparent">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                        <h1 className="text-white text-3xl font-black tracking-tight mb-2">
+                        <h1 className="text-white text-xl sm:text-3xl font-black tracking-tight mb-2">
                             {project.title}<span className="text-blue-500">.</span>
                         </h1>
                         <div className="flex items-center gap-2">
@@ -39,13 +39,13 @@ export default function JsonViewer({ project }: JsonViewerProps) {
                     <div className="flex gap-3">
                         {project.liveUrl && (
                             <a href={project.liveUrl} target="_blank" rel="noreferrer" 
-                                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-blue-900/20">
+                                className="flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-blue-900/20">
                                 <ExternalLink className="w-3.5 h-3.5" /> Launch
                             </a>
                         )}
                         {project.githubUrl && (
                             <a href={project.githubUrl} target="_blank" rel="noreferrer"
-                                className="flex items-center gap-2 px-4 py-2 bg-[#2d2d2d] hover:bg-[#3d3d3d] text-white border border-[#444] rounded-lg text-xs font-bold transition-all hover:scale-105 active:scale-95">
+                                className="flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 bg-[#2d2d2d] hover:bg-[#3d3d3d] text-white border border-[#444] rounded-lg text-xs font-bold transition-all hover:scale-105 active:scale-95">
                                 <Github className="w-3.5 h-3.5" /> Source
                             </a>
                         )}
@@ -54,7 +54,7 @@ export default function JsonViewer({ project }: JsonViewerProps) {
             </div>
 
             <div className="flex-1 overflow-auto custom-scrollbar">
-                <div className="p-8 max-w-3xl space-y-8">
+                <div className="p-4 sm:p-8 max-w-3xl space-y-6 sm:space-y-8">
                     {/* Compact Overview */}
                     <section>
                         <h2 className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 flex items-center gap-2">

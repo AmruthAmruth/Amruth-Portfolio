@@ -192,9 +192,9 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                         exit={{ opacity: 0, y: -12, filter: 'blur(4px)', scale: 0.98 }}
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        className="fixed inset-x-4 top-[82px] z-40 md:hidden"
+                        className="fixed inset-x-4 top-[76px] z-40 md:hidden max-h-[82vh] flex flex-col"
                     >
-                        <div className="relative bg-[#000000]/70 backdrop-blur-3xl backdrop-saturate-150 border border-white/10 rounded-3xl shadow-[0_24px_64px_rgba(0,0,0,0.6),0_1px_1px_rgba(255,255,255,0.08)_inset] overflow-hidden">
+                        <div className="relative bg-[#000000]/80 backdrop-blur-3xl backdrop-saturate-150 border border-white/10 rounded-3xl shadow-[0_24px_64px_rgba(0,0,0,0.6),0_1px_1px_rgba(255,255,255,0.08)_inset] overflow-y-auto max-h-[82vh] custom-scrollbar">
                             {/* Inner highlight */}
                             <div className="absolute inset-0 rounded-3xl pointer-events-none ring-1 ring-inset ring-white/[0.02]" />
 

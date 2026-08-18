@@ -55,27 +55,27 @@ export default function OriginSection() {
                         className="relative w-full rounded-xl overflow-hidden border border-[#30363d] bg-[#0d1117] shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-shadow duration-500 group-hover:shadow-[0_25px_70px_rgba(0,0,0,0.6)]"
                     >
                         {/* ── macOS Title Bar ── */}
-                        <div className="relative flex items-center px-4 py-3 bg-[#161b22] border-b border-[#30363d]">
+                        <div className="relative flex items-center justify-between px-3 sm:px-4 py-3 bg-[#161b22] border-b border-[#30363d]">
                             {/* Traffic lights */}
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 shrink-0">
                                 <div className="w-3 h-3 rounded-full bg-[#ff5f57] border border-black/10 hover:brightness-110 transition-all" />
                                 <div className="w-3 h-3 rounded-full bg-[#febc2e] border border-black/10 hover:brightness-110 transition-all" />
                                 <div className="w-3 h-3 rounded-full bg-[#28c840] border border-black/10 hover:brightness-110 transition-all" />
                             </div>
                             
                             {/* Centered repo title */}
-                            <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
-                                <Book className="w-3.5 h-3.5 text-[#8b949e]" />
-                                <div className="flex items-center gap-1">
-                                    <span className="text-[12.5px] font-semibold text-[#c9d1d9] hover:text-[#58a6ff] transition-colors cursor-pointer">amruth</span>
-                                    <span className="text-[12.5px] text-[#8b949e]/40">/</span>
-                                    <span className="text-[12.5px] font-semibold text-[#c9d1d9] hover:text-[#58a6ff] transition-colors cursor-pointer">amruth.dev</span>
+                            <div className="flex items-center gap-1.5 truncate px-2">
+                                <Book className="w-3.5 h-3.5 text-[#8b949e] shrink-0" />
+                                <div className="flex items-center gap-1 truncate text-xs sm:text-[12.5px]">
+                                    <span className="font-semibold text-[#c9d1d9]">amruth</span>
+                                    <span className="text-[#8b949e]/40">/</span>
+                                    <span className="font-semibold text-[#c9d1d9]">amruth.dev</span>
                                 </div>
-                                <span className="hidden sm:flex items-center gap-1 text-[10px] font-mono text-[#6e7681] border border-[#30363d] bg-[#0d1117] px-1.5 py-0.5 rounded leading-none">
+                                <span className="hidden sm:flex items-center gap-1 text-[10px] font-mono text-[#6e7681] border border-[#30363d] bg-[#0d1117] px-1.5 py-0.5 rounded leading-none shrink-0">
                                     README.md
                                 </span>
                             </div>
-                            <div className="ml-auto flex items-center gap-3">
+                            <div className="flex items-center gap-3 shrink-0">
                                 <div className="flex items-center gap-1 text-[#8b949e] hover:text-[#c9d1d9] transition-colors cursor-pointer">
                                     <Sparkles className="w-3.5 h-3.5" />
                                     <span className="text-[11px] font-medium hidden xs:inline">Featured</span>
@@ -85,13 +85,13 @@ export default function OriginSection() {
 
                         {/* ── Repo sub-header: file path + public badge ── */}
                         <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-[#0d1117] border-b border-[#30363d]">
-                            <div className="flex items-center gap-2 text-[13px] text-[#8b949e]">
+                            <div className="flex items-center gap-2 text-[12px] sm:text-[13px] text-[#8b949e] truncate">
                                 <FileText className="w-4 h-4 shrink-0 text-[#8b949e]" />
                                 <span className="font-mono font-medium text-[#c9d1d9]">README.md</span>
                                 <span className="text-[#8b949e]/30">|</span>
-                                <div className="flex items-center gap-1.5 group/update cursor-help">
-                                    <Clock className="w-3.5 h-3.5 group-hover/update:text-[#58a6ff] transition-colors" />
-                                    <span className="text-[12px]">Last updated</span>
+                                <div className="flex items-center gap-1.5 group/update cursor-help truncate">
+                                    <Clock className="w-3.5 h-3.5 group-hover/update:text-[#58a6ff] transition-colors shrink-0" />
+                                    <span className="text-[11px] sm:text-[12px] hidden xs:inline">Last updated</span>
                                     <span className="font-semibold text-[#c9d1d9]">2h ago</span>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@ export default function OriginSection() {
                             {/* ── H1 + Badges ── */}
                             <div className="space-y-6 pb-8 border-b border-[#21262d]">
                                 <div className="space-y-2">
-                                    <h1 className="text-[32px] sm:text-[42px] font-extrabold tracking-tight text-[#e6edf3] leading-tight flex items-center flex-wrap gap-x-4">
+                                    <h1 className="text-[26px] xs:text-[32px] sm:text-[42px] font-extrabold tracking-tight text-[#e6edf3] leading-tight flex items-center flex-wrap gap-x-4">
                                         Hi, I&apos;m Amruth
                                         <motion.span 
                                             animate={{ rotate: [0, 20, 0] }}
@@ -153,10 +153,10 @@ export default function OriginSection() {
                                         <motion.span
                                             animate={{ opacity: [1, 1, 0, 0] }}
                                             transition={{ duration: 0.8, repeat: Infinity, times: [0, 0.5, 0.5, 1], ease: "linear" }}
-                                            className="inline-block w-[3px] h-[32px] sm:h-[42px] bg-[#58a6ff] ml-1"
+                                            className="inline-block w-[3px] h-[26px] xs:h-[32px] sm:h-[42px] bg-[#58a6ff] ml-1"
                                         />
                                     </h1>
-                                    <p className="text-[16px] text-[#8b949e] font-medium max-w-xl">
+                                    <p className="text-[14px] sm:text-[16px] text-[#8b949e] font-medium max-w-xl">
                                         Software Engineer focused on building systems that stay reliable, maintainable, and easy to grow over time.
                                     </p>
                                 </div>
@@ -169,10 +169,10 @@ export default function OriginSection() {
 
                             {/* ── About Me ── */}
                             <Section title="Philosophy">
-                                <p className="text-[15px] sm:text-[16px] text-[#8b949e] leading-relaxed">
+                                <p className="text-[14px] sm:text-[16px] text-[#8b949e] leading-relaxed">
                                     I believe engineering is about more than just solving immediate problems—it&apos;s about <strong className="text-[#e6edf3] font-semibold">architecting for the long-term</strong>. I value clarity, intentionality, and systems that are as simple as possible but no simpler.
                                 </p>
-                                <p className="text-[15px] sm:text-[16px] text-[#8b949e] leading-relaxed">
+                                <p className="text-[14px] sm:text-[16px] text-[#8b949e] leading-relaxed">
                                     My approach is rooted in <strong className="text-[#e6edf3] font-semibold">clean architecture</strong> and type-safe systems, ensuring that every piece of code contributes to a stable and scalable ecosystem.
                                 </p>
                             </Section>
@@ -206,7 +206,7 @@ export default function OriginSection() {
                             </Section>
 
                             {/* ── Quick Stats row ── */}
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 border-t border-[#21262d] pt-8">
+                            <div className="grid grid-cols-1 xs:grid-cols-3 gap-4 border-t border-[#21262d] pt-8">
                                 {[
                                     { label: 'System Uptime', value: '1.5+ Years', note: 'Project consistency', icon: <Clock className="w-3 h-3" /> },
                                     { label: 'Current Version', value: 'v2.4.0-stable', note: 'Continuous evolution', icon: <GitBranch className="w-3 h-3" /> },

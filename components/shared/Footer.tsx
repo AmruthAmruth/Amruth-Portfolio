@@ -59,7 +59,7 @@ export default function Footer() {
                     <div className="w-px h-4 bg-slate-200 hidden sm:block" />
 
                     {/* Social Array Visualization */}
-                    <div className="flex items-center font-mono text-[13px] select-none">
+                    <div className="flex flex-wrap items-center justify-center font-mono text-[12px] sm:text-[13px] select-none">
                         <span className="text-purple-500 font-bold mr-1">[</span>
                         <div className="flex items-center">
                             {['LinkedIn', 'WhatsApp', 'Instagram'].map((name, i, arr) => {

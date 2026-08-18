@@ -47,21 +47,21 @@ export default function GitLogEntry({
             className="group relative flex gap-0"
         >
             {/* ── Graph rail ── */}
-            <div className="shrink-0 relative flex flex-col items-center w-7 sm:w-12">
+            <div className="shrink-0 relative flex flex-col items-center w-6 sm:w-10 mr-1 sm:mr-2">
                 {/* Colored node dot */}
                 <div className={`
-                    relative z-10 mt-[20px] w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 border-[#0d1117]
+                    relative z-10 mt-[18px] sm:mt-[20px] w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 border-[#0d1117]
                     ring-2 ring-[#30363d] group-hover:ring-[#58a6ff]/60
                     ${tc.dot} transition-all duration-300 shrink-0
                 `} />
                 {/* Connecting line */}
                 {!isLast && (
-                    <div className="absolute top-[36px] bottom-0 w-px bg-[#30363d] group-hover:bg-[#444c56] transition-colors duration-300" />
+                    <div className="absolute top-[34px] sm:top-[36px] bottom-0 w-px bg-[#30363d] group-hover:bg-[#444c56] transition-colors duration-300" />
                 )}
             </div>
 
             {/* ── Right column ── */}
-            <div className="flex-1 min-w-0 pb-8">
+            <div className="flex-1 min-w-0 pb-6 sm:pb-8">
 
                 {/* ── Commit summary row ── */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 py-2 px-2.5 sm:py-2.5 sm:px-3.5 mb-3 rounded-lg bg-[#161b22] border border-[#30363d] group-hover:border-[#444c56] shadow-sm transition-all duration-200">
@@ -95,7 +95,7 @@ export default function GitLogEntry({
                 <div className="rounded-lg border border-[#30363d] bg-[#161b22] overflow-hidden">
 
                     {/* Card meta bar */}
-                    <div className="flex flex-wrap items-center justify-between gap-y-1 gap-x-4 px-4 sm:px-5 py-2.5 bg-[#0d1117] border-b border-[#21262d]">
+                    <div className="flex flex-wrap items-center justify-between gap-y-1 gap-x-4 px-3 sm:px-5 py-2.5 bg-[#0d1117] border-b border-[#21262d]">
                         <div className="flex items-center gap-2 overflow-hidden">
                             <img
                                 src={avatarUrl}
@@ -115,8 +115,8 @@ export default function GitLogEntry({
                     </div>
 
                     {/* Card body — the readable story */}
-                    <div className="px-4 sm:px-6 py-5">
-                        <p className="text-[15px] sm:text-[15.5px] font-normal text-[#c9d1d9] leading-[1.85] font-sans">
+                    <div className="px-3 sm:px-6 py-4 sm:py-5">
+                        <p className="text-[13.5px] sm:text-[15.5px] font-normal text-[#c9d1d9] leading-[1.75] sm:leading-[1.85] font-sans">
                             {body}
                         </p>
                     </div>

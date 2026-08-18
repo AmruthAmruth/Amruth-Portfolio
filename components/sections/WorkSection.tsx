@@ -92,7 +92,7 @@ export default function WorkSection() {
 
                     {/* ── DESKTOP IDE WINDOW (md and above) ── */}
                     <div
-                        className="hidden md:flex flex-col h-[800px] lg:h-[850px] w-full max-w-7xl mx-auto shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] rounded-lg overflow-hidden border border-[#333] bg-[#1e1e1e]"
+                        className="hidden md:flex flex-col h-[72vh] min-h-[550px] max-h-[850px] w-full max-w-7xl mx-auto shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] rounded-lg overflow-hidden border border-[#333] bg-[#1e1e1e]"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                     >
@@ -105,7 +105,7 @@ export default function WorkSection() {
                                     <div className="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-inner" />
                                     <div className="w-3 h-3 rounded-full bg-[#27c93f] shadow-inner" />
                                 </div>
-                                <div className="flex items-center gap-3 ml-2 text-[#969696] text-[11px] font-sans">
+                                <div className="hidden lg:flex items-center gap-3 ml-2 text-[#969696] text-[11px] font-sans">
                                     {['File', 'Edit', 'Selection', 'View', 'Go', 'Run', 'Terminal', 'Help'].map(item => (
                                         <span key={item} className="hover:bg-[#454545] hover:text-white px-2 py-1 rounded transition-colors cursor-default">
                                             {item}

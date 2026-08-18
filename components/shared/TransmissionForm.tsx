@@ -88,40 +88,40 @@ export default function TransmissionForm() {
             <div className="rounded-xl overflow-hidden border border-[#30363d] shadow-2xl shadow-black/30 bg-[#0d1117]">
 
                 {/* macOS titlebar */}
-                <div className="flex items-center gap-3 px-4 py-3 bg-[#161b22] border-b border-[#21262d]">
+                <div className="flex items-center justify-between gap-3 px-3 sm:px-4 py-3 bg-[#161b22] border-b border-[#21262d]">
                     <div className="flex gap-1.5 shrink-0">
                         <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
                         <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
                         <div className="w-3 h-3 rounded-full bg-[#28c840]" />
                     </div>
-                    <div className="flex-1 flex items-center justify-center gap-2 text-[13px] font-sans text-[#8b949e] select-none">
-                        <Github className="w-4 h-4" />
+                    <div className="flex items-center justify-center gap-1.5 sm:gap-2 text-[11px] sm:text-[13px] font-sans text-[#8b949e] select-none truncate px-2">
+                        <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
                         <span className="text-[#58a6ff] font-semibold">amruth</span>
                         <span>/</span>
                         <span className="text-[#58a6ff] font-bold">portfolio</span>
-                        <span className="text-[#8b949e]">·</span>
-                        <span>New Issue</span>
+                        <span className="text-[#8b949e] hidden xs:inline">·</span>
+                        <span className="hidden xs:inline">New Issue</span>
                     </div>
-                    <div className="w-[72px] hidden sm:block" />
+                    <div className="w-12 sm:w-[72px] shrink-0" />
                 </div>
 
                 {/* Issue form header */}
-                <div className="bg-[#161b22] border-b border-[#21262d] px-5 sm:px-7 py-4">
+                <div className="bg-[#161b22] border-b border-[#21262d] px-4 sm:px-7 py-4">
                     <div className="flex items-center gap-2 mb-1">
                         <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-[10px] font-bold shrink-0">A</div>
                         <span className="text-[#8b949e] text-[12px] font-sans">Opening an issue as <strong className="text-[#e6edf3]">guest</strong></span>
                     </div>
-                    <h3 className="text-[#e6edf3] font-semibold font-sans text-base mt-2">
+                    <h3 className="text-[#e6edf3] font-semibold font-sans text-sm sm:text-base mt-2">
                         👋 Say hello, propose a project, or just ask anything
                     </h3>
-                    <p className="text-[#8b949e] text-[12px] font-sans mt-1">
+                    <p className="text-[#8b949e] text-[11px] sm:text-[12px] font-sans mt-1">
                         Fill in the fields below and hit <strong className="text-[#e6edf3]">Submit</strong> — your message will land directly in my inbox.
                     </p>
                 </div>
 
                 {/* ── The Form ── */}
                 <form onSubmit={handleSubmit} noValidate className="font-sans">
-                    <div className="px-5 sm:px-7 py-6 space-y-5 bg-[#0d1117]">
+                    <div className="px-4 sm:px-7 py-5 sm:py-6 space-y-4 sm:space-y-5 bg-[#0d1117]">
 
                         {/* Name */}
                         <div>
@@ -134,7 +134,7 @@ export default function TransmissionForm() {
                                 disabled={status === 'sending'}
                                 onChange={e => { setName(e.target.value); setErrors(p => ({ ...p, name: '' })); }}
                                 placeholder="e.g. Jane Doe"
-                                className={`w-full bg-[#161b22] border ${errors.name ? 'border-[#f85149]' : 'border-[#30363d]'} rounded-lg px-3.5 py-2.5 text-[#e6edf3] text-sm placeholder-[#484f58] outline-none focus:border-[#388bfd] focus:ring-1 focus:ring-[#388bfd]/40 transition-all disabled:opacity-50`}
+                                className={`w-full bg-[#161b22] border ${errors.name ? 'border-[#f85149]' : 'border-[#30363d]'} rounded-lg px-3.5 py-2.5 text-[#e6edf3] text-sm sm:text-base placeholder-[#484f58] outline-none focus:border-[#388bfd] focus:ring-1 focus:ring-[#388bfd]/40 transition-all disabled:opacity-50`}
                             />
                             {errors.name && <p className="mt-1.5 text-[11px] text-[#f85149] flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.name}</p>}
                         </div>

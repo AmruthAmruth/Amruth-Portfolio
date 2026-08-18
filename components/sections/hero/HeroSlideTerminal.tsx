@@ -289,7 +289,7 @@ export default function HeroSlideTerminal() {
     };
 
     const renderPrompt = () => (
-        <div className="flex items-center gap-1 select-none font-mono text-sm">
+        <div className="flex items-center gap-1 select-none font-mono text-xs sm:text-sm shrink-0">
             <span className="text-[#34d399] font-bold">amruth@shyju-mbp</span>
             <span className="text-neutral-400">:</span>
             <span className="text-[#38bdf8] font-bold">~</span>
@@ -325,7 +325,7 @@ export default function HeroSlideTerminal() {
 
                     {/* Headline */}
                     <motion.h1
-                        className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-5 leading-[1.15]"
+                        className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-5 leading-[1.15]"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
@@ -434,19 +434,19 @@ export default function HeroSlideTerminal() {
                         <div className="overflow-hidden rounded-xl bg-[#1c1c1e] border border-neutral-800 shadow-[0_30px_60px_-12px_rgba(0,0,0,0.65)] flex flex-col min-h-[300px]">
                             
                             {/* Window Titlebar */}
-                            <div className="flex items-center px-4 h-10 bg-[#2d2d30] border-b border-neutral-900/50 flex-shrink-0 select-none">
+                            <div className="flex items-center px-3 sm:px-4 h-10 bg-[#2d2d30] border-b border-neutral-900/50 flex-shrink-0 select-none justify-between">
                                 {/* Window Traffic Light Buttons */}
-                                <div className="flex gap-2">
+                                <div className="flex gap-2 shrink-0">
                                     <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#ff5f56]/10 cursor-pointer" onClick={() => setHistory([])} title="Clear" />
                                     <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#ffbd2e]/10 cursor-pointer" onClick={restartSequence} title="Restart" />
                                     <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#27c93f]/10 cursor-pointer" onClick={restartSequence} title="Replay" />
                                 </div>
                                 {/* Window Title */}
-                                <div className="flex-1 text-center text-xs text-neutral-400 font-sans font-medium pr-10">
-                                    amruth — zsh — 80×24
+                                <div className="text-center text-[11px] sm:text-xs text-neutral-400 font-sans font-medium truncate px-2">
+                                    amruth — zsh
                                 </div>
                                 {/* Header Tools */}
-                                <div className="flex items-center gap-2 text-neutral-400">
+                                <div className="flex items-center gap-2 text-neutral-400 shrink-0">
                                     <button
                                         onClick={handleCopy}
                                         className="p-1 hover:text-white transition-colors duration-150 rounded"
@@ -467,7 +467,7 @@ export default function HeroSlideTerminal() {
                             {/* Shell Terminal Body */}
                             <div 
                                 ref={containerRef}
-                                className="flex-1 p-6 text-sm text-[#e4e4e7] space-y-3 font-mono overflow-hidden"
+                                className="flex-1 p-4 sm:p-6 text-xs sm:text-sm text-[#e4e4e7] space-y-3 font-mono overflow-x-auto custom-scrollbar"
                             >
                                 {/* macOS Terminal Login Banner */}
                                 <div className="text-neutral-500 text-xs select-none mb-2">

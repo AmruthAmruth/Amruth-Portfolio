@@ -72,8 +72,7 @@ export default function StackSection() {
 
                 {/* ── Postman Window ── */}
                 <div
-                    className="w-full rounded-xl overflow-hidden border border-[#2d2d2d] shadow-2xl flex flex-col bg-[#242424]"
-                    style={{ minHeight: '500px', maxHeight: '750px' }}
+                    className="w-full rounded-xl overflow-hidden border border-[#2d2d2d] shadow-2xl flex flex-col bg-[#242424] min-h-[450px] sm:min-h-[520px] max-h-[70vh] sm:max-h-[750px]"
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                 >

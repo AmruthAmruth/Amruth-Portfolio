@@ -32,14 +32,15 @@ export default function CustomCursor({ color = "blue" }: { color?: string }) {
     }, [currentImage]);
 
     useEffect(() => {
-        const isTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
+        const isTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.matchMedia('(hover: none)').matches);
         
-        // Always visible on desktop; on mobile, only if we are doing the gesture
-        setIsVisible(true);
-
-        if (!isTouch) {
-            document.body.style.cursor = 'none';
+        if (isTouch) {
+            setIsVisible(false);
+            return;
         }
+
+        setIsVisible(true);
+        document.body.style.cursor = 'none';
 
         const moveCursor = (e: MouseEvent) => {
             mouseX.set(e.clientX);
