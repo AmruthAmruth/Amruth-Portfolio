@@ -11,130 +11,233 @@ import FloatingBlobs from '@/components/shared/FloatingBlobs';
 import { blobColors } from '@/constants/theme';
 import SectionDivider from '@/components/shared/SectionDivider';
 
-interface TerminalLine {
+interface HistoryItem {
     id: string;
-    type: 'command' | 'output';
-    text: string | React.ReactNode;
-}
-
-interface CommandSequenceItem {
     command: string;
-    output: React.ReactNode;
+    line1?: string;
+    line2?: string;
 }
 
 export default function HeroSlideTerminal() {
-    const [history, setHistory] = useState<TerminalLine[]>([]);
-    const [currentSequenceIndex, setCurrentSequenceIndex] = useState(0);
-    const [currentTypedText, setCurrentTypedText] = useState('');
-    const [isTyping, setIsTyping] = useState(false);
+    const [history, setHistory] = useState<HistoryItem[]>([]);
+    
+    // Active typing state for typewriter effect
+    const [currentCommandText, setCurrentCommandText] = useState('');
+    const [currentLine1Text, setCurrentLine1Text] = useState('');
+    const [currentLine2Text, setCurrentLine2Text] = useState('');
+    const [typingStage, setTypingStage] = useState<'cmd' | 'line1' | 'line2' | 'idle'>('cmd');
+    
+    const [currentSeq, setCurrentSeq] = useState(0); // 0 = whoami, 1 = tagline, 2 = done
+    const [isAnimating, setIsAnimating] = useState(true);
     const [copied, setCopied] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const sequence: CommandSequenceItem[] = [
-        {
-            command: 'whoami',
-            output: (
-                <div className="pl-4 py-1 text-sm font-mono leading-relaxed select-text space-y-1">
-                    <div>
-                        <span className="text-neutral-400">Name:</span> <span className="text-emerald-400 font-bold">Amruth Shyju</span>
-                    </div>
-                    <div>
-                        <span className="text-neutral-400">Role:</span> <span className="text-sky-300 font-semibold">Full Stack Developer</span>
-                    </div>
-                </div>
-            )
-        },
-        {
-            command: 'cat tagline.txt',
-            output: (
-                <div className="pl-4 py-1 text-sm font-mono leading-relaxed select-text">
-                    <span className="text-emerald-400 font-semibold">&ldquo;Engineering Ideas Into Reality.&rdquo;</span>
-                </div>
-            )
-        }
-    ];
-
-    // Sequence playback
+    // Initial sequential typewriter playback
     useEffect(() => {
-        if (currentSequenceIndex >= sequence.length) return;
+        if (!isAnimating) return;
 
-        const nextCmdItem = sequence[currentSequenceIndex];
-        setIsTyping(true);
-        setCurrentTypedText('');
-        let charIndex = 0;
+        if (currentSeq === 0) {
+            const cmdTarget = 'whoami';
+            const line1Target = 'Name: Amruth Shyju';
+            const line2Target = 'Role: Full Stack Developer';
 
-        const interval = setInterval(() => {
-            if (charIndex < nextCmdItem.command.length) {
-                setCurrentTypedText(nextCmdItem.command.substring(0, charIndex + 1));
-                charIndex++;
-            } else {
-                clearInterval(interval);
-                setTimeout(() => {
-                    setHistory((prev) => [
-                        ...prev,
-                        { id: `cmd-${currentSequenceIndex}-${Date.now()}`, type: 'command', text: nextCmdItem.command },
-                        { id: `out-${currentSequenceIndex}-${Date.now()}`, type: 'output', text: nextCmdItem.output }
-                    ]);
-                    setCurrentTypedText('');
-                    setIsTyping(false);
+            let cmdIdx = 0;
+            let l1Idx = 0;
+            let l2Idx = 0;
+
+            setTypingStage('cmd');
+            setCurrentCommandText('');
+
+            const cmdInterval = setInterval(() => {
+                if (cmdIdx < cmdTarget.length) {
+                    setCurrentCommandText(cmdTarget.substring(0, cmdIdx + 1));
+                    cmdIdx++;
+                } else {
+                    clearInterval(cmdInterval);
                     setTimeout(() => {
-                        setCurrentSequenceIndex((prev) => prev + 1);
-                    }, 600);
-                }, 200);
-            }
-        }, 45);
+                        setTypingStage('line1');
+                        setCurrentLine1Text('');
 
-        return () => clearInterval(interval);
-    }, [currentSequenceIndex]);
+                        const l1Interval = setInterval(() => {
+                            if (l1Idx < line1Target.length) {
+                                setCurrentLine1Text(line1Target.substring(0, l1Idx + 1));
+                                l1Idx++;
+                            } else {
+                                clearInterval(l1Interval);
+                                setTimeout(() => {
+                                    setTypingStage('line2');
+                                    setCurrentLine2Text('');
+
+                                    const l2Interval = setInterval(() => {
+                                        if (l2Idx < line2Target.length) {
+                                            setCurrentLine2Text(line2Target.substring(0, l2Idx + 1));
+                                            l2Idx++;
+                                        } else {
+                                            clearInterval(l2Interval);
+                                            setTimeout(() => {
+                                                setHistory(prev => [
+                                                    ...prev,
+                                                    { id: `seq-0-${Date.now()}`, command: cmdTarget, line1: line1Target, line2: line2Target }
+                                                ]);
+                                                setCurrentCommandText('');
+                                                setCurrentLine1Text('');
+                                                setCurrentLine2Text('');
+                                                setTypingStage('idle');
+                                                setTimeout(() => setCurrentSeq(1), 400);
+                                            }, 200);
+                                        }
+                                    }, 20);
+                                }, 150);
+                            }
+                        }, 20);
+                    }, 200);
+                }
+            }, 45);
+
+            return () => clearInterval(cmdInterval);
+
+        } else if (currentSeq === 1) {
+            const cmdTarget = 'cat tagline.txt';
+            const line1Target = '"Engineering Ideas Into Reality."';
+
+            let cmdIdx = 0;
+            let l1Idx = 0;
+
+            setTypingStage('cmd');
+            setCurrentCommandText('');
+
+            const cmdInterval = setInterval(() => {
+                if (cmdIdx < cmdTarget.length) {
+                    setCurrentCommandText(cmdTarget.substring(0, cmdIdx + 1));
+                    cmdIdx++;
+                } else {
+                    clearInterval(cmdInterval);
+                    setTimeout(() => {
+                        setTypingStage('line1');
+                        setCurrentLine1Text('');
+
+                        const l1Interval = setInterval(() => {
+                            if (l1Idx < line1Target.length) {
+                                setCurrentLine1Text(line1Target.substring(0, l1Idx + 1));
+                                l1Idx++;
+                            } else {
+                                clearInterval(l1Interval);
+                                setTimeout(() => {
+                                    setHistory(prev => [
+                                        ...prev,
+                                        { id: `seq-1-${Date.now()}`, command: cmdTarget, line1: line1Target }
+                                    ]);
+                                    setCurrentCommandText('');
+                                    setCurrentLine1Text('');
+                                    setTypingStage('idle');
+                                    setIsAnimating(false);
+                                    setCurrentSeq(2);
+                                }, 200);
+                            }
+                        }, 20);
+                    }, 200);
+                }
+            }, 40);
+
+            return () => clearInterval(cmdInterval);
+        }
+    }, [currentSeq, isAnimating]);
 
     const restartSequence = () => {
         setHistory([]);
-        setCurrentSequenceIndex(0);
-        setCurrentTypedText('');
-        setIsTyping(false);
+        setCurrentCommandText('');
+        setCurrentLine1Text('');
+        setCurrentLine2Text('');
+        setTypingStage('idle');
+        setCurrentSeq(0);
+        setIsAnimating(true);
     };
 
-    const handleRunManualCommand = (cmdText: string) => {
-        if (isTyping) return;
+    const handleRunManualCommand = (cmdKey: string) => {
+        if (typingStage !== 'idle' || isAnimating) return;
 
-        if (cmdText === 'clear') {
+        if (cmdKey === 'clear') {
             setHistory([]);
             return;
         }
 
-        let actualCommand = cmdText;
-        let matchedOutput: React.ReactNode = null;
+        let cmdTarget = '';
+        let line1Target = '';
+        let line2Target: string | undefined = undefined;
 
-        if (cmdText === 'whoami') {
-            actualCommand = 'whoami';
-            matchedOutput = sequence[0].output;
-        } else if (cmdText === 'tagline') {
-            actualCommand = 'cat tagline.txt';
-            matchedOutput = sequence[1].output;
+        if (cmdKey === 'whoami') {
+            cmdTarget = 'whoami';
+            line1Target = 'Name: Amruth Shyju';
+            line2Target = 'Role: Full Stack Developer';
+        } else if (cmdKey === 'tagline') {
+            cmdTarget = 'cat tagline.txt';
+            line1Target = '"Engineering Ideas Into Reality."';
         }
 
-        setIsTyping(true);
-        setCurrentTypedText('');
-        let charIndex = 0;
+        setTypingStage('cmd');
+        setCurrentCommandText('');
 
-        const interval = setInterval(() => {
-            if (charIndex < actualCommand.length) {
-                setCurrentTypedText(actualCommand.substring(0, charIndex + 1));
-                charIndex++;
+        let cmdIdx = 0;
+        let l1Idx = 0;
+        let l2Idx = 0;
+
+        const cmdInterval = setInterval(() => {
+            if (cmdIdx < cmdTarget.length) {
+                setCurrentCommandText(cmdTarget.substring(0, cmdIdx + 1));
+                cmdIdx++;
             } else {
-                clearInterval(interval);
+                clearInterval(cmdInterval);
                 setTimeout(() => {
-                    setHistory((prev) => [
-                        ...prev,
-                        { id: `manual-cmd-${Date.now()}`, type: 'command', text: actualCommand },
-                        { id: `manual-out-${Date.now()}`, type: 'output', text: matchedOutput }
-                    ]);
-                    setCurrentTypedText('');
-                    setIsTyping(false);
-                }, 200);
+                    setTypingStage('line1');
+                    setCurrentLine1Text('');
+
+                    const l1Interval = setInterval(() => {
+                        if (l1Idx < line1Target.length) {
+                            setCurrentLine1Text(line1Target.substring(0, l1Idx + 1));
+                            l1Idx++;
+                        } else {
+                            clearInterval(l1Interval);
+                            if (line2Target) {
+                                setTimeout(() => {
+                                    setTypingStage('line2');
+                                    setCurrentLine2Text('');
+
+                                    const l2Interval = setInterval(() => {
+                                        if (l2Idx < line2Target.length) {
+                                            setCurrentLine2Text(line2Target.substring(0, l2Idx + 1));
+                                            l2Idx++;
+                                        } else {
+                                            clearInterval(l2Interval);
+                                            setTimeout(() => {
+                                                setHistory(prev => [
+                                                    ...prev,
+                                                    { id: `manual-${Date.now()}`, command: cmdTarget, line1: line1Target, line2: line2Target }
+                                                ]);
+                                                setCurrentCommandText('');
+                                                setCurrentLine1Text('');
+                                                setCurrentLine2Text('');
+                                                setTypingStage('idle');
+                                            }, 150);
+                                        }
+                                    }, 20);
+                                }, 100);
+                            } else {
+                                setTimeout(() => {
+                                    setHistory(prev => [
+                                        ...prev,
+                                        { id: `manual-${Date.now()}`, command: cmdTarget, line1: line1Target }
+                                    ]);
+                                    setCurrentCommandText('');
+                                    setCurrentLine1Text('');
+                                    setTypingStage('idle');
+                                }, 150);
+                            }
+                        }
+                    }, 20);
+                }, 150);
             }
-        }, 40);
+        }, 35);
     };
 
     const handleCopy = () => {
@@ -143,8 +246,6 @@ export default function HeroSlideTerminal() {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
-
-    const isInitialSequenceDone = currentSequenceIndex >= sequence.length;
 
     const renderHighlightCommand = (cmdText: string) => {
         const parts = cmdText.split(' ');
@@ -160,7 +261,33 @@ export default function HeroSlideTerminal() {
         );
     };
 
-    // Authentic macOS Terminal zsh prompt
+    const renderFormattedOutputLine = (lineStr: string) => {
+        if (lineStr.startsWith('Name:')) {
+            const val = lineStr.replace('Name:', '');
+            return (
+                <div>
+                    <span className="text-neutral-400">Name:</span>
+                    <span className="text-emerald-400 font-bold">{val}</span>
+                </div>
+            );
+        } else if (lineStr.startsWith('Role:')) {
+            const val = lineStr.replace('Role:', '');
+            return (
+                <div>
+                    <span className="text-neutral-400">Role:</span>
+                    <span className="text-sky-300 font-semibold">{val}</span>
+                </div>
+            );
+        } else if (lineStr.startsWith('"Engineering')) {
+            return (
+                <div>
+                    <span className="text-emerald-400 font-semibold">{lineStr}</span>
+                </div>
+            );
+        }
+        return <div>{lineStr}</div>;
+    };
+
     const renderPrompt = () => (
         <div className="flex items-center gap-1 select-none font-mono text-sm">
             <span className="text-[#34d399] font-bold">amruth@shyju-mbp</span>
@@ -347,33 +474,75 @@ export default function HeroSlideTerminal() {
                                     Last login: {new Date().toDateString()} on ttys001
                                 </div>
 
-                                {/* History Lines */}
-                                {history.map((line) => (
-                                    <div key={line.id} className="space-y-1">
-                                        {line.type === 'command' ? (
-                                            <div className="flex items-start gap-2 select-none">
-                                                {renderPrompt()}
-                                                <span className="font-medium text-white">{renderHighlightCommand(line.text as string)}</span>
+                                {/* History Lines (Completed typed outputs) */}
+                                {history.map((item) => (
+                                    <div key={item.id} className="space-y-1">
+                                        <div className="flex items-start gap-2 select-none">
+                                            {renderPrompt()}
+                                            <span className="font-medium text-white">{renderHighlightCommand(item.command)}</span>
+                                        </div>
+                                        {item.line1 && (
+                                            <div className="pl-4 py-0.5">
+                                                {renderFormattedOutputLine(item.line1)}
                                             </div>
-                                        ) : (
-                                            <div>{line.text}</div>
+                                        )}
+                                        {item.line2 && (
+                                            <div className="pl-4 py-0.5">
+                                                {renderFormattedOutputLine(item.line2)}
+                                            </div>
                                         )}
                                     </div>
                                 ))}
 
-                                {/* Live typing input line */}
-                                {isTyping && currentTypedText && (
-                                    <div className="flex items-start gap-2 select-none">
-                                        {renderPrompt()}
-                                        <span className="font-medium text-white">
-                                            {renderHighlightCommand(currentTypedText)}
-                                            <span className="inline-block w-[8px] h-[15px] ml-0.5 bg-[#38bdf8] animate-pulse align-middle" />
-                                        </span>
+                                {/* Live Typewriter Animation Line */}
+                                {typingStage !== 'idle' && (
+                                    <div className="space-y-1">
+                                        {/* Typing Command */}
+                                        {typingStage === 'cmd' && (
+                                            <div className="flex items-start gap-2 select-none">
+                                                {renderPrompt()}
+                                                <span className="font-medium text-white">
+                                                    {renderHighlightCommand(currentCommandText)}
+                                                    <span className="inline-block w-[8px] h-[15px] ml-0.5 bg-[#38bdf8] animate-pulse align-middle" />
+                                                </span>
+                                            </div>
+                                        )}
+
+                                        {/* Command finished, typing line 1 */}
+                                        {typingStage === 'line1' && (
+                                            <>
+                                                <div className="flex items-start gap-2 select-none">
+                                                    {renderPrompt()}
+                                                    <span className="font-medium text-white">{renderHighlightCommand(currentCommandText || (currentSeq === 0 ? 'whoami' : 'cat tagline.txt'))}</span>
+                                                </div>
+                                                <div className="pl-4 py-0.5">
+                                                    {renderFormattedOutputLine(currentLine1Text)}
+                                                    <span className="inline-block w-[8px] h-[15px] ml-0.5 bg-[#34d399] animate-pulse align-middle" />
+                                                </div>
+                                            </>
+                                        )}
+
+                                        {/* Line 1 finished, typing line 2 */}
+                                        {typingStage === 'line2' && (
+                                            <>
+                                                <div className="flex items-start gap-2 select-none">
+                                                    {renderPrompt()}
+                                                    <span className="font-medium text-white">{renderHighlightCommand(currentCommandText || 'whoami')}</span>
+                                                </div>
+                                                <div className="pl-4 py-0.5">
+                                                    {renderFormattedOutputLine(currentLine1Text || 'Name: Amruth Shyju')}
+                                                </div>
+                                                <div className="pl-4 py-0.5">
+                                                    {renderFormattedOutputLine(currentLine2Text)}
+                                                    <span className="inline-block w-[8px] h-[15px] ml-0.5 bg-[#38bdf8] animate-pulse align-middle" />
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
                                 )}
 
                                 {/* zsh autocompletion menu suggestions */}
-                                {!isTyping && isInitialSequenceDone && (
+                                {typingStage === 'idle' && !isAnimating && (
                                     <div className="space-y-2 pt-1 border-t border-neutral-800/40">
                                         {/* Blank Prompt with blinking cursor */}
                                         <div className="flex items-start gap-2 select-none">
@@ -394,7 +563,7 @@ export default function HeroSlideTerminal() {
                                                 ].map((item) => (
                                                     <button
                                                         key={item.label}
-                                                        disabled={isTyping}
+                                                        disabled={typingStage !== 'idle'}
                                                         onClick={() => handleRunManualCommand(item.cmd)}
                                                         className="hover:text-[#34d399] hover:underline transition-colors duration-150 py-0.5 cursor-pointer font-mono text-xs font-semibold"
                                                     >
