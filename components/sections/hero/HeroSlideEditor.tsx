@@ -120,7 +120,7 @@ const systemConfig = {
                             </div>
 
                             {/* Editor Content */}
-                            <div className="p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto min-h-[300px]">
+                            <div className="p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto min-h-[360px] sm:min-h-[380px]">
                                 <pre>
                                     <code>
                                         {codeSnippet.trim().split('\n').map((line, i, arr) => (

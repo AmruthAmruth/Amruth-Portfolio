@@ -72,7 +72,7 @@ export default function StackSection() {
 
                 {/* ── Postman Window ── */}
                 <div
-                    className="w-full rounded-xl overflow-hidden border border-[#2d2d2d] shadow-2xl flex flex-col bg-[#242424] min-h-[450px] sm:min-h-[520px] max-h-[70vh] sm:max-h-[750px]"
+                    className="w-full rounded-xl overflow-hidden border border-[#2d2d2d] shadow-2xl flex flex-col bg-[#242424] min-h-[550px] sm:min-h-[620px] lg:h-[680px] xl:h-[720px] max-h-[82vh] sm:max-h-[780px]"
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                 >

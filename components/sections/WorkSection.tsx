@@ -92,7 +92,7 @@ export default function WorkSection() {
 
                     {/* ── DESKTOP IDE WINDOW (md and above) ── */}
                     <div
-                        className="hidden md:flex flex-col h-[72vh] min-h-[550px] max-h-[850px] w-full max-w-7xl mx-auto shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] rounded-lg overflow-hidden border border-[#333] bg-[#1e1e1e]"
+                        className="hidden md:flex flex-col h-[82vh] min-h-[680px] lg:h-[800px] xl:h-[840px] max-h-[880px] w-full max-w-7xl mx-auto shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] rounded-lg overflow-hidden border border-[#333] bg-[#1e1e1e]"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                     >

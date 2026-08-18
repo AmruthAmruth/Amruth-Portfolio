@@ -146,7 +146,7 @@ export default function HeroSlideAPI({ isActive }: HeroSlideAPIProps) {
                             </div>
 
                             {/* Postman Response Section */}
-                            <div className="bg-[#1c1c1c] min-h-[300px] flex flex-col">
+                            <div className="bg-[#1c1c1c] min-h-[360px] sm:min-h-[380px] flex flex-col">
                                 {/* Response Metadata */}
                                 <div className="px-4 py-2 border-b border-[#333] flex gap-4 text-[10px]">
                                     <div className="flex gap-4">
