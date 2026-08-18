@@ -24,7 +24,7 @@ export const projects: Project[] = [
             { name: 'Socket.IO', icon: 'S' },
             { name: 'AWS', icon: 'A' },
         ],
-        liveUrl: 'https://stratify.ddns.net',
+        liveUrl: 'https://stratifyapp.ddns.net/',
         githubUrl: 'https://github.com/AmruthAmruth/Stratify',
         gradient: 'from-blue-500 to-cyan-500',
         status: 'Live',
@@ -33,31 +33,40 @@ export const projects: Project[] = [
         buildDuration: '1m 2s',
     },
     {
-        title: 'Speedo',
-        impact: 'GPS Fleet Trip Analytics System',
-        problem: 'Speedo is a fleet analytics platform that processes GPS trip data and visualizes vehicle movement on an interactive map. The system analyzes large trip logs to detect driving patterns such as stoppage, idling, and overspeed events while rendering thousands of coordinates efficiently on a GIS dashboard.',
-        features: [
-            'Built a high-performance data processing pipeline using Node.js Streams to parse large CSV trip logs with O(1) memory usage, enabling efficient handling of large datasets.',
-            'Implemented spatial-temporal analytics algorithms to detect vehicle stoppage, idling, and overspeed events using distance and speed calculations based on the Haversine formula.',
-            'Structured the backend using Clean Architecture principles with dependency injection to maintain modular, loosely coupled business logic.',
-            'Developed an interactive GIS dashboard using React and Leaflet that renders thousands of GPS coordinates efficiently while dynamically color-coding trip polylines based on vehicle speed.',
-        ],
-        outcome: '',
-        techStack: [
-            { name: 'Node.js', icon: 'N' },
-            { name: 'TypeScript', icon: 'TS' },
-            { name: 'MongoDB', icon: 'M' },
-            { name: 'React', icon: 'R' },
-            { name: 'Leaflet', icon: 'L' },
-        ],
-        liveUrl: 'https://speedo-vehicle-trip-tracking-and-an.vercel.app',
-        githubUrl: 'https://github.com/AmruthAmruth/Speedo',
-        gradient: 'from-teal-500 to-green-500',
-        status: 'Live',
-        environment: 'Production',
-        createdAt: '5d ago',
-        buildDuration: '45s',
-    },
+    title: 'Speedo',
+    impact: 'High-Performance GPS Fleet Analytics Platform',
+
+    problem:
+        'A GPS fleet analytics platform built to process large-scale vehicle trip data, detect driving events, and visualize vehicle movement on an interactive GIS dashboard.',
+
+    features: [
+        'Built a memory-efficient GPS data processing pipeline using Node.js Streams, enabling large CSV trip logs to be processed with O(1) memory usage instead of loading entire datasets into memory.',
+        'Implemented spatial-temporal analytics using the Haversine formula and speed calculations to detect vehicle stoppage, idling, overspeeding, and trip-level driving patterns.',
+        'Designed the backend using Clean Architecture, dependency injection, and separation of concerns to keep domain logic modular, testable, and maintainable.',
+        'Developed an interactive React + Leaflet GIS dashboard capable of visualizing thousands of GPS coordinates with speed-based color-coded trip polylines.',
+        'Optimized GPS visualization and data processing to handle large trip datasets efficiently while maintaining a responsive dashboard experience.'
+    ],
+
+    outcome:
+        'Demonstrates the ability to design high-performance backend systems, process large datasets efficiently, and build real-time geospatial visualizations for data-intensive applications.',
+
+    techStack: [
+        { name: 'Node.js', icon: 'N' },
+        { name: 'TypeScript', icon: 'TS' },
+        { name: 'MongoDB', icon: 'M' },
+        { name: 'React', icon: 'R' },
+        { name: 'Leaflet', icon: 'L' },
+    ],
+
+    liveUrl: 'https://speedo-vehicle-trip-tracking-and-an.vercel.app',
+    githubUrl: 'https://github.com/AmruthAmruth/Speedo',
+
+    gradient: 'from-teal-500 to-green-500',
+    status: 'Live',
+    environment: 'Production',
+    createdAt: '5d ago',
+    buildDuration: '45s',
+},
     {
         title: 'FashionZone',
         impact: 'Full-Stack E-Commerce Platform',
